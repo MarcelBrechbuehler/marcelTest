@@ -20,4 +20,4 @@
       <xsd:enumeration value="Alternate3"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

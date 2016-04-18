@@ -17,4 +17,4 @@
       <xsd:enumeration value="DataPlus"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

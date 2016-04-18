@@ -8,4 +8,4 @@
         name="CTSuitableOperatorWithdrawResultRecord_INT" type="tns:CTSuitableOperatorWithdrawResultRecord_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

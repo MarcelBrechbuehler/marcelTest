@@ -14,4 +14,4 @@
       <xsd:element form="qualified" name="Password" type="xsd:string"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

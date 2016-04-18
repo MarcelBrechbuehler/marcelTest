@@ -8,4 +8,4 @@
         name="CTEnvironmentalAuthorityMRAStandardApplication_INT" type="tns:CTEnvironmentalAuthorityMRAStandardApplicationDetails_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

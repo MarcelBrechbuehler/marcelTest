@@ -13,4 +13,4 @@
         name="CTSuitableOperatorRegisterPhone_INT" type="tns:CTSuitableOperatorRegisterPhone_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

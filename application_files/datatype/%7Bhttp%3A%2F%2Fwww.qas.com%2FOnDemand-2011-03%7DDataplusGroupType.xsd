@@ -15,4 +15,4 @@
     </xsd:sequence>
     <xsd:attribute name="GroupName" type="xsd:string"/>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

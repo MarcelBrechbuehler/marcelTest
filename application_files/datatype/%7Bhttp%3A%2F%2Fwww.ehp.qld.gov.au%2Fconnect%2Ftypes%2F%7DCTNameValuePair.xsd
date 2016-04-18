@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTNameValuePair">
+    <xsd:annotation>
+      <xsd:documentation>Simple Name Value Pair object</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" nillable="true" type="xsd:string"/>
+      <xsd:element name="value" nillable="true" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

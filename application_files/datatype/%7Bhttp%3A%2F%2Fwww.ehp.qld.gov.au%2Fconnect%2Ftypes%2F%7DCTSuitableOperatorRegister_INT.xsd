@@ -26,4 +26,4 @@
         name="CTSuitableOperatorRegisterSuitability_INT" type="tns:CTSuitableOperatorRegisterSuitability_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

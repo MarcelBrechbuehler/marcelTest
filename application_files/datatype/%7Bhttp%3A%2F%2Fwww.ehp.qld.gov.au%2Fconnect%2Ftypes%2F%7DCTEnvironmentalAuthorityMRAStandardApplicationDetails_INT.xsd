@@ -40,4 +40,4 @@
         name="documentDetails" type="tns:CTEnvironmentalAuthorityDocumentDetails_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

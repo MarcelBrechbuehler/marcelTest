@@ -28,4 +28,4 @@
     <xsd:attribute default="false" name="OverThreshold" type="xsd:boolean"/>
     <xsd:attribute default="false" name="Timeout" type="xsd:boolean"/>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

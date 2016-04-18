@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTABNResults">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[Results from ABN Webservice call]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="abn" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityName" nillable="true" type="xsd:string"/>
+      <xsd:element name="state" nillable="true" type="xsd:string"/>
+      <xsd:element name="postCode" nillable="true" type="xsd:string"/>
+      <xsd:element name="gstEffectiveFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="gstEffectiveTo" nillable="true" type="xsd:string"/>
+      <xsd:element name="abnStatus" nillable="true" type="xsd:string"/>
+      <xsd:element name="abnStatusDateFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="abnStatusDateTo" nillable="true" type="xsd:string"/>
+      <xsd:element name="dateLastUpdated" nillable="true" type="xsd:string"/>
+      <xsd:element name="exception" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -10,4 +10,4 @@
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="documents" type="tns:CTEnvironmentalAuthorityDocumentDetails_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

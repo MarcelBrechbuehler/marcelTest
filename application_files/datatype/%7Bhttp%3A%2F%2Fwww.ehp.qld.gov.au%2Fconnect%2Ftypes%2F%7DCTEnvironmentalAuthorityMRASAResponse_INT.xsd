@@ -8,4 +8,4 @@
         name="CTEnvironmentalAuthorityMRASAResultRecord_INT" type="tns:CTEnvironmentalAuthorityMRASAResultRecord_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

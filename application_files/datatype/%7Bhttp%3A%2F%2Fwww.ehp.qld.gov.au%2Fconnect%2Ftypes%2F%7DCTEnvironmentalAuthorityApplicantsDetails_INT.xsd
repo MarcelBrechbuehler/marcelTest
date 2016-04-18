@@ -14,4 +14,4 @@
       <xsd:element name="sharePercentage" nillable="true" type="xsd:double"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

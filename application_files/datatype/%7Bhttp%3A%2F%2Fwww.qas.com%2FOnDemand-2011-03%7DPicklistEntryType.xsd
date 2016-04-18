@@ -31,4 +31,4 @@
     <xsd:attribute default="false" name="UnresolvableRange" type="xsd:boolean"/>
     <xsd:attribute default="false" name="WarnInformation" type="xsd:boolean"/>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

@@ -19,4 +19,4 @@
       <xsd:enumeration value="DPVSeedHit"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

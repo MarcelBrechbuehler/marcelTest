@@ -8,4 +8,4 @@
         name="CTPermitGrantEA_INT" type="tns:CTPermitGrantEA_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

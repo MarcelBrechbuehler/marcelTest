@@ -16,4 +16,4 @@
     </xsd:sequence>
     <xsd:anyAttribute namespace="##other"/>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

@@ -14,4 +14,4 @@
       <xsd:pattern value="^[A-Za-z0-9\\ /._:-]{0,256}$"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

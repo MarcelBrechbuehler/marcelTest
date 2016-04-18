@@ -21,4 +21,4 @@
       <xsd:enumeration value="VerifiedStreet"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

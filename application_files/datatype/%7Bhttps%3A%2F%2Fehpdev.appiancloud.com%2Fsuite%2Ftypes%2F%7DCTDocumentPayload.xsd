@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  targetNamespace="https://ehpdev.appiancloud.com/suite/types/"
+  xmlns:tns="https://ehpdev.appiancloud.com/suite/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTDocumentPayload">
+    <xsd:annotation>
+      <xsd:documentation>Name Value text pair used to populate document merge fields</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="name" nillable="true" type="xsd:string"/>
+      <xsd:element name="value" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

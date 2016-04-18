@@ -15,4 +15,4 @@
       <xsd:maxInclusive value="750"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

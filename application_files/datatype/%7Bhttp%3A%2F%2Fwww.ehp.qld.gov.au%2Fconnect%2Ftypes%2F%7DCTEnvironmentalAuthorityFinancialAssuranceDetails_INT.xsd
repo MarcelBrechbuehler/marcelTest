@@ -8,4 +8,4 @@
       <xsd:element name="financialAssuranceFee" nillable="true" type="xsd:int"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

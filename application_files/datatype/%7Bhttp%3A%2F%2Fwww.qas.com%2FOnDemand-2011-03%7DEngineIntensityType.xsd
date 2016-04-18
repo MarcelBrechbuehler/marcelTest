@@ -16,4 +16,4 @@
       <xsd:enumeration value="Extensive"/>
     </xsd:restriction>
   </xsd:simpleType>
-</xsd:schema>
+</xsd:schema> 

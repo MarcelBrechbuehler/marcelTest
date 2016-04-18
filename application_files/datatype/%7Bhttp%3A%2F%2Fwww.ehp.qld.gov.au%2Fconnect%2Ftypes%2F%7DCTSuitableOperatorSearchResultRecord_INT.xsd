@@ -10,4 +10,4 @@
       <xsd:element maxOccurs="unbounded" minOccurs="0" name="Results" type="tns:CTSuitableOperatorSearchResult_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

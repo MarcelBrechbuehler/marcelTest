@@ -8,4 +8,4 @@
         name="CTPermitSetTenureDateResultRecord_INT" type="tns:CTPermitSetTenureDateResultRecord_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

@@ -8,4 +8,4 @@
         name="CTSuitableOperatorRegister_INT" type="tns:CTSuitableOperatorRegister_INT"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 

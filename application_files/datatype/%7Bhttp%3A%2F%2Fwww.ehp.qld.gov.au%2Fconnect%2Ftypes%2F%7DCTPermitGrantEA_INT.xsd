@@ -6,4 +6,4 @@
       <xsd:element name="EAApplicationReference" nillable="true" type="xsd:long"/>
     </xsd:sequence>
   </xsd:complexType>
-</xsd:schema>
+</xsd:schema> 
