@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_reactivateConfirmation</name>
+        <uuid>7d935926-1110-4cd9-8f65-712d732a2116</uuid>
+        <description>interface rule used to display the confirmation page of reactivate user</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5559</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  &#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Reactivate User&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: {&#xD;
+              #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                text: &quot;Do you want to Reactive the below user?&quot;,&#xD;
+                style: &quot;HEADER_MEDIUM&quot;&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;User Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;User Name :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!user_cdt.userLogin,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;First Name :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!user_cdt.userFirstName,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Last Name :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!user_cdt.userSurname,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!user_cdt.userEmail,&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+          &#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {},&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Submit&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value:#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+           saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Cancel&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          skipValidation: true&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    validations: {}&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>user_cdt</name>
+            <type>
+                <name>CTUser</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>user_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

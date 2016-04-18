@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>EA_constructPersistEntityDataMRASA</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8887</uuid>
+        <description>This rule constructs Entity Data</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= {
+  if(
+    not(
+      isnull(
+        pv!partyEmail_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4830&quot;,
+      data: {
+        pv!partyEmail_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!partyPhone_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4831&quot;,
+      data: {
+        pv!partyPhone_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!permitApplicationPartyMap_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10851&quot;,
+      data: {
+        pv!permitApplicationPartyMap_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!permitQuestionAnswer_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8849&quot;,
+      data: {
+        pv!permitQuestionAnswer_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!locationLgaMap_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15755&quot;,
+      data: {
+        pv!locationLgaMap_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!permitTenureMineral_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8852&quot;,
+      data: {
+        pv!permitTenureMineral_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!permitTenureBlockSub_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8854&quot;,
+      data: {
+        pv!permitTenureBlockSub_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!commonDocument_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8853&quot;,
+      data: {
+        pv!commonDocument_cdt
+      }
+    },
+    {}
+  ),
+  if(
+    not(
+      isnull(
+        pv!permitApplicationActivityMap_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15163&quot;,
+      data: {
+        pv!permitApplicationActivityMap_cdt
+      }
+    },
+    {}
+  ),
+if(
+    not(
+      isnull(
+        pv!permitApplicationTenureMap_cdt
+      )
+    ),
+    {
+      entity: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15162&quot;,
+      data: {
+        pv!permitApplicationTenureMap_cdt
+      }
+    },
+    {}
+  )
+
+}</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

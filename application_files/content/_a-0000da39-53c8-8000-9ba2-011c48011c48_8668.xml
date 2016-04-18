@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>EA_integrationCheckDocumentType</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8668</uuid>
+        <description>This expression rule is to check if Document Type is provided and is a valid Document Type
+
+</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+  isnull(
+    ri!documentType
+  ),
+  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8400&quot;,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8401&quot;,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8664&quot;,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8409&quot;
+    ),
+    ri!field_txt,
+    joinarray(
+      ri!documentType,
+      &quot;-&quot;
+    )
+  ),
+  if(
+    length(
+      ri!documentType
+    ) = 0,
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8400&quot;,
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8401&quot;,
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8664&quot;,
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8409&quot;
+      ),
+      ri!field_txt,
+      joinarray(
+        ri!documentType,
+        &quot;-&quot;
+      )
+    ),
+    if(
+      contains(
+        {
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10320&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10321&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10322&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10323&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10324&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10325&quot;,
+          #&quot;_a-0000da8e-1d9c-8000-9ba2-011c48011c48_8817&quot;
+        },
+        ri!documentType
+      ),
+      {},
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+          #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8400&quot;,
+          #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8401&quot;,
+          #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8667&quot;,
+          #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8409&quot;
+        ),
+        ri!field_txt,
+        joinarray(
+          ri!documentType,
+          &quot;-&quot;
+        )
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>documentType</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

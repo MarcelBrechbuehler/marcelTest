@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AHC_UI_requestHealthCheck</name>
+        <uuid>d0953b6c-e2ce-4cd9-99c1-46a057a689f8</uuid>
+        <description>Interface for requesting an Appian Health Check analysis</description>
+        <parentUuid>_a-0000dbd4-7e1b-8000-4afc-010000010000_2068</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;Start Appian Health Check&quot;,
+  instructions: &quot;The Appian Health Check is a powerful way to gain a deeper understanding of your Appian platform, identify potential risks, and get the most out of Appian.&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+      value: {
+          #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+            text: &quot;The Health Check will perform the following actions:&quot;,
+            style: &quot;STRONG&quot;
+          ),
+        #&quot;SYSTEM_SYSRULES_richTextNumberedList&quot;(
+          items: {
+            &quot;Collect data about this environment's configuration and design (see caution note below)&quot;,
+            &quot;Generate a ZIP of the environment's configuration, design and logs&quot;,
+            if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2226&quot;,
+              {
+                if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2064&quot;, &quot;Assign a task to review the ZIP contents&quot;, {}),
+                &quot;Upload the ZIP to Appian Forum for analysis&quot;,
+                &quot;Post the Health Check report to the News feed&quot;
+              },
+              {
+                &quot;Assign a task to download the collection ZIP and manually upload to Appian Forum for analysis.&quot;
+              }
+            )
+          }
+        )
+      }
+    ),
+    if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2226&quot;,
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value: {
+          &quot;This is a &quot;,
+          if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2057&quot;, #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;production &quot;, style: &quot;STRONG&quot;), #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;non-production &quot;, style: &quot;STRONG&quot;)),
+          &quot;environment &quot;,
+          if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2058&quot;, #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;on Appian Cloud &quot;, style: &quot;STRONG&quot;), #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;on premise&quot;, style: &quot;STRONG&quot;)),
+          &quot;. If this information is incorrect contact the System Administrator to update the configuration before running the Health Check.&quot;
+        }
+      ),
+      {}
+    ),
+    #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+      value: {
+        #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;CAUTION: &quot;, style: &quot;STRONG&quot;),
+        &quot;While the collection process is running it may increase the load on your system and degrade performance for users. &quot;,
+        #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;DO NOT run the collection during business hours in a production environment or an environment with active users.&quot;, style: &quot;EMPHASIS&quot;)
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+      value: {
+        #&quot;SYSTEM_SYSRULES_richTextItem&quot;(text: &quot;NOTE: &quot;, style: &quot;STRONG&quot;),
+        if (#&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2226&quot;,
+          &quot;If the results have not been posted to the News feed after an hour, contact the System Administrator.&quot;,
+          &quot;If a task to download the collected data has not been assigned after an hour, contact the System Administrator.&quot;
+        )
+      }
+    )
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Start Health Check&quot;,
+        style: &quot;PRIMARY&quot;
+      )
+    }
+  ),
+  validations: {
+    if (gethealthcheckcollectionstatus().isRunning, &quot;Health Check collection is already running&quot;, &quot;&quot;)
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTErrorObject">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[This datatype is used to record the details of interface error messages]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="errorCode" nillable="true" type="xsd:string"/>
+      <xsd:element name="errorMessage" nillable="true" type="xsd:string"/>
+      <xsd:element name="field" nillable="true" type="xsd:string"/>
+      <xsd:element name="value" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

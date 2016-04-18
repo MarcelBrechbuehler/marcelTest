@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="EngineEnumType">
+    <xsd:annotation>
+      <xsd:documentation>The available engines</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="Singleline"/>
+      <xsd:enumeration value="Typedown"/>
+      <xsd:enumeration value="Verification"/>
+      <xsd:enumeration value="Keyfinder"/>
+      <xsd:enumeration value="Intuitive"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

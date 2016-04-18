@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Customer" a:uuid="6d985ce5-84e1-48fb-91d8-c117d3eadff0">
+        <a:pluralName>Customers</a:pluralName>
+        <a:description>Directory of EHP Customers</a:description>
+        <a:urlStub>C_6xWA</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Datatype" a:uuid="{http://www.ehp.qld.gov.au/connect/types/}CTEHPCustomer"/>
+        <a:listViewTemplateExpr>#&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17935&quot;(rf!customerName,rf!customerRef,rf!partyTypeId,rf!partyTypeDescription)</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17906&quot;(rp!id)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>91a0d54a-8366-433f-97b0-34a136691464</a:relatedActionCfg>
+            <a:relatedActionCfg>09b96d38-bb3a-4e5f-a347-bdc6c86f73c4</a:relatedActionCfg>
+            <a:relatedActionCfg>0b2ffed9-1589-4edd-96d1-98a64fd0ade9</a:relatedActionCfg>
+            <a:relatedActionCfg>cb19d139-8703-4155-8ebc-30c9dfc38a6d</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultSortInfo>
+            <field>customerName</field>
+            <ascending>true</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0003da0f-f5a3-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{customerId: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22559&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>91a0d54a-8366-433f-97b0-34a136691464</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002da0c-e2f1-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{partyId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22547&quot;(rp!id)
+</a:visibilityExpr>
+            <a:refId>09b96d38-bb3a-4e5f-a347-bdc6c86f73c4</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0003da21-6ca1-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{partyId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5966&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>0b2ffed9-1589-4edd-96d1-98a64fd0ade9</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0003da21-2c0e-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{relatedCustomerId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22551&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>cb19d139-8703-4155-8ebc-30c9dfc38a6d</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr>#&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17908&quot;(rsp!query)</a:dataSrcExpr>
+        <a:facetsListExpr>#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_27449&quot;()</a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_20</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>CT_getSORSearchViewDetailsByNamePartsIndividual</name>
+        <uuid>33aba121-8ff1-417e-bf29-3af007306124</uuid>
+        <description></description>
+        <folderUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1388</folderUuid>
+        <dataStoreEntityCompositeUuid>3b44fa28-f118-401d-8929-f98dfac073bd@_a-0000da0f-2564-8000-9ba2-011c48011c48_4206</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>firstName</name>
+                <type>{http://www.w3.org/2001/XMLSchema}string</type>
+            </param>
+            <param>
+                <description></description>
+                <name>middleName</name>
+                <type>{http://www.w3.org/2001/XMLSchema}string</type>
+            </param>
+            <param>
+                <description></description>
+                <name>lastName</name>
+                <type>{http://www.w3.org/2001/XMLSchema}string</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>firstName</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}string</type>
+                </field>
+                <op>includes</op>
+                <value>firstName</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+            <filter>
+                <field>
+                    <name>middleName</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}string</type>
+                </field>
+                <op>includes</op>
+                <value>middleName</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+            <filter>
+                <field>
+                    <name>surname</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}string</type>
+                </field>
+                <op>includes</op>
+                <value>lastName</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

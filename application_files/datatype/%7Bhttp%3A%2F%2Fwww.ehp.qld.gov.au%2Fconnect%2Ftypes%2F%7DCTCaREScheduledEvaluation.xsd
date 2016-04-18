@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCaREEvaluationCampaign.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCaREEvaluationComponent.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCaREEvaluationLink.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCaREEvaluationUserMap.xsd"/>
+  <xsd:complexType name="CTCaREScheduledEvaluation">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="care_evaluation")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to schedule a CaRE Evaluation]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="care_evaluation_id" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Id
+				  @GeneratedValue
+				  @Column( name="care_evaluation_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="evaluationCampaign" nillable="true" type="tns:CTCaREEvaluationCampaign">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @ManyToOne(cascade=REFRESH, optional=false)
+				  @JoinColumn(name="care_evaluation_campaign_id", nullable=false, unique=true) 
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="evaluationRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="care_evaluation_ref")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="status" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="status")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="evaluationComponent" type="tns:CTCaREEvaluationComponent">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  	@OneToMany(cascade=ALL, indexed=false)
+					@JoinColumn(name="care_evaluation_id")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="evaluationOfficers" type="tns:CTCaREEvaluationUserMap">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  	@OneToMany(cascade=ALL, indexed=false)
+					@JoinColumn(name="care_evaluation_id")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="evaluationLinks" type="tns:CTCaREEvaluationLink">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  	@OneToMany(cascade=ALL, indexed=false)
+					@JoinColumn(name="care_evaluation_id")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

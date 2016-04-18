@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_contactRowEachForEditContact</name>
+        <uuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_6499</uuid>
+        <description>This rule is used to iterate the fields for each row of grid in edit contact</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(
+  id: ri!index,
+  contents: {
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+      label: &quot;phoneType&quot; &amp; ri!index,
+      required: if(
+        isnull(
+          ri!customerToUpdate[ri!index].phoneNumber
+        ),
+        false(),
+        true()
+      ),
+      choiceLabels: {
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5702&quot;().name
+      },
+      choiceValues: {
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5702&quot;().value
+      },
+      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+      value: ri!customerToUpdate[ri!index].phoneType,
+      saveInto: {
+        ri!customerToUpdate[ri!index].phoneType,
+        a!save(
+          ri!customerToUpdate[ri!index].internationalCode,
+          if(
+            isnull(
+              ri!customerToUpdate[ri!index].internationalCode
+            ),
+            &quot;+61&quot;,
+            ri!customerToUpdate[ri!index].internationalCode
+          )
+        ),
+        a!save(
+          ri!customerToUpdate[ri!index].areaCode,
+          if(
+            isnull(
+              ri!customerToUpdate[ri!index].areaCode
+            ),
+            if(
+              or(
+                ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5698&quot;,
+                ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5697&quot;,
+                ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18362&quot;
+              ),
+              &quot;07&quot;,
+              if(
+                ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5696&quot;,
+                null,
+                ri!customerToUpdate[ri!index].areaCode
+              )
+            ),
+            ri!customerToUpdate[ri!index].areaCode
+          )
+        )
+      },
+      disabled: if(
+        ri!customerToUpdate[ri!index].active = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+        false,
+        true
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;internationalCode&quot; &amp; ri!index,
+      readOnly: true(),
+      value: ri!customerToUpdate[ri!index].internationalCode,
+      saveInto: ri!customerToUpdate[ri!index].internationalCode
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;areaCode&quot; &amp; ri!index,
+      disabled: if(
+        ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5696&quot;,
+        true(),
+        false()
+      ),
+      readOnly: if(
+        ri!customerToUpdate[ri!index].active = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+        false(),
+        true()
+      ),
+      value: ri!customerToUpdate[ri!index].areaCode,
+      saveInto: {
+        ri!customerToUpdate[ri!index].areaCode
+      },
+      validations:
+        #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+          fieldMaxLength: #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_28116&quot;,
+          fieldData: ri!customerToUpdate[ri!index].areaCode
+        )
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;phoneNumber&quot;,
+      validations: if(
+        or(
+          ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5698&quot;,
+          ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5697&quot;,
+          ri!customerToUpdate[ri!index].phoneType = #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18362&quot;
+        ),
+        if(
+          len(
+            ri!customerToUpdate[ri!index].phoneNumber
+          ) = 8,
+          if(
+            len(
+              cleanwith(
+                ri!customerToUpdate[ri!index].phoneNumber,
+                &quot;0123456789&quot;
+              )
+            ) &lt;&gt; len(
+              ri!customerToUpdate[ri!index].phoneNumber
+            ),
+            &quot;Only Numbers are allowed&quot;,
+            &quot;&quot;
+          ),
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23610&quot;
+        ),
+        if(
+          len(
+            ri!customerToUpdate[ri!index].phoneNumber
+          ) = 10,
+          if(
+            len(
+              cleanwith(
+                ri!customerToUpdate[ri!index].phoneNumber,
+                &quot;0123456789&quot;
+              )
+            ) &lt;&gt; len(
+              ri!customerToUpdate[ri!index].phoneNumber
+            ),
+            &quot;Only Numbers are allowed&quot;,
+            &quot;&quot;
+          ),
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23611&quot;
+        )
+      ),
+      required: if(
+        isnull(
+          ri!customerToUpdate[ri!index].phoneType
+        ),
+        false(),
+        true()
+      ),
+      value: ri!customerToUpdate[ri!index].phoneNumber,
+      readOnly: if(
+        ri!customerToUpdate[ri!index].active = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+        false,
+        true
+      ),
+      saveInto: {
+        ri!customerToUpdate[ri!index].phoneNumber,
+        ri!itemsToken &lt;&lt; #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_6769&quot;(
+          ri!itemsToken,
+          ri!index,
+          _
+        )
+      }
+    ),
+    /*a!checkboxField(
+      label: &quot;receiveSMSFlag&quot;,
+      validations: if(
+        and(
+          ri!customerToUpdate.receiveSMSFlag = 1,
+          or(
+            ri!customerToUpdate.phoneType = cons!CUST_PHONE_TYPE_ID_OFFICE,
+            ri!customerToUpdate.phoneType = cons!CUST_PHONE_TYPE_ID_HOME,
+            ri!customerToUpdate[ri!index].phoneType = cons!CUST_PHONE_TYPE_ID_FAX
+          )
+        ),
+        &quot;Phone Type must be Mobile&quot;,
+        &quot;&quot;
+      ),choiceLabels: {
+        cons!CUST_RECEIVE_SMS_TEXT
+      },
+      choiceValues: {
+        cons!CUST_COMMON_VALUES[1]
+      },
+      value: if(
+        ri!customerToUpdate.receiveSmsFlag = 0,
+        &quot;&quot;,
+        ri!customerToUpdate.receiveSmsFlag
+      ),
+      saveInto: ri!customerToUpdate.receiveSmsFlag
+    ),*/#&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;&quot;,
+      value: if(
+        ri!customerToUpdate[ri!index].active = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+        &quot;Y&quot;,
+        &quot;N&quot;
+      ),
+      readOnly: true
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;delete &quot; &amp; ri!index,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: if(
+          ri!customerToUpdate[ri!index].active = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+          char(
+            10005
+          ),
+          &quot;&quot;
+        ),
+        value: ri!index,
+        saveInto: {
+          a!save(
+            ri!removedPhoneNumbers,
+            append(
+              ri!removedPhoneNumbers,
+              index(
+                ri!customerToUpdate,
+                save!value,
+                - 1
+              )
+            )
+          ),
+          a!save(
+            ri!customerToUpdate,
+            remove(
+              ri!customerToUpdate,
+              save!value
+            )
+          )
+        },
+        align: &quot;CENTER&quot;
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>customerToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>removedPhoneNumbers</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

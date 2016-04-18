@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTPartyEmail">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="party_email")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to record the details for party email]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="partyEmailId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+ 					@Id
+	   			     @GeneratedValue
+ 				     @Column( name="party_email_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partyId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="party_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="emailType" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="email_type")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="email" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="email",columnDefinition="VARCHAR(573)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="primaryFlag" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="primary_flag")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="receiveCorrespondenceFlag" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="receive_correspondence_flag")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="created_by")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="created_ts")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="updated_by")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="updated_ts")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="active")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="source" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="source")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

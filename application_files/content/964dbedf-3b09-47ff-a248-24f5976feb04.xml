@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_lotPlanDetails</name>
+        <uuid>964dbedf-3b09-47ff-a248-24f5976feb04</uuid>
+        <description>Interface to display location lot plan details</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+      label: &quot;Plan Type&quot;,
+      labelPosition: &quot;ADJACENT&quot;,
+      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+      choiceLabels: {
+        local!planType.description
+      },
+      choiceValues: {
+        local!planType.commonCodeId
+      },
+       required: true(),
+      value: ri!locationLotPlan_cdt.planType,
+      saveInto: ri!locationLotPlan_cdt.planType
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Lot #&quot;,
+      labelPosition: &quot;ADJACENT&quot;,
+      value: ri!locationLotPlan_cdt.lotNo,
+      saveInto: ri!locationLotPlan_cdt.lotNo,
+      required: true(),
+      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+        fieldMaxLength: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13657&quot;,
+        fieldData: ri!locationLotPlan_cdt.lotNo
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Plan #&quot;,
+      labelPosition: &quot;ADJACENT&quot;,
+      value: ri!locationLotPlan_cdt.planNo,
+      saveInto: ri!locationLotPlan_cdt.planNo,
+      required: true(),
+      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+        fieldMaxLength: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13658&quot;,
+        fieldData: ri!locationLotPlan_cdt.planNo
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>locationLotPlan_cdt</name>
+            <type>
+                <name>CTLocationLotPlan</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationLotPlan_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

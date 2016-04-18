@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicatinActivityCondition</name>
+        <uuid>2f6e0595-465d-46d4-b9b5-fbc0bb5d16b7</uuid>
+        <description>This expression rule displays permit application actiivty condition details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;Activity Condition&quot;,
+  isCollapsible: true,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(
+      readOnly: true,
+      label: &quot;&quot;,
+      totalCount: if(
+        isnull(
+          local!activityMapDetails
+        ),
+        0,
+        length(
+          local!activityMapDetails
+        ) + 1
+      ),
+      columns: {
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Activity&quot;,
+          data: if(
+            isnull(
+              local!activityDetails
+            ),
+            &quot;&quot;,
+            local!activityDetails.level4
+            
+          ),
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Eligibility Criteria&quot;,
+          data: if(
+            or(
+              isnull(
+                local!documentId
+              ),
+              length(
+                local!documentId
+              ) &lt; 1
+            ),
+            &quot;&quot;,
+            local!commonDocumentVersionDocumentDetails.documentName
+          ),
+          links: if(
+            or(
+              isnull(
+                local!documentId
+              ),
+              length(
+                local!documentId
+              ) &lt; 1
+            ),
+            &quot;&quot;,
+            apply(
+              #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(
+                document: local!documentId,
+                label: _
+              ),
+              local!documentId
+            )
+          ),
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Complied&quot;,
+          data: if(
+            isnull(
+              local!activityDetails
+            ),
+            &quot;&quot;,
+            if(
+              local!activityMapDetails.ecComplyFlag = 0,
+              &quot;N&quot;,
+              &quot;Y&quot;
+            )
+          ),
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Standard Condition&quot;,
+          data: if(
+            or(
+              isnull(
+                local!documentId
+              ),
+              length(
+                local!documentId
+              ) &lt; 1
+            ),
+            &quot;&quot;,
+            local!commonDocumentVersionDocumentDetails.documentName
+          ),
+          links: if(
+            or(
+              isnull(
+                local!documentId
+              ),
+              length(
+                local!documentId
+              ) &lt; 1
+            ),
+            &quot;&quot;,
+            apply(
+              #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(
+                document: local!documentId,
+                label: _
+              ),
+              local!documentId
+            )
+          ),
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Complied&quot;,
+          data: if(
+            isnull(
+              local!activityDetails
+            ),
+            &quot;&quot;,
+            if(
+              local!activityMapDetails.scComplyFlag = 0,
+              &quot;N&quot;,
+              &quot;Y&quot;
+            )
+          ),
+          alignment: &quot;LEFT&quot;
+        )
+      },
+      value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+        startIndex: 1,
+        batchSize: 5,
+        sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+          field: &quot;name&quot;,
+          ascending: true
+        )
+      )
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

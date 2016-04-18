@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTSuitableOperatorDisplay_VW">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="suitable_operator_group_question_vw")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to record the details of care question]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="groupId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="group_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="groupText" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="group_text")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="questionId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Id
+				  @Column( name="question_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="questionText" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				   @Column( name="question_text")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="questionDisplayOrder" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				   @Column( name="question_display_order")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="groupDisplayOrder" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				   @Column( name="group_display_order")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

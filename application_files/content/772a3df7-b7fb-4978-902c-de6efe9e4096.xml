@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>REP_userTaskGrid</name>
+        <uuid>772a3df7-b7fb-4978-902c-de6efe9e4096</uuid>
+        <description>Grid to populate user task details</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_6096</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!report: a!queryProcessAnalytics(
+    report: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12682&quot;,
+    contextUsers: local!userLogin_user,
+    query: #&quot;SYSTEM_SYSRULES_query&quot;(
+      pagingInfo: local!pagingInfoUT
+    )
+  ),
+  {
+    if(
+      count(
+        local!userLogin_user
+      ) &gt; 0,
+      {
+        #&quot;SYSTEM_SYSRULES_gridField&quot;(
+          label: local!report.name,
+          instructions: local!report.description,
+          totalCount: local!report.totalCount,
+          columns: {
+            apply(
+              #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11013&quot;(
+                columnConfig: _,
+                data: local!report.data
+              ),
+              local!report.columnConfigs
+            )
+          },
+          value: local!pagingInfoUT,
+          saveInto: local!pagingInfoUT
+        )
+      },
+      {}
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

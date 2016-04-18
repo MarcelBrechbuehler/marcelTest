@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_fetchRelationshipDetailsOfDocumentByCommonDocumentIdByRestrictedEntityType</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11844</uuid>
+        <description></description>
+        <parentUuid>_a-0000dada-365c-8000-9ba2-011c48011c48_22482</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(
+  local!commonDocumentLinkSubset: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11155&quot;(
+    ri!commonDocumentId
+  ),
+  local!entityType: intersection(
+    local!commonDocumentLinkSubset.entityType,
+    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11841&quot;
+  ),
+  local!entityId: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11843&quot;(
+    ri!commonDocumentId,
+    local!entityType
+  ).entityId,
+  local!relationshipDataSubset: if(
+    or(
+      or(
+        length(
+          local!entityType
+        ) = #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,
+        isnull(
+          local!entityType
+        )
+      ),
+      or(
+        length(
+          local!entityId
+        ) = #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,
+        isnull(
+          local!entityId
+        )
+      )
+    ),
+    {},
+    apply(
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11856&quot;,
+      merge(
+        {
+          local!entityType
+        },
+        {
+          local!entityId
+        }
+      )
+    )
+  ),
+  local!relationshipDataSubset
+)</definition>
+        <namedTypedValue>
+            <name>commonDocumentid</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

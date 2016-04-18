@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_eachDocumentRow</name>
+        <uuid>9906241d-a9b7-4e17-b080-a9e8542ad779</uuid>
+        <description>Constructs document rows in grid for document upload</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5559</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(&#xD;
+  id: ri!index,&#xD;
+  contents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_imageField&quot;(&#xD;
+      label: &quot;Document&quot;,&#xD;
+      images: #&quot;SYSTEM_SYSRULES_documentImage&quot;(&#xD;
+        document:#&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;DOC_GENERIC&quot;),&#xD;
+        link:#&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(&#xD;
+          document:ri!items[ri!index].documentId,&#xD;
+          label:&quot;Document&quot;)&#xD;
+      ),&#xD;
+      size: &quot;ICON&quot;&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      /* Labels are not visible in grid cells but are necessary to meet accessibility requirements */&#xD;
+      label: &quot;documentName &quot; &amp; ri!index,&#xD;
+      value: ri!items[ri!index].documentName,&#xD;
+      saveInto: ri!items[ri!index].documentName,&#xD;
+      readOnly: true,&#xD;
+      required: true&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      /* Labels are not visible in grid cells but are necessary to meet accessibility requirements */&#xD;
+      label: &quot;classification &quot; &amp; ri!index,&#xD;
+      value: ri!items[ri!index].classification,&#xD;
+      readOnly: true,&#xD;
+      required: true&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+      label: &quot;delete &quot; &amp; ri!index,&#xD;
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        label: char(10005),&#xD;
+        value: ri!index,&#xD;
+        saveInto: {&#xD;
+          a!save(ri!items, remove(ri!items, save!value)),&#xD;
+          /* When modifying the size of the array used in a!applyComponents, /&#xD;
+          / make the same change in the &quot;token&quot; array variable               */&#xD;
+          a!save(ri!itemsToken, remove(ri!itemsToken, save!value))&#xD;
+        },&#xD;
+      align: &quot;CENTER&quot;&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

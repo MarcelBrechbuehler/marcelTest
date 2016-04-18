@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_businessNumberNumeric</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_22093</uuid>
+        <description>This rule is used to check whether the business number is valid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_13080</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!businessNumber: stripwith(
+    ri!businessNumber,
+    &quot; &quot;
+  ),
+  local!totalSize: len(
+    local!businessNumber
+  ),
+  local!numericSize: len(
+    cleanwith(
+      ri!businessNumber,
+      &quot;0123456789&quot;
+    )
+  ),
+  if(
+    local!totalSize = local!numericSize,
+    true(),
+    false()
+  )
+)</definition>
+        <namedTypedValue>
+            <name>businessNumber</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

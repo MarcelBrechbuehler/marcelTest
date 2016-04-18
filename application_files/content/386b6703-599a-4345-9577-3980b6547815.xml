@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>CT_getSuitableOperatorDisplayDetails</name>
+        <uuid>386b6703-599a-4345-9577-3980b6547815</uuid>
+        <description>This query rule fetches all active suitable operator question group and question details</description>
+        <folderUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1388</folderUuid>
+        <dataStoreEntityCompositeUuid>0dbc93d1-a1ee-4f90-8666-657a90ad2e01@_a-0000da0f-2564-8000-9ba2-011c48011c48_4206</dataStoreEntityCompositeUuid>
+        <params/>
+        <filters/>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

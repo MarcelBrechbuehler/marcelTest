@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AHC_RunThisHour</name>
+        <uuid>f223d51d-5f24-4e6e-a182-407a49ae296f</uuid>
+        <description>Returns true if the scheduled Health Check should run during the current hour.</description>
+        <parentUuid>_a-0000dbd4-7e1b-8000-4afc-010000010000_2033</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!next: #&quot;c5280c20-a309-46a1-aa7e-2ce286b11bfe&quot;(
+    date: now(),
+    frequency: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2136&quot;,
+    day: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2137&quot;,
+    hour: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2138&quot;
+  ),
+  local!isToday: exact(todate(local!next), today()),
+  local!isThisHour: exact(hour(now()), #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2138&quot;),
+  and(local!isToday, local!isThisHour)
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

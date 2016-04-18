@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_uploadDocument</name>
+        <uuid>01022047-2bbb-4840-81bf-b834be926f75</uuid>
+        <description>This interface is used by the generic document upload process</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1192</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  /*================ LOAD ================*/
+  local!function_int: ri!function_int,
+  local!activity_int: ri!activity_int,
+  local!subject_int: ri!subject_int,
+  local!type_int: ri!type_int,
+  local!subtype_int: ri!subtype_int,
+  local!gridSelection: 
+    #&quot;SYSTEM_SYSRULES_gridSelection&quot;(
+      pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+      startIndex: 1,
+      batchSize: 5,
+      selected:{}
+    )
+  ),
+  local!file_doc,
+  local!documentName_txt,
+  local!documentUpload_cdt: ri!documentUpload_cdt,
+  local!errorMessage_txt: ri!errorMessage_txt,
+  local!itemsToken,
+  with(
+  /*================ WITH ================*/
+    local!types: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12865&quot;(local!function_int,local!activity_int,local!subject_int),
+    local!subTypes: if(isnull(ri!commonDocumentClassificationFK_cdt),
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12864&quot;(local!function_int,local!activity_int,local!subject_int,local!type_int),
+      ri!commonDocumentClassificationFK_cdt.documentSubtype
+    ),
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  /*================ FORM ================*/
+      label: &quot;Document Upload&quot;,
+      firstColumnContents: {
+        if(isnull(ri!milestoneName_txt),
+          {},
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(
+            ri!milestoneName_txt,
+            ri!milestoneIndex_int
+          )
+        ),
+        if(isnull(ri!entityType_txt),
+          {},
+          #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+            label: &quot;Entity&quot;,
+            firstColumnContents: {
+              #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+                labelPosition: &quot;COLLAPSED&quot;,
+                value: {
+                  #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                    text: ri!entityType_txt,
+                    style: &quot;STRONG&quot;
+                  )
+                }
+              )
+            },
+            secondColumnContents: {
+              #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+                labelPosition: &quot;COLLAPSED&quot;,
+                value: {
+                  #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                    text: ri!entity_txt,
+                    style: &quot;STRONG&quot;
+                  )
+                }
+              )
+            },
+            isCollapsible: true
+          )
+        ),
+        if(isnull(ri!instruction_txt),
+          {},
+          #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+            label: &quot;Instructions&quot;,
+            firstColumnContents: {
+              #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+                labelPosition: &quot;COLLAPSED&quot;,
+                value: {
+                  #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                    text: ri!instruction_txt,
+                    style: &quot;STRONG&quot;
+                  ),
+                  #&quot;SYSTEM_SYSRULES_richTextBulletedList&quot;(
+                    items: ri!commonDocumentClassificationFK_cdt.documentSubtype.description
+                  )
+                }
+              )
+            },
+            isCollapsible: true
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+          label: &quot;Documents&quot;,
+          firstColumnContents: {
+/*
+            a!paragraphField(
+              label: &quot;ri!isCancelButton_bln&quot;,
+              value: ri!isCancelButton_bln
+            ),
+            a!paragraphField(
+              label: &quot;ri!isGoBackButton_bln&quot;,
+              value: ri!isGoBackButton_bln
+            ),
+*/
+            #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+              label: &quot;&quot;,
+              headerCells: {
+                #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;&quot;, align: &quot;LEFT&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Document Name&quot;, align: &quot;LEFT&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Classification&quot;, align: &quot;LEFT&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;&quot;, align: &quot;LEFT&quot;)
+              },
+              columnConfigs: {
+                #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),
+                #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)
+              },
+              rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+                function: #&quot;9906241d-a9b7-4e17-b080-a9e8542ad779&quot;(
+                  items: local!documentUpload_cdt,
+                  index: _,
+                  itemsToken: local!itemsToken
+                ),
+                array: if(or(isnull(local!documentUpload_cdt), count(local!documentUpload_cdt) &lt; 1), {}, 1+enumerate(count(local!documentUpload_cdt))),
+                arrayVariable: local!itemsToken
+              )
+            )
+          },
+          isCollapsible: true
+        ),
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+          label: &quot;Upload&quot;,
+          firstColumnContents: {
+            if(ri!type_int &gt; 0,
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                label: &quot;Document Sub Type&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                placeholderLabel: &quot;--- Select Document Sub Type ---&quot;,
+                choiceLabels: index(local!subTypes,&quot;description&quot;,{}),
+                choiceValues: index(local!subTypes,&quot;commonCodeId&quot;,{}),
+                value: local!subType_int,
+                saveInto: {
+                  local!subtype_int
+                },
+                required: if(isnull(ri!subtype_int),true,false),
+                disabled: if(isnull(ri!subtype_int),false,true),
+                validationGroup: &quot;upload&quot;
+              ),
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                label: &quot;Document Type&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                placeholderLabel: &quot;--- Select Document Type ---&quot;,
+                choiceLabels: index(local!types,&quot;description&quot;,{}),
+                choiceValues: index(local!types,&quot;commonCodeId&quot;,{}),
+                value: local!type_int,
+                saveInto: {
+                  local!type_int,
+                  a!save(local!subType_int, null)
+                },
+                required: if(isnull(ri!type_int),true,false),
+                disabled: if(isnull(ri!type_int),false,true),
+                validationGroup: &quot;upload&quot;
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_textField&quot;(
+              label: &quot;Document Name&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              value: local!documentName_txt,
+              saveInto: local!documentName_txt
+            ),
+            #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(
+              label: &quot;Upload Document&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              instructions: if(isnull(local!errorMessage_txt),
+                {},
+                local!errorMessage_txt
+              ),
+              target: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14459&quot;,
+              documentName: local!documentName_txt,
+              value: local!file_doc,
+              saveInto: {
+                local!file_doc
+              },
+              required: true,
+              validationGroup: &quot;upload&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+              secondaryButtons: {
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+                  label: &quot;Upload Document&quot;,
+                  value: &quot;Upload Document&quot;,
+                  saveInto: {
+                    ri!buttonValue_txt,
+                    a!save(ri!file_doc, local!file_doc),
+                    a!save(local!file_doc,null),
+                    a!save(ri!documentName_txt, local!documentName_txt),
+                    a!save(local!documentName_txt,null),
+                    a!save(ri!type_int, local!type_int),
+                    a!save(local!type_int,null),
+                    a!save(ri!subtype_int, local!subtype_int),
+                    a!save(local!subtype_int,null),
+                    a!save(ri!documentUpload_cdt, local!documentUpload_cdt)
+                  },
+                  submit: true,
+                  validate: true,
+                  validationGroup: &quot;upload&quot;
+                )
+              }
+            )
+          },
+          secondColumnContents: {
+            if(ri!type_int &gt; 0,
+              #&quot;SYSTEM_SYSRULES_textField&quot;(
+                label: &quot;Filler&quot;,
+                labelPosition: &quot;COLLAPSED&quot;,
+                readOnly: true
+              ),
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                label: &quot;Document Sub Type&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                placeholderLabel: &quot;--- Select Document Sub Type ---&quot;,
+                choiceLabels: index(local!subTypes,&quot;description&quot;,{}),
+                choiceValues: index(local!subTypes,&quot;commonCodeId&quot;,{}),
+                value: local!subType_int,
+                saveInto: {
+                  local!subtype_int
+                },
+                required: if(isnull(ri!subtype_int),true,false),
+                disabled: if(isnull(ri!subtype_int),false,true),
+                validationGroup: &quot;upload&quot;
+              )
+            )
+          },
+          isCollapsible: true
+        )
+      },
+      secondColumnContents: {},
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+            style: &quot;PRIMARY&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+            saveInto: {
+              ri!buttonValue_txt,
+              a!save(ri!documentUpload_cdt, local!documentUpload_cdt)
+            },
+            validationGroup: &quot;documents&quot;
+          )
+        },
+        secondaryButtons: {
+          if(ri!isGoBackButton_bln=true,
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              style: &quot;NORMAL&quot;,
+              value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              saveInto: {
+                ri!buttonValue_txt
+              },
+              skipValidation: true
+            ),
+            {}
+          ),
+          if(ri!isCancelButton_bln=true,
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+              label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+              style: &quot;DESTRUCTIVE&quot;,
+              confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+              saveInto: {
+                ri!buttonValue_txt,
+                a!save(ri!documentUpload_cdt, {})
+              },
+              skipValidation: true
+            ),
+            {}
+          )
+        }
+      ),
+      validations: {
+        if(isnull(local!documentUpload_cdt),
+          if(ri!minNumberDocuments_int&gt;0,
+            #&quot;SYSTEM_SYSRULES_validationMessage&quot;(
+              message: concat(&quot;You must upload at least &quot;, ri!minNumberDocuments_int, &quot; document(s).&quot;),
+              validateAfter: &quot;SUBMIT&quot;  
+            ),
+            {}
+          ),
+          if(ri!minNumberDocuments_int&gt;length(local!documentUpload_cdt),
+            #&quot;SYSTEM_SYSRULES_validationMessage&quot;(
+              message: concat(&quot;You must upload at least &quot;, ri!minNumberDocuments_int, &quot; document(s).&quot;),
+              validateAfter: &quot;SUBMIT&quot;  
+            ),
+            {}
+          )
+        )
+      },
+      validationGroup: &quot;documents&quot;
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>function_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activity_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>subject_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>type_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>subtype_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentUpload_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>commonDocumentClassificationFK_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>file_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>instruction_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>errorMessage_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityType_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entity_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isCancelButton_bln</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isGoBackButton_bln</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>minNumberDocuments_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>maxNumberDocuments_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>function_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>activity_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>subject_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>type_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>subtype_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>documentUpload_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>commonDocumentClassificationFK_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                <a:nameRef>file_doc</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>documentName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>instruction_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>errorMessage_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>milestoneName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>milestoneIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityType_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entity_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>isCancelButton_bln</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>isGoBackButton_bln</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>minNumberDocuments_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>maxNumberDocuments_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

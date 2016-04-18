@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTEHPCustomer">
+    <xsd:sequence>
+      <xsd:element name="customerId" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerRef" nillable="true" type="xsd:string"/>
+      <xsd:element name="customerName" nillable="true" type="xsd:string"/>
+      <xsd:element name="partyTypeId" nillable="true" type="xsd:int"/>
+      <xsd:element name="partyTypeDescription" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTSuitableOperatorDecision_INT.xsd"/>
+  <xsd:complexType name="CTSuitableOperatorDecisionRequest_INT">
+    <xsd:sequence>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="CTSuitableOperatorDecision_INT" type="tns:CTSuitableOperatorDecision_INT"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

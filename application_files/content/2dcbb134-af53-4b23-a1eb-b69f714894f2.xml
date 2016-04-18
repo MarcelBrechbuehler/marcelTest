@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>CT_getCaREJustificationMapDetailsByCaREJustificationMapId</name>
+        <uuid>2dcbb134-af53-4b23-a1eb-b69f714894f2</uuid>
+        <description>This query rule fetches all CaRE justification map details by CaRE justification map id</description>
+        <folderUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1233</folderUuid>
+        <dataStoreEntityCompositeUuid>434f5b54-3d6a-4677-8a40-e89263f43057@_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1299</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>careJustificationMapId</name>
+                <type>{http://www.w3.org/2001/XMLSchema}int</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>careJustificationMapId</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>=</op>
+                <value>careJustificationMapId</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

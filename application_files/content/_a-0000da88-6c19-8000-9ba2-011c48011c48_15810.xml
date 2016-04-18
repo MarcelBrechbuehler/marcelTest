@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editContactProcessContacts</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_15810</uuid>
+        <description>Processes the edited contacts</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  partyContactId: ri!partyContactPhone.partyContactId,
+  partyId: ri!partyContactPhone.partyId,
+  contactType: ri!partyContactPhone.contactType,
+  position: ri!partyContactPhone.position,
+  comment: ri!partyContactPhone.comment,
+  status: ri!partyContactPhone.status,
+  createdBy: ri!partyContactPhone.createdBy,
+  createdTimestamp: ri!partyContactPhone.createdTimestamp,
+  updatedBy: ri!partyContactPhone.updatedBy,
+  updatedTimestamp: ri!partyContactPhone.updatedTimestamp,
+  active: ri!partyContactPhone.active,
+  source: ri!partyContactPhone.source,
+  partyPhoneDetails: {
+    partyId: ri!partyContactPhone.partyPhoneDetails.partyId,
+    partyRef: ri!partyContactPhone.partyPhoneDetails.partyRef,
+    partyTypeId: ri!partyContactPhone.partyPhoneDetails.partyTypeId,
+    partyName: ri!partyContactPhone.partyPhoneDetails.partyName,
+    prefCorrespondenceType: ri!partyContactPhone.partyPhoneDetails.prefCorrespondenceType,
+    status: ri!partyContactPhone.partyPhoneDetails.status,
+    partyPersonId: ri!partyContactPhone.partyPhoneDetails.partyPersonId,
+    createdBy: ri!partyContactPhone.partyPhoneDetails.createdBy,
+    createdTimestamp: ri!partyContactPhone.partyPhoneDetails.createdTimestamp,
+    updatedBy: ri!partyContactPhone.partyPhoneDetails.updatedBy,
+    updatedTimestamp: ri!partyContactPhone.partyPhoneDetails.updatedTimestamp,
+    active: ri!partyContactPhone.partyPhoneDetails.active,
+    source: ri!partyContactPhone.partyPhoneDetails.source,
+    contactPhoneDetails: {
+      apply(
+        #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15803&quot;,
+        ri!partyContactPhone.partyPhoneDetails.contactPhoneDetails,
+        ri!partyContactPhone.partyPhoneDetails.partyId,
+        ri!loggedOnUser
+      )
+    },
+  contactEmail: if(isnull(ri!partyContactPhone.partyPhoneDetails.contactEmail),
+        {},
+        #&quot;_a-0000dacd-13b0-8000-9ba2-011c48011c48_12265&quot;(ri!partyContactPhone.partyPhoneDetails.contactEmail,
+        ri!partyContactPhone.partyPhoneDetails.partyId,
+        ri!loggedOnUser)
+  )
+  }
+}</definition>
+        <namedTypedValue>
+            <name>partyContactPhone</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>loggedOnUser</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

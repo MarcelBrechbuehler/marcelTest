@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_gpsPointsDetails</name>
+        <uuid>4eb7ef27-7b35-4aa0-a55f-73ad36940bc0</uuid>
+        <description>This interface rule is used to display gps points details for location dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;GPS Points&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+            totalCount: local!gpsDetailsDataSubset.totalCount,&#xD;
+            columns: {&#xD;
+/*&#xD;
+              a!gridLinkColumn(&#xD;
+                label: &quot;Point&quot;,&#xD;
+                data: a!safeLink(&#xD;
+                    label: if(or(length(locationGeoMapSpatialObjectDetails)=0,isnull(locationGeoMapSpatialObjectDetails)),null,apply(rule!LOC_concatenateLatitudeLongitudeDetails,local!locationGeoMapSpatialPointDetails.latitude,local!locationGeoMapSpatialPointDetails.longitude)),&#xD;
+                    uri: concat(&quot;http://maps.google.com/maps?q=&quot;,local!locationGeoMapSpatialPointDetails.latitude,&quot;,&quot;,local!locationGeoMapSpatialPointDetails.longitude)&#xD;
+                    uri: concat(&quot;https://www.google.com.au/maps/preview/@&quot;,local!locationGeoMapSpatialPointDetails.latitude,&quot;,&quot;,local!locationGeoMapSpatialPointDetails.longitude)&#xD;
+                  )&#xD;
+              ),&#xD;
+*/&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Point&quot;,&#xD;
+                data: if(or(length(locationGeoMapSpatialObjectDetails)=0,isnull(locationGeoMapSpatialObjectDetails)),null,apply(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11738&quot;,local!locationGeoMapSpatialPointDetails.latitude,local!locationGeoMapSpatialPointDetails.longitude))&#xD;
+              ),&#xD;
+             #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Description&quot;,&#xD;
+                data: local!locationGeoMapSpatialObjectDetails.description&#xD;
+              ),&#xD;
+             #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Status&quot;,&#xD;
+                data: local!locationGeoMapSpatialObjectDetails.statusRef.description&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Date Added&quot;,&#xD;
+                data: apply(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;,&#xD;
+                  local!locationGeoMapSpatialObjectDetails.createdTimestamp&#xD;
+                )&#xD;
+              )&#xD;
+            },&#xD;
+            value: local!pagingInfo&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      )</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Suitable Operator" a:uuid="92fe0539-bcbc-43e4-ad1c-5b5a53d5bcdb">
+        <a:pluralName>Suitable Operators</a:pluralName>
+        <a:description>Directory of Suitable Operator Applications</a:description>
+        <a:urlStub>KBn8DQ</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="9db9ea4f-0ef1-4250-b4c2-4808e5d61be0@_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1299"/>
+        <a:listViewTemplateExpr>#&quot;61534651-6b9a-43ae-a691-dfd871e5b256&quot;()</a:listViewTemplateExpr>
+        <a:fieldCfg name="Status">
+            <a:description></a:description>
+            <a:sourceRef>status</a:sourceRef>
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetLabelExpr>&quot;Status&quot;</a:facetLabelExpr>
+            <a:facetOption>
+                <a:labelExpr>&quot;Registered&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3066&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Assessment&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13767&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Cancelled&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4634&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Expired&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4635&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Refused&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4632&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Submitted&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4630&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Suspended&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4633&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Withdrawn&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4631&quot;</a:values>
+            </a:facetOption>
+            <a:sortOrderIndex>0</a:sortOrderIndex>
+            <a:facetOrderIndex>0</a:facetOrderIndex>
+        </a:fieldCfg>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;16029b14-ed24-467f-b165-d6b88f621256&quot;(rf!suitableOperatorId,rf!partyId)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>4f09d9e9-52bb-4ac0-80d9-7eea1f6d711a</a:relatedActionCfg>
+            <a:relatedActionCfg>977aff0f-1230-4be8-a0ae-acf7b67c7be0</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>active</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultSortInfo>
+            <field>suitableOperatorId</field>
+            <ascending>false</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0003da13-e4d9-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{suitableOperatorId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23001&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>4f09d9e9-52bb-4ac0-80d9-7eea1f6d711a</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002dabc-9f57-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{suitableOperatorId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23002&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>977aff0f-1230-4be8-a0ae-acf7b67c7be0</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_38</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

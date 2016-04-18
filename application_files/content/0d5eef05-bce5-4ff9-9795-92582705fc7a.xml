@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_getPartyAddressByKleberRecordId</name>
+        <uuid>0d5eef05-bce5-4ff9-9795-92582705fc7a</uuid>
+        <description>This rule will structure party/customer address details and return the result as CDT of CTPartyAddress type.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_14643</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=with(
+   local!addressData: #&quot;22c40242-fb27-40a9-baa6-ac7b72624733&quot;(ri!recordId_text),
+   local!buildingLevelType:#&quot;eddd5f44-cd8a-4107-a76e-c98c5cc84c6d&quot;(local!addressData.LevelType),
+   
+   local!streetTypeId: /** Map street value from Kleber service to Common Code ID **/
+      #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10262&quot; (
+        #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26624&quot;,
+        local!addressData.StreetType
+      ).commonCodeId, 
+
+   local!isNotFound: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!addressData.DPID),
+   local!isPOBox: and(not(local!isNotFound), #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!addressData.PostBoxType)=false()),
+   if(
+      local!isNotFound, 
+      null(), 
+      'type!{http://www.ehp.qld.gov.au/connect/types/}CTPartyAddress'
+      (
+        null(), /** partyAddressId **/
+        0,      /** verifiedFlag **/
+        0,      /** standardFlag **/
+        0,      /** overseasFlag **/
+        if(     /** Post number **/
+          local!isPOBox, 
+          concat(
+            local!addressData.PostBoxNumberPrefix, 
+            local!addressData.PostBoxNumber,
+            local!addressData.PostBoxNumberSuffix
+          ),
+          &quot;&quot;
+        ),
+        &quot;&quot;,     /** property **/
+        local!addressData.UnitNumber,     /** Unit No **/
+        joinarray(  /** Street No. if street number 2 exists, it will format the street number as e.g &quot;12A-12B&quot; **/
+          {
+            concat(local!addressData.StreetNumber1, local!addressData.StreetNumberSuffix1),
+            concat(local!addressData.StreetNumber2, local!addressData.StreetNumberSuffix2) 
+          },
+          &quot;-&quot;
+        ),
+        local!addressData.StreetName,
+        local!streetTypeId,
+        local!addressData.Postcode,
+        local!addressData.Locality,
+        local!addressData.State,
+        &quot;&quot;,   /** Address Line 1 **/
+        &quot;&quot;,   /** Address Line 2 **/
+        &quot;&quot;,   /** Address Line 3 **/
+        &quot;Australia&quot;,   /** Country - Kleber only return Australian address at the moment **/
+        local!addressData.DPID,  /** Deliver Point ID **/
+        local!addressData.UnitType  /** Flat Unit Type **/,
+        &quot;&quot;,   /** building name **/
+        local!buildingLevelType,
+        local!addressData.LevelNumber,  /** buliding level number **/
+        local!addressData.LotNumber,  /** allotment Lot **/
+        &quot;&quot;,   /** allotment number **/
+        &quot;&quot;,   /** sub building number **/
+        local!addressData.PostBoxType,  /** postal delivery type **/
+        local!addressData.StreetSuffix, /** street type suffix **/
+        &quot;&quot;,   /** invalid locality alias **/
+        &quot;&quot;,   /** bordering locality **/
+        &quot;&quot;,   /** border locality postcode **/
+        &quot;&quot;,   /** primary point **/
+        &quot;&quot;,   /** country code 2 **/
+        &quot;&quot;   /** country code 3 **/
+        
+      )
+   
+   )
+  
+)</definition>
+        <namedTypedValue>
+            <name>recordId_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>recordId_text</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

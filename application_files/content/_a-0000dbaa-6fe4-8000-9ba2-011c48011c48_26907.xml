@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <constant>
+        <name>SOR_POSTAL_ADDRESS_DETECTION_KEYWORDS</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26907</uuid>
+        <description>The list of valid keywords to identify the address string is of postal address type following Australian Postal Address standards plus some additional variations.&#xD;
+&#xD;
+Reference: https://auspost.com.au/media/documents/australia-post-addressing-standards-1999.pdf</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_3065</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <typedValue>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+            <value>
+                <el>Care of Post Office</el>
+                <el>CARE PO</el>
+                <el>Community Mail Bag</el>
+                <el>CMB</el>
+                <el>General Post Office Box</el>
+                <el>GPO Box</el>
+                <el>Mail Service</el>
+                <el>MS</el>
+                <el>Roadside Delivery</el>
+                <el>RSD</el>
+                <el>Roadside Mail Service</el>
+                <el>RMS</el>
+                <el>Community Mail Agent</el>
+                <el>Community Mail Agent.</el>
+                <el>CMA</el>
+                <el>Community Postal Agent</el>
+                <el>CPA</el>
+                <el>Locked Bag</el>
+                <el>Post Office Box</el>
+                <el>PO Box</el>
+                <el>Roadside Mail Box/Bag</el>
+                <el>RMB</el>
+                <el>Private Bag</el>
+                <el>Mail Box</el>
+                <el>Mailbox</el>
+            </value>
+        </typedValue>
+    </constant>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

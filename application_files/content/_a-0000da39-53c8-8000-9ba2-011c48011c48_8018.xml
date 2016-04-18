@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_integrationCheckTenureExpiryDate</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8018</uuid>
+        <description>check if the tenure expiry date is blank or it is greater than tenure granted date otherwise returns false</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+  isnull(
+    ri!tenureExpiryDate_dt
+  ),
+  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+      818,
+      838,
+      &quot;5&quot;,
+      819
+    ),
+    ri!field_txt,
+    ri!tenureExpiryDate_dt
+  ),
+ if(ri!tenureExpiryDate_dt&lt;tenureGrantedDate_dt,
+   #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+      818,
+      838,
+      &quot;6&quot;,
+      819
+    ),
+    ri!field_txt,
+    ri!tenureExpiryDate_dt
+  ),{}
+ )
+)</definition>
+        <namedTypedValue>
+            <name>tenureExpiryDate_dt</name>
+            <type>
+                <name>dateTime</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tenureGrantedDate_dt</name>
+            <type>
+                <name>dateTime</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_txt</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

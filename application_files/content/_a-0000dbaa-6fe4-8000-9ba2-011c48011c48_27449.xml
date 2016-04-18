@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_ehpCustomerUserFilters</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_27449</uuid>
+        <description>User Filters (Facets) for Customer List View</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1633</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>/*&#xD;
+  Each call of a!facet() will represent a single, labeled set of options for the user to pick from.&#xD;
+  Only one option may be chosen at a time from a 'facet'. &#xD;
+&#xD;
+  **The 'id' field in a!facetOption must be unique across ALL facetOptions.&#xD;
+*/&#xD;
+{&#xD;
+  #&quot;SYSTEM_SYSRULES_facet&quot;(&#xD;
+    name: &quot;Customer Name&quot;,&#xD;
+    options: {&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 1,&#xD;
+        name: &quot;A - E&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;customerName&quot;, operator: &quot;between&quot;, value: {&quot;a&quot;,&quot;f&quot;})&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 2,&#xD;
+        name: &quot;F - K&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;customerName&quot;, operator: &quot;between&quot;, value: {&quot;f&quot;,&quot;l&quot;})&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 3,&#xD;
+        name: &quot;L - P&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;customerName&quot;, operator: &quot;between&quot;, value: {&quot;l&quot;,&quot;q&quot;})&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 4,&#xD;
+        name: &quot;Q - U&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;customerName&quot;, operator: &quot;between&quot;, value: {&quot;q&quot;,&quot;v&quot;})&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 5,&#xD;
+        name: &quot;V - Z&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;customerName&quot;, operator: &quot;between&quot;, value: {&quot;v&quot;,&quot;z&quot;})&#xD;
+      )&#xD;
+    }&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_facet&quot;(&#xD;
+    name: &quot;Customer Type&quot;,&#xD;
+    options: {&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 10,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5194&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5194&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 11,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5191&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5191&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 12,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5200&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5200&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 13,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5189&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5189&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 14,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5196&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5196&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 15,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5187&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5187&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 16,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5206&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5206&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 17,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5198&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5198&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 18,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5202&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5202&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 19,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5209&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5209&quot;)&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_facetOption&quot;(&#xD;
+        id: 20,&#xD;
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5204&quot;,&#xD;
+        filter: #&quot;SYSTEM_SYSRULES_queryFilter&quot;(field: &quot;partyTypeDescription&quot;, operator: &quot;=&quot;, value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5204&quot;)&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+}</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

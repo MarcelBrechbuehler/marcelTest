@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTCommonCodeGroup">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="common_code_group")
+			</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to store commom code group details]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="commonCodeGroupId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+					@Id
+				  @GeneratedValue
+				  @Column( name="common_code_group_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="codeGroup" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="code_group", columndefinition="varchar(60)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="created_by")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="created_ts")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="updated_by")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="updated_ts")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="active")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

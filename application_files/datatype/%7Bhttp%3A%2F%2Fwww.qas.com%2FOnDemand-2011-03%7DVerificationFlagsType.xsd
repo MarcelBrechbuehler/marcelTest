@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="VerificationFlagsType">
+    <xsd:annotation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="BldgFirmNameChanged" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="PrimaryNumberChanged" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="StreetCorrected" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="RuralRteHighwayContractMatched" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="CityNameChanged" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="CityAliasMatched" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="StateProvinceChanged" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="PostCodeCorrected" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="SecondaryNumRetained" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="IdenPreStInfoRetained" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="GenPreStInfoRetained" type="xsd:boolean"/>
+      <xsd:element default="false" form="qualified" minOccurs="0"
+        name="PostStInfoRetained" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

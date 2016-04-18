@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_suitableOperatorCertification</name>
+        <uuid>8823b4ca-5f15-480d-aecf-5e30500f0a42</uuid>
+        <description>this screen enables the applicant to certify that they understand the implications of giving false, misleading or incomplete information, before submitting the application</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  /*================ LOAD ================*/&#xD;
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(&#xD;
+      loggedInUser(),{#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22070&quot;}&#xD;
+  ),&#xD;
+	local!customerInfo: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4421&quot;(ri!customerId_int),&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  /*================ FORMLAYOUT ================*/&#xD;
+    label: &quot;Suitable Operator Registration&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+        ri!processMilestoneName_txt,&#xD;
+        ri!processMilestoneIndex_int&#xD;
+      ),&#xD;
+      #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(&#xD;
+        local!customerInfo.customerName,&#xD;
+        local!customerInfo.customerType.description,&#xD;
+        local!customerInfo.customerId,&#xD;
+        local!customerInfo.customerType.partyTypeId&#xD;
+      ),&#xD;
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1369&quot;(),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Applicant Certification&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1488&quot;(),&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1486&quot;()&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22070&quot;),&#xD;
+        #&quot;73b99a65-8cbe-4874-bc40-e8ac308f5e2e&quot;(),&#xD;
+        {}&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          submit: true&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>applicationDate_dti</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

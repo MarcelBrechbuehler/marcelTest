@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_getApplicationRecordDisplayDetails</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_13087</uuid>
+        <description>This expression rule used to fetch application record details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(
+  local!applicationDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13029&quot;(
+    ri!permitApplicationId,#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;
+  ),
+  &quot;Type : &quot; &amp; if(
+    or(
+      isnull(
+        local!applicationDetails.applicationType
+      ),
+      length(
+        local!applicationDetails.applicationType
+      ) = 0
+    ),
+    &quot;&quot;,
+    local!applicationDetails.applicationTypeRef.description
+  ) &amp; char(
+    10
+  )&amp;   &quot;Status:  &quot; &amp; local!applicationDetails.statusRef.description)</definition>
+        <namedTypedValue>
+            <name>permitApplicationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

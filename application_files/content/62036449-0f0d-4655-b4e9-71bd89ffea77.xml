@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_displayCaREInformation</name>
+        <uuid>62036449-0f0d-4655-b4e9-71bd89ffea77</uuid>
+        <description>Section to display summary information for CaRE Evaluation dashboards</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluation),&#xD;
+  {},&#xD;
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    label: &quot;Evaluation Details&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26894&quot;,&#xD;
+        labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value: if(&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(&#xD;
+            ri!careEvaluation.careEvaluationCampaignId&#xD;
+          ),&#xD;
+          {},&#xD;
+          #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_6430&quot;(&#xD;
+            ri!careEvaluation.careEvaluationCampaignId&#xD;
+          ).campaignName&#xD;
+        ),&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Scheduled Start&quot;,&#xD;
+        labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8410&quot;(ri!careEvaluation.scheduleStartDate),&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Scheduled End&quot;,&#xD;
+        labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8410&quot;(ri!careEvaluation.scheduleEndDate),&#xD;
+        readOnly: true&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {&#xD;
+       #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label:  &quot;Current Status&quot;,&#xD;
+        labelPosition:  #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3064&quot;(ri!careEvaluation.status).description,&#xD;
+        readOnly: true&#xD;
+      ),   &#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Actual Start&quot;,&#xD;
+        labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8410&quot;(ri!careEvaluation.actualStartDate),&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Actual End&quot;,&#xD;
+        labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+        value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8410&quot;(ri!careEvaluation.actualEndDate),&#xD;
+        readOnly: true&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>careEvaluation</name>
+            <type>
+                <name>CTCaREEvaluation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot;(8)</a:value>
+                <a:nameRef>careEvaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

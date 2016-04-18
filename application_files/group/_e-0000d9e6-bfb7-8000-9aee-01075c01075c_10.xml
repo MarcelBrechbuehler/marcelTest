@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <group>
+        <name>All Connect Internal Users</name>
+        <securityMap>SECURITYMAP_PUBLIC</securityMap>
+        <uuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <description>A group containing all Connect Internal Users</description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_LOW</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users>
+            <userUuid>michael.mullins@ehp.qld.gov.au</userUuid>
+            <userUuid>kate.fyfe@ehp.qld.gov.au</userUuid>
+            <userUuid>timocles.copland@appian.com</userUuid>
+            <userUuid>Christine.Hall@ehp.qld.gov.au</userUuid>
+            <userUuid>Peter.Thomas@ehp.qld.gov.au</userUuid>
+            <userUuid>katrina.mckenna@ehp.qld.gov.au</userUuid>
+            <userUuid>Cathy.Birt@ehp.qld.gov.au</userUuid>
+            <userUuid>Tony.Schmid@ehp.qld.gov.au</userUuid>
+            <userUuid>ashlee.finnigan@ehp.qld.gov.au</userUuid>
+            <userUuid>Rebecca.DeHaan@ehp.qld.gov.au</userUuid>
+            <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            <userUuid>marcel.brechbuehler@procensol.co.uk</userUuid>
+            <userUuid>rebecca.yabsley@ehp.qld.gov.au</userUuid>
+            <userUuid>Casey.Imber@ehp.qld.gov.au</userUuid>
+            <userUuid>IntegrationNRMMMO</userUuid>
+            <userUuid>Rachel.Hanwright@ehp.qld.gov.au</userUuid>
+            <userUuid>Mark.Franco@ehp.qld.gov.au</userUuid>
+            <userUuid>Liz.Patu@ehp.qld.gov.au</userUuid>
+            <userUuid>Tom.Verkaaik@ehp.qld.gov.au</userUuid>
+            <userUuid>nathan.sirl@ehp.qld.gov.au</userUuid>
+            <userUuid>Tom.Laycock@ehp.qld.gov.au</userUuid>
+            <userUuid>Steve.Schipper@ehp.qld.gov.au</userUuid>
+            <userUuid>Jodie.Brackenbury@ehp.qld.gov.au</userUuid>
+            <userUuid>Alison.Shaw@ehp.qld.gov.au</userUuid>
+        </users>
+        <groups>
+            <groupUuid>SYSTEM_GROUP_ROLE_DESIGNERS</groupUuid>
+            <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            <groupUuid>SYSTEM_GROUP_PROCESS_MODEL_CREATORS</groupUuid>
+            <groupUuid>_e-0000da0f-2569-8000-9aee-01075c01075c_12</groupUuid>
+            <groupUuid>_e-0000da0f-2569-8000-9aee-01075c01075c_13</groupUuid>
+        </groups>
+    </members>
+    <admins>
+        <users>
+            <userUuid>dan.cooke@procensol.co.uk</userUuid>
+        </users>
+        <groups/>
+    </admins>
+    <ruleSet/>
+</groupHaul>

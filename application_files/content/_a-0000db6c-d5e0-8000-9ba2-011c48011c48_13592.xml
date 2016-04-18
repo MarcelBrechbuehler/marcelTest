@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_captureCaREInformation</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13592</uuid>
+        <description>Capture the Campaign, Schedule dates and select Compliance Officers for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!evaluation:         if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluation),&#xD;
+                              {},&#xD;
+                              ri!evaluation&#xD;
+                            ),&#xD;
+  local!evaluationUserMap:  if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluationUserMap),&#xD;
+                              {},&#xD;
+                              ri!evaluationUserMap&#xD;
+                            ),&#xD;
+  local!deletedUserMapIds:  if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!deletedUserMapIds),&#xD;
+                              {},&#xD;
+                              ri!deletedUserMapIds&#xD;
+                            ),&#xD;
+  with(&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: ri!formName,&#xD;
+      firstColumnContents: {&#xD;
+        /* Progress */&#xD;
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12562&quot;(1),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          readOnly: true &#xD;
+        ),&#xD;
+        /* Select Campaign */&#xD;
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13555&quot;(&#xD;
+          evaluation: local!evaluation&#xD;
+        ),&#xD;
+        /* Select Component Scheduled Dates */&#xD;
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13564&quot;(&#xD;
+          evaluation: local!evaluation&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          readOnly: true &#xD;
+        ),&#xD;
+        /* Select Compliance Officers */&#xD;
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13752&quot;(&#xD;
+          evaluationUserMap:  local!evaluationUserMap,&#xD;
+          deletedUserMapIds:  local!deletedUserMapIds&#xD;
+        )&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            saveInto: {&#xD;
+              a!save(ri!evaluation, local!evaluation),&#xD;
+              a!save(ri!evaluationUserMap, local!evaluationUserMap),&#xD;
+              a!save(ri!deletedUserMapIds, local!deletedUserMapIds),&#xD;
+              a!save(ri!btnValue, save!value)&#xD;
+            },&#xD;
+            validationGroup:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!btnValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      validations:  {&#xD;
+      },&#xD;
+      validationGroup:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>formName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>evaluation</name>
+            <type>
+                <name>CTCaREEvaluation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>evaluationUserMap</name>
+            <type>
+                <name>CTCaREEvaluationUserMap?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedUserMapIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>btnValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>formName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluationUserMap</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedUserMapIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>btnValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

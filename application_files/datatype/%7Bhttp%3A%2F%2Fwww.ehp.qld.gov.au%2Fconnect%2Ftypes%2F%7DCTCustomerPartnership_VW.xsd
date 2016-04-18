@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTCustomerPartnership_VW">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( 	name="customer_partnership_vw")
+	</xsd:appinfo>
+      <xsd:documentation><![CDATA[This data type is used to store the information about customer partnerships]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="partyPartnershipId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="party_partnership_id")
+				  @Id
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="customer_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="customer_name")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partnerCustomerId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="partner_customer_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partnerCustomerName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="partner_customer_name")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partnershipTypeId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="partnership_type_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partnershipTypeName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="partnership_type_name")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="percentage" nillable="true" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="percentage")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="active")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

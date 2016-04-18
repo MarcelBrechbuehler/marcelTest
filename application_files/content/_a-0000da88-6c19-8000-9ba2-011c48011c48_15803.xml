@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editContactPopulatePhoneNumbers</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_15803</uuid>
+        <description>Populates array items with minimum required data</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= {
+  partyPhoneId: ri!phoneDetails.partyPhoneId,
+  partyId: if(
+    len(
+      ri!phoneDetails.partyId
+    ) = 0,
+    ri!partyId,
+    ri!phoneDetails.partyId
+  ),
+  phoneType: ri!phoneDetails.phoneType,
+  internationalCode: ri!phoneDetails.internationalCode,
+  areaCode: ri!phoneDetails.areaCode,
+  phoneNumber: ri!phoneDetails.phoneNumber,
+  primaryFlag: if(
+    len(
+      ri!phoneDetails.primaryFlag
+    ) = 0,
+    0,
+    ri!phoneDetails.primaryFlag
+  ),
+  recieveSmsFlag: if(
+    len(
+      ri!phoneDetails.recieveSmsFlag
+    ) = 0,
+    0,
+    ri!phoneDetails.recieveSmsFlag
+  ),
+  createdBy: if(
+    len(
+      ri!phoneDetails.createdBy
+    ) = 0,
+    ri!loggedOnUser,
+    ri!phoneDetails.createdBy
+  ),
+  updatedBy: ri!LoggedOnUser,
+  createdTimestamp: if(
+    len(
+      ri!phoneDetails.createdTimestamp
+    ) = 0,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;(),
+    ri!phoneDetails.createdTimestamp
+  ),
+  updatedTimestamp: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;(),
+  active: if(
+    len(
+      ri!phoneDetails.active
+    ) = 0,
+    1,
+    ri!phoneDetails.active
+  ),
+  source: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4549&quot;
+}</definition>
+        <namedTypedValue>
+            <name>phoneDetails</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>loggedOnUser</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

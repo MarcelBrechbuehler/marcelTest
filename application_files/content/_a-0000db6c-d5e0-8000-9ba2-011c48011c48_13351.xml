@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_selectCustomers</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13351</uuid>
+        <description>Allows the selection of Customers for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:  1,&#xD;
+                                 batchSize:   10,&#xD;
+                                 sort:  #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                                          field:  &quot;customerName&quot;,&#xD;
+                                          ascending:  true&#xD;
+                                        )&#xD;
+                    ),&#xD;
+  local!gridSelection:  #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+                          pagingInfo: local!pagingInfo,&#xD;
+                          selected:{}&#xD;
+                        ),&#xD;
+  &#xD;
+  with(&#xD;
+    local!customers: fn!todatasubset(ri!customers, local!pagingInfo),&#xD;
+    &#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: ri!formName,&#xD;
+      firstColumnContents: {&#xD;
+        /* Progress */&#xD;
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12562&quot;(4),&#xD;
+        /* Details */&#xD;
+        #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(careEvaluation: ri!evaluation),          &#xD;
+        /*  Customer Selections */&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label:  &quot;Selected Customer(s)&quot;,&#xD;
+          firstColumnContents:  {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              label: {},&#xD;
+              totalCount: local!customers.totalCount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+      					  label:  &quot;Customer Ref&quot;,&#xD;
+      					  field:  &quot;customerRef&quot;,&#xD;
+      					  data: index(local!customers.data, &quot;customerRef&quot;, {})				  &#xD;
+      					),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+      					  label:  &quot;Customer Name&quot;,&#xD;
+      					  field:  &quot;customerName&quot;,&#xD;
+      					  data: index(local!customers.data, &quot;customerName&quot;, {})&#xD;
+      					),&#xD;
+      					#&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+      					  label:  &quot;Customer Type&quot;,&#xD;
+      					  field:  &quot;description&quot;,&#xD;
+      					  data:  index(index(local!customers.data,&quot;customerType&quot;,{}),&quot;description&quot;,{})&#xD;
+      					)&#xD;
+              },&#xD;
+              identifiers:  if(local!customers.totalCount = 0,&#xD;
+                              {},&#xD;
+                              local!customers.data.customerId&#xD;
+                            ),&#xD;
+              value: local!gridSelection,&#xD;
+              saveInto: {&#xD;
+                a!save(local!pagingInfo, save!value.pagingInfo),&#xD;
+                a!save(local!gridSelection, save!value)&#xD;
+              },&#xD;
+              selection: true&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible:  true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+          primaryButtons: {&#xD;
+            if(count(local!gridSelection.selected) &gt; 0,&#xD;
+              {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+                  label: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8351&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8351&quot;,&#xD;
+                  saveInto: {&#xD;
+                    a!save(ri!customers, fn!remove(ri!customers, fn!where(local!gridSelection.selected = ri!customers.customerId))),&#xD;
+                    a!save(local!gridSelection.selected, {})&#xD;
+                  }&#xD;
+                )&#xD;
+              },&#xD;
+              {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                  label: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8350&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8350&quot;,&#xD;
+                  saveInto: ri!btnValue&#xD;
+                )               &#xD;
+              }&#xD;
+            )       &#xD;
+          }  &#xD;
+        )&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            saveInto: ri!btnValue,&#xD;
+            validationGroup:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!btnValue,&#xD;
+            skipValidation: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,&#xD;
+            value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,&#xD;
+            saveInto: ri!btnValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      validations:  {&#xD;
+        if(local!customers.totalCount &gt; ri!maxSelected,&#xD;
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+            message:  concat(&quot;A maximum of &quot; &amp; ri!maxSelected &amp; &quot; customer(s) can be selected&quot;),&#xD;
+            validateAfter:  &quot;SUBMIT&quot;&#xD;
+          ),&#xD;
+          {}&#xD;
+        ),&#xD;
+        if(local!customers.totalCount &lt; ri!minSelected,&#xD;
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+            message:  concat(&quot;You must select at least &quot; &amp; ri!minSelected &amp; &quot; customer(s)&quot;),&#xD;
+            validateAfter:  &quot;SUBMIT&quot;&#xD;
+          ),&#xD;
+          {}&#xD;
+        )&#xD;
+      },&#xD;
+      validationGroup:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customers</name>
+            <type>
+                <name>CTCustomer?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>maxSelected</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>minSelected</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>formName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>btnValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>evaluation</name>
+            <type>
+                <name>CTCaREEvaluation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customers</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>maxSelected</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>minSelected</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>formName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>btnValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

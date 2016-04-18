@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="DPVStatusType">
+    <xsd:annotation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="DPVNotConfigured"/>
+      <xsd:enumeration value="DPVConfigured"/>
+      <xsd:enumeration value="DPVConfirmed"/>
+      <xsd:enumeration value="DPVConfirmedMissingSec"/>
+      <xsd:enumeration value="DPVNotConfirmed"/>
+      <xsd:enumeration value="DPVLocked"/>
+      <xsd:enumeration value="DPVSeedHit"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

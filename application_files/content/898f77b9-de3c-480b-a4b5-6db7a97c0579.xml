@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AHC_GetAnalysisAuthenticationCredentials</name>
+        <uuid>898f77b9-de3c-480b-a4b5-6db7a97c0579</uuid>
+        <description>Returns the basic auth credentials for requesting a Health Check analysis on Appian Forum.</description>
+        <parentUuid>_a-0000dbd4-7e1b-8000-4afc-010000010000_2033</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_httpAuthenticationBasic&quot;(&#xD;
+  username: #&quot;SYSTEM_SYSRULES_scsField&quot;(&#xD;
+    externalSystemKey: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2052&quot;,&#xD;
+    fieldKey: &quot;username&quot;,&#xD;
+    usePerUser: false&#xD;
+  ),&#xD;
+  password: #&quot;SYSTEM_SYSRULES_scsField&quot;(&#xD;
+    externalSystemKey: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2052&quot;,&#xD;
+    fieldKey: &quot;password&quot;,&#xD;
+    usePerUser: false&#xD;
+  ),&#xD;
+  preemptive: true&#xD;
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

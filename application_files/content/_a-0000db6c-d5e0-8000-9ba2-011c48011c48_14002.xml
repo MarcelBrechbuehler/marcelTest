@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dynamicQuestionObservation</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14002</uuid>
+        <description>Renders an observation section</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+ local!justifications: wherecontains(tostring(index(ri!observations_txt,ri!index,{})),ri!justificationAnswers_cdt.observationText),
+#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label:index(ri!observations_txt,ri!index,{}),
+  firstColumnContents:{
+    #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+      function:#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14006&quot;(readOnly_bln:ri!readOnly_bln,justificationAnswers_cdt:ri!justificationAnswers_cdt,index:_),      
+      array:local!justifications
+    )
+    },
+  validations:{if(index(ri!justificationAnswers_cdt.justificationDisplayType,index(local!justifications,1,null),0)=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15103&quot;,
+    if(sum(tointeger(apply(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14342&quot;,index(ri!justificationAnswers_cdt,local!justifications))))&gt;1,&quot;You may only select one option&quot;,&quot;&quot;),&quot;&quot;)},
+  isCollapsible: true
+)
+)</definition>
+        <namedTypedValue>
+            <name>justificationAnswers_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestion_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>observations_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly_bln</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13993&quot;(2)</a:value>
+                <a:nameRef>justificationAnswers_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">1</a:value>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>observations_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>readOnly_bln</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

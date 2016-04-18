@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTCaREEvaluationStatusDueDate_VW">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="care_evaluation_status_due_date_vw")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is a DB View used to report Status and Due date information for a CaRE]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="careEvaluationId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @Column(name="care_evaluation_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="careEvaluationRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="care_evaluation_ref")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="careEvaluationCampaignId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="care_evaluation_campaign_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="campaignName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="campaign_name")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="locationId" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="location_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="locationRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="location_ref")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="primaryOfficerId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="primary_officer_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="primaryOfficer" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="primary_officer")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="secondaryOfficerId" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="secondary_officer_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="secondaryOfficer" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="secondary_officer")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="approverId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="approver_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="approver" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="approver")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="targetStartDate" nillable="true" type="xsd:date">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="target_start_date")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="targetEndDate" nillable="true" type="xsd:date">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="target_end_date")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="actualStartDate" nillable="true" type="xsd:date">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="actual_start_date")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="actualEndDate" nillable="true" type="xsd:date">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="actual_end_date")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="startedOnTime" nillable="true" type="xsd:unsignedShort">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="started_on_time")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="completedOnTime" nillable="true" type="xsd:unsignedShort">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="completed_on_time")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="statusId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="status_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="statusDescription" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="status_description")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

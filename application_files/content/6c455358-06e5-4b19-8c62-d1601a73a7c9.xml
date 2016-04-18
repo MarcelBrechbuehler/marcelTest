@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CQBK_QuestionDetails</name>
+        <uuid>6c455358-06e5-4b19-8c62-d1601a73a7c9</uuid>
+        <description></description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label:&quot;Questions left to be answered&quot;,&#xD;
+      instructions:&quot;You cannot make a recommendation until all mandatory questions are answered&quot;,&#xD;
+  firstColumnContents:&#xD;
+  {  &#xD;
+  with(&#xD;
+    local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 5),&#xD;
+    local!datasubset: todatasubset(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7866&quot;(ri!careQuestionId), local!pagingInfo),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;&quot;,&#xD;
+        firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      label: &quot;Question Details&quot;,&#xD;
+      totalCount: local!datasubset.totalCount,&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;QuestionId&quot;,&#xD;
+          field: &quot;careQuestionId&quot;,&#xD;
+          data: index(local!datasubset.data, &quot;careQuestionId&quot;, {}),&#xD;
+          alignment: &quot;RIGHT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Question Reference&quot;,&#xD;
+          field: &quot;questionRef&quot;,&#xD;
+          data: index(local!datasubset.data, &quot;questionRef&quot;, {})&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Question Text&quot;,&#xD;
+          field: &quot;questionText&quot;,&#xD;
+          data: index(local!datasubset.data, &quot;questionText&quot;, {})&#xD;
+        )&#xD;
+      },&#xD;
+      value: local!pagingInfo,&#xD;
+      saveInto: local!pagingInfo&#xD;
+    )}&#xD;
+    )&#xD;
+  ),&#xD;
+#&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          validate: true,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          skipValidation: true,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+}&#xD;
+)&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careQuestionId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

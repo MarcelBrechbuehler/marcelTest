@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTErrorObject.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTSuitableOperatorSearchResult_INT.xsd"/>
+  <xsd:complexType name="CTSuitableOperatorSearchResultRecord_INT">
+    <xsd:sequence>
+      <xsd:element name="processingFlag" nillable="true" type="xsd:int"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="Errors" type="tns:CTErrorObject"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="Results" type="tns:CTSuitableOperatorSearchResult_INT"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

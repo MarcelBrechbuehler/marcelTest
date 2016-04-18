@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_LocationGpsPointRowEach</name>
+        <uuid>c3db6977-a370-41f5-9367-6a474848be1b</uuid>
+        <description>This expression rule used to populate dynamic data of edit GPS Point</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(&#xD;
+  contents: {&#xD;
+     #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Point &quot; &amp; ri!index,&#xD;
+      value: concat(todecimal(ri!items[ri!index].editLocationGPSGeoSpatialObject.locationGeoSpatialPoint.latitude),&quot;/&quot;,ri!items[ri!index].editLocationGPSGeoSpatialObject.locationGeoSpatialPoint.longitude),&#xD;
+      readOnly:true,&#xD;
+      align: &quot;LEFT&quot;&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Description &quot; &amp; ri!index,&#xD;
+      value: ri!items[ri!index].editLocationGPSGeoSpatialObject.description,&#xD;
+      readOnly:true,&#xD;
+      align: &quot;LEFT&quot;&#xD;
+    ),&#xD;
+	&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Status &quot; &amp; ri!index,&#xD;
+      value: apply(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8523&quot;,{ri!items[ri!index].editLocationGPSGeoSpatialObject.status}),&#xD;
+       readOnly:true,&#xD;
+      align: &quot;LEFT&quot;&#xD;
+    ),&#xD;
+#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Date Added &quot; &amp; ri!index,&#xD;
+      value:text(ri!items[ri!index].createdTimestamp,&quot;dd/mm/yyyy&quot;),&#xD;
+      readOnly:true,&#xD;
+      align: &quot;LEFT&quot;&#xD;
+    ),&#xD;
+  #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+    label: &quot;Remove&quot;,&#xD;
+    links: {&#xD;
+      #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        label: char(10005),&#xD;
+         value: ri!index,&#xD;
+        saveInto: {&#xD;
+          a!save(ri!items, remove(ri!items, save!value)),&#xD;
+                 a!save(ri!itemsToken, remove(ri!itemsToken, save!value)),&#xD;
+				 a!save(ri!selectedGpsIndex,append(ri!selectedGpsIndex,if(isnull(save!value),null,index(ri!items,save!value,null).locationGeoMapId)))&#xD;
+        }&#xD;
+        )&#xD;
+    },&#xD;
+    align :&quot;CENTER&quot;&#xD;
+  )&#xD;
+&#xD;
+  },&#xD;
+  id: ri!index&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>selectedGpsIndex</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

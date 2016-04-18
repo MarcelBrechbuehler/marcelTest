@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_offlineAssessment</name>
+        <uuid>fff5e871-84ef-4ea9-bec6-584a46bb5f61</uuid>
+        <description>This rule allows the user to assess an SOR application</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!files: {},
+  local!target: tofolder(-1),
+  local!itemsToken,
+  local!documentUpload_cdt: ri!documentUpload_cdt,
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: if(ri!instantGrant_txt=#&quot;_a-0000db65-f152-8000-9ba2-011c48011c48_13986&quot;, 
+      &quot;Suitable Operator Offline Assessment&quot;,
+      &quot;Suitable Operator Manual Decision&quot;
+    ),
+    instructions: &quot;Due on: &quot; &amp; if(isnull(ri!deadline_dat),null,todate(local(ri!deadline_dat))),
+    firstColumnContents: {
+/*
+      rule!COM_taskDetailsSection(),
+*/
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Suitable Operator Details&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            label: &quot;Label&quot;,
+            labelPosition: &quot;COLLAPSED&quot;,
+            links: {
+              #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+                label: &quot;Suitable Operator Dashboard&quot;,
+                recordtype: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11227&quot;,
+                identifier: ri!suitableOperatorId_int
+              )
+            },
+            align: &quot;LEFT&quot;
+          )
+        },
+        isCollapsible: true
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Offline Assessment&quot;,
+        firstColumnContents: {
+          if(ri!instantGrant_txt=#&quot;_a-0000db65-f152-8000-9ba2-011c48011c48_13986&quot;,
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+              secondaryButtons: {
+                if(or(ri!buttonValue_txt=null,ri!buttonValue_txt=#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24543&quot;),
+                  #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+                    label: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24542&quot;,
+                    value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24542&quot;,
+                    saveInto: {
+                      ri!buttonValue_txt,
+                      a!save(ri!obtainSuitabilityReport_int,1)
+                    },
+                    skipValidation: true
+                  ),
+                  #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+                    label: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24543&quot;,
+                    value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24543&quot;,
+                    saveInto: {
+                      ri!buttonValue_txt,
+                      a!save(ri!obtainSuitabilityReport_int,0),
+                      a!save(ri!documentUpload_cdt,{})
+                    },
+                    skipValidation: true
+                  )
+                )
+              }
+            ),
+            {}
+          ),
+        },
+        secondColumnContents: {
+          if(ri!instantGrant_txt=#&quot;_a-0000db65-f152-8000-9ba2-011c48011c48_13986&quot;,
+            #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+              label: &quot;Decision&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              choiceLabels: {&quot;Approve&quot;, &quot;Refuse&quot;},
+              choiceValues: {1, 3},
+              value: ri!decision_int,
+              saveInto: ri!decision_int,
+              required: true,
+              validations: {}
+            ),
+            #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+              label: &quot;Decision&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              choiceLabels: {&quot;Approve&quot;},
+              choiceValues: {1},
+              value: ri!decision_int,
+              saveInto: ri!decision_int,
+              required: true,
+              validations: {}
+            )
+          ),
+          if(ri!decision_int=3,
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+            label: &quot;Reason&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            required: true,
+            choiceLabels: {&quot;Unsuitable Environmental Record&quot;, &quot;Disqualification&quot;},
+            choiceValues: {#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5171&quot;, #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5169&quot;},
+            placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+            value: ri!decisionCode_int,
+            saveInto: ri!decisionCode_int
+          ),
+          {}
+          ),
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+            label: &quot;Decision Reason&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!decisionReason_txt,
+            saveInto: ri!decisionReason_txt,
+            refreshAfter: &quot;UNFOCUS&quot;,
+            required: if(ri!decision_int=3,true,false),
+            validations: {}
+          )
+        },
+        isCollapsible: true
+      ),
+      if(ri!obtainSuitabilityReport_int=1,
+        {
+        #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+          label: &quot;&quot;,
+          headerCells: {
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;&quot;, align: &quot;LEFT&quot;),
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Document Name&quot;, align: &quot;LEFT&quot;),
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Classification&quot;, align: &quot;LEFT&quot;)
+          },
+          columnConfigs: {
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;),
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;)
+          },
+          rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+            function: #&quot;928a22ba-75c0-4855-b921-f4b0fe026118&quot;(
+              items: ri!documentUpload_cdt,
+              index: _,
+              itemsToken: local!itemsToken
+            ),
+            array: if(or(isnull(ri!documentUpload_cdt), count(ri!documentUpload_cdt) &lt; 1), {}, 1+enumerate(count(ri!documentUpload_cdt))),
+            arrayVariable: local!itemsToken
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+          secondaryButtons: {
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+              value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true,
+              validate: false
+            )
+          }
+        )
+        },
+        {}
+      )
+    },
+    secondColumnContents: {},
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+          style: &quot;PRIMARY&quot;,
+          submit: true,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+          saveInto: ri!buttonValue_txt
+        )
+      },
+      secondaryButtons: {
+      }
+    ),
+    validations: {
+      if(ri!obtainSuitabilityReport_int=1,
+        if(contains(ri!documentUpload_cdt.classificationId,{44}),
+          null,
+          &quot;You need to upload the Notice of Suitability Report&quot;
+        ),
+        null
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suitableOperatorId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decision_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decisionReason_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>obtainSuitabilityReport_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentUpload_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deadline_dat</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decisionCode_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>instantGrant_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

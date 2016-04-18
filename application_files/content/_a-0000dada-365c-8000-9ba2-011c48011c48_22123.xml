@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_generatePayloadSORDecisionNotice</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_22123</uuid>
+        <description>Business rule which creates the document payload for the SOR decision notice documents</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5559</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>={{name:&quot;chief_del_sig&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17799&quot;).itemValue},
+{name:&quot;chief_delegate&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17798&quot;).itemValue},
+{name:&quot;cust_serv_contact&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17793&quot;).itemValue},
+{name:&quot;cust_serv_dept&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17792&quot;).itemValue},
+{name:&quot;cust_serv_email&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17797&quot;).itemValue},
+{name:&quot;cust_serv_fax&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17796&quot;).itemValue},
+{name:&quot;cust_serv_phone&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17795&quot;).itemValue},
+{name:&quot;cust_serv_postal_addr&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17794&quot;).itemValue},
+{name:&quot;dept_abn&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17803&quot;).itemValue},
+{name:&quot;dept_name&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17800&quot;).itemValue},
+{name:&quot;dept_website&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17802&quot;).itemValue},
+{name:&quot;email_address&quot;,value:if(isnull(pv!partyContactCommunicationDetails_cdt.contactEmail),null,pv!partyContactCommunicationDetails_cdt.contactEmail.email)},
+{name:&quot;epa_act&quot;,value:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17801&quot;).itemValue},
+{name:&quot;legal_entity_name&quot;,value:if(isnull(pv!customer_cdt.customerPerson),pv!customer_cdt.customerName,if(pv!customer_cdt.customerPerson.salutationCode=#&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10573&quot;,pv!customer_cdt.customerName,concat(#&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11165&quot;(pv!customer_cdt.customerPerson.salutationCode), &quot; &quot;, pv!customer_cdt.customerName)))},
+{name:&quot;postal_address&quot;,value:#&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19581&quot;(pv!partyAddressLinkAddress_cdt)},
+{name:&quot;received_date&quot;,value:datevalue(local(pv!suitableOperator_cdt.applicationDate))},
+{name:&quot;so_reference&quot;,value:pv!suitableOperator_cdt.suitableOperatorRef},
+{name:&quot;so_refusal_date&quot;,value:datevalue(local(pv!suitableOperator_cdt.updatedTimestamp))},
+{name:&quot;so_refusal_reasdesc&quot;,value:pv!suitableOperatorStatus_cdt.statusReasonText},
+{name:&quot;so_refusal_reason&quot;,value:pv!suitableOperatorStatus_cdt.statusReasonCodeRef.description},
+{name:&quot;so_app_ref&quot;,value:pv!suitableOperator_cdt.applicationRef},
+{name:&quot;so_rego_date&quot;,value:if(isnull(pv!suitableOperator_cdt.registrationDate),null,datevalue(local(pv!suitableOperator_cdt.registrationDate)))},
+{name:&quot;ft_email&quot;,value:if(isnull(pv!partyContactCommunicationDetails_cdt.contactEmail),null,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(#&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19573&quot;).itemValue)},
+{name:&quot;last_one&quot;,value:&quot;Last One&quot;}}</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

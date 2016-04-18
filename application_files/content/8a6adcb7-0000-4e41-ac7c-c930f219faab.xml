@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AHC_UI_schedule</name>
+        <uuid>8a6adcb7-0000-4e41-ac7c-c930f219faab</uuid>
+        <description>Interface for setting the Health Check schedule.
+
+Set every rule input to 1 to test.</description>
+        <parentUuid>_a-0000dbd4-7e1b-8000-4afc-010000010000_2068</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  label: &quot;Appian Health Check Schedule&quot;,&#xD;
+  instructions: &quot;Configure the frequency of Health Checks below.&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    if (ri!isScheduleEnabled,&#xD;
+      {&#xD;
+        #&quot;SYSTEM_SYSRULES_dropdownFieldByIndex&quot;(&#xD;
+          label: &quot;Run every&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          choiceLabels: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2126&quot;,&#xD;
+          value: ri!frequency,&#xD;
+          saveInto: ri!frequency&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          choiceLabels: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2125&quot;,&#xD;
+          choiceValues: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2129&quot;,&#xD;
+          value: ri!day,&#xD;
+          saveInto: ri!day&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_dropdownFieldByIndex&quot;(&#xD;
+          label: &quot;at&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          choiceLabels: #&quot;_a-0000dbd4-7e1b-8000-4afc-010000010000_2134&quot;,&#xD;
+          value: ri!hour + 1,&#xD;
+          saveInto: a!save(ri!hour, save!value - 1)&#xD;
+        )&#xD;
+      },&#xD;
+      {}&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+          label: &quot;Scheduling is enabled&quot;,&#xD;
+          choiceLabels: {&quot;Yes&quot;, &quot;No&quot;},&#xD;
+          choiceValues: {true, false},&#xD;
+          value: ri!isScheduleEnabled,&#xD;
+          saveInto: ri!isScheduleEnabled&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  },&#xD;
+  secondColumnContents: {&#xD;
+    if (ri!isScheduleEnabled,&#xD;
+      {&#xD;
+        #&quot;SYSTEM_SYSRULES_dateTimeField&quot;(&#xD;
+          label: &quot;Next three execution dates&quot;,&#xD;
+          labelPosition: &quot;ABOVE&quot;,&#xD;
+          value: #&quot;c5280c20-a309-46a1-aa7e-2ce286b11bfe&quot;(today(), ri!frequency, ri!day, ri!hour),&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_dateTimeField&quot;(&#xD;
+          labelPosition: &quot;COLLAPSED&quot;,&#xD;
+          value: #&quot;c5280c20-a309-46a1-aa7e-2ce286b11bfe&quot;(today()+((ri!frequency*7)*1), ri!frequency, ri!day, ri!hour),&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_dateTimeField&quot;(&#xD;
+          labelPosition: &quot;COLLAPSED&quot;,&#xD;
+          value: #&quot;c5280c20-a309-46a1-aa7e-2ce286b11bfe&quot;(today()+((ri!frequency*7)*2), ri!frequency, ri!day, ri!hour),&#xD;
+          readOnly: true&#xD;
+        )&#xD;
+      },&#xD;
+      {}&#xD;
+    )&#xD;
+  },&#xD;
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+    primaryButtons: {&#xD;
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+        label: &quot;Save&quot;,&#xD;
+        style: &quot;PRIMARY&quot;,&#xD;
+        saveInto: {}&#xD;
+      )&#xD;
+    }&#xD;
+  ),&#xD;
+  validations: {}&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>frequency</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>day</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>hour</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isScheduleEnabled</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>WS_getKleberAddressDataById</name>
+        <uuid>22c40242-fb27-40a9-baa6-ac7b72624733</uuid>
+        <description>Ths rule will retrieve particular address details identified by the Klebber unique record identifier.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_14643</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(
+  local!wsData: 
+    webservicequery(
+      #&quot;SYSTEM_SYSRULES_wsConfig&quot;(
+        wsdlUrl: &quot;https://kleber.datatoolscloud.net.au/KleberWebServiceSoap/DtKleberService.svc?singleWsdl&quot;,
+        service: &quot;{http://tempuri.org/}DtKleberSoapService&quot;,
+        port: &quot;BasicHttpsBinding_IDtKleberService&quot;,
+        operation: &quot;{http://tempuri.org/}ProcessXmlRequest&quot;
+      ),
+      {
+        IDtKleberService_ProcessXmlRequest_InputMessage: {
+          DtXmlRequest: &quot;&lt;DtRequest Method='DataTools.Capture.Address.Predictive.AuPaf.RetrieveAddress' RecordId='&quot; &amp; ri!recordId_text &amp; &quot;' RequestId='' RequestKey='&quot; &amp; #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26356&quot; &amp; &quot;' DepartmentCode='' /&gt;&quot;
+        }
+      }
+    ).returnValue.IDtKleberService_ProcessXmlRequest_OutputMessage.ProcessXmlRequestResult,
+    #&quot;999d3027-0508-4c20-b917-02701a7dffad&quot;(
+      xpathsnippet(local!wsData,&quot;//@DPID&quot;),	
+      xpathsnippet(local!wsData,&quot;//@UnitType&quot;),
+      xpathsnippet(local!wsData,&quot;//@UnitNumber&quot;),	
+      xpathsnippet(local!wsData,&quot;//@LevelType&quot;),
+      xpathsnippet(local!wsData,&quot;//@LevelNumber&quot;),
+      xpathsnippet(local!wsData,&quot;//@LotNumber&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetNumber1&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetNumberSuffix1&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetNumber2&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetNumberSuffix2&quot;),
+      xpathsnippet(local!wsData,&quot;//@PostBoxNumber&quot;),
+      xpathsnippet(local!wsData,&quot;//@PostBoxNumberPrefix&quot;),
+      xpathsnippet(local!wsData,&quot;//@PostBoxNumberSuffix&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetName&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetType&quot;),
+      xpathsnippet(local!wsData,&quot;//@StreetSuffix&quot;),
+      xpathsnippet(local!wsData,&quot;//@PostBoxType&quot;),
+      xpathsnippet(local!wsData,&quot;//@Locality&quot;),
+      xpathsnippet(local!wsData,&quot;//@State&quot;),
+      xpathsnippet(local!wsData,&quot;//@Postcode&quot;)
+    )
+  )  
+</definition>
+        <namedTypedValue>
+            <name>recordId_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>recordId_text</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

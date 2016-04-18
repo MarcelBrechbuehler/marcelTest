@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_cancelEvaluation</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15119</uuid>
+        <description>UI to allow the cancellation of a CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!careEvaluation: if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                          {},&#xD;
+                          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot;(ri!careEvaluationId)&#xD;
+                        ),&#xD;
+  local!cancellationReason: if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!cancellationReason),&#xD;
+                              {},&#xD;
+                              ri!cancellationReason&#xD;
+                            ),&#xD;
+  with(&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label:  if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(local!careEvaluation),&#xD;
+                {},&#xD;
+                concat(&quot;Cancel CaRE Evaluation: &quot; &amp; local!careEvaluation.careEvaluationRef)&#xD;
+              ),&#xD;
+      firstColumnContents: {&#xD;
+         /* Campaign */&#xD;
+        #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(local!careEvaluation),&#xD;
+        /* Reason for Cancellation */&#xD;
+        #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+          label:  &quot;Reason for Cancellation&quot;,&#xD;
+          labelPosition:  #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+          value:  local!cancellationReason,&#xD;
+          saveInto: {&#xD;
+            a!save(local!cancellationReason, save!value)&#xD;
+          },&#xD;
+          required: true,&#xD;
+          requiredMessage:  &quot;You must provide a reason for cancelling the evaluation&quot;,&#xD;
+          validations:  {&#xD;
+            if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12723&quot;(local!cancellationReason, #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15122&quot;),&#xD;
+              {},&#xD;
+              fn!concat(&quot;You must not enter more than &quot; &amp; #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15122&quot; &amp; &quot; characters&quot;)&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15125&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: &quot;This CaRE record will be cancelled. No further updates can be made and all outstanding tasks associated with this evaluation will be terminated.  Do you wish to proceed?&quot;,&#xD;
+            value: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15125&quot;,&#xD;
+            saveInto: {&#xD;
+              a!save(ri!cancellationReason, local!cancellationReason),&#xD;
+              a!save(ri!btnValue, save!value)&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!btnValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      validations:  {&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancellationReason</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>btnValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="true" inherit="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>cancellationReason</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>btnValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

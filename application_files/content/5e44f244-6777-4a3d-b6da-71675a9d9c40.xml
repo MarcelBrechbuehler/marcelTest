@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_validateUniqueBimCodeBlockNo</name>
+        <uuid>5e44f244-6777-4a3d-b6da-71675a9d9c40</uuid>
+        <description>This rule will check list of items (type: CTPermitTenureVW) to find any duplicate Bim Code and Block No. This rule is used in TEN_addEditTenureDetails to perform validation against the added/updated sub-blocks when adding or updating Location records.</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!isTypeValid: or(not(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!items)), search(&quot;CTPermitTenureBlock_VW&quot;, typename(typeof(ri!items)), 0)&gt;0 ),
+  and(
+    local!isTypeValid,
+    with(
+      local!bimCodeBlockNoStrings: apply(fn!concat(_, _), merge(ri!items.blockIdentifierMap, ri!items.blockRef)),
+      local!uniqueBimCodeBlockNoStrings: union(local!bimCodeBlockNoStrings, local!bimCodeBlockNoStrings),
+      /** compare original bim code &amp; block no list with the unique ones to see any difference **/
+      length(local!bimCodeBlockNoStrings)=length(local!uniqueBimCodeBlockNoStrings)
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

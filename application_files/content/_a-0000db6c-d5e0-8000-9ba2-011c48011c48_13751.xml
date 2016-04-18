@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_selectCaREOfficersGridRow</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13751</uuid>
+        <description>Grid Row definition for the selection of CaRE officers for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(&#xD;
+  id:	ri!index,&#xD;
+  contents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_pickerFieldUsers&quot;(&#xD;
+      maxSelections:  1,&#xD;
+      groupFilter: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4637&quot;,&#xD;
+      value:  if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluationUserMap[ri!index].userId),&#xD;
+                {},&#xD;
+                touser(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7824&quot;(ri!evaluationUserMap[ri!index].userId).userLogin)&#xD;
+              ),&#xD;
+      saveInto: {&#xD;
+        a!save(ri!evaluationUserMap[ri!index].userId, if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(save!value),&#xD;
+                                                        {},&#xD;
+                                                        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7904&quot;(save!value).userId)&#xD;
+                                                      )&#xD;
+      },&#xD;
+      required: true,&#xD;
+      requiredMessage:  &quot;You must select an Officer&quot;&#xD;
+    ),&#xD;
+		#&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+      choiceLabels: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14424&quot;,&#xD;
+      choiceValues: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14426&quot;,&#xD;
+      value:  ri!evaluationUserMap[ri!index].careOfficerPriority,&#xD;
+      saveInto: {&#xD;
+        a!save(ri!evaluationUserMap[ri!index].careOfficerPriority, save!value)&#xD;
+      },&#xD;
+			required:	true,&#xD;
+			requiredMessage:  &quot;You must select a role&quot;&#xD;
+    ),&#xD;
+		#&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+			links:	#&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+								label: char(10005),&#xD;
+								value: ri!index,&#xD;
+								saveInto: {&#xD;
+	                a!save(ri!deletedUserMapIds, append(ri!deletedUserMapIds, index(ri!evaluationUserMap.careEvaluationUserMapId, save!value, null))),&#xD;
+									a!save(ri!evaluationUserMap, remove(ri!evaluationUserMap, save!value)),&#xD;
+									a!save(ri!itemsToken, remove(ri!itemsToken, save!value))&#xD;
+								}&#xD;
+							),&#xD;
+			align: &quot;CENTER&quot;&#xD;
+		)&#xD;
+	}&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>evaluationUserMap</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedUserMapIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluationUserMap</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedUserMapIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

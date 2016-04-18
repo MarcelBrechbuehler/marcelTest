@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTSuitableOperatorRegisterSuitability_INT">
+    <xsd:sequence>
+      <xsd:element name="questionRef" nillable="true" type="xsd:string"/>
+      <xsd:element name="answer" nillable="true" type="xsd:int"/>
+      <xsd:element name="attachment" nillable="true" type="xsd:string"/>
+      <xsd:element name="attachmentName" nillable="true" type="xsd:string"/>
+      <xsd:element name="dateReceived" nillable="true" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

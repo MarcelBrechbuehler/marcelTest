@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dynamicQuestionJustification</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14006</uuid>
+        <description>Renders the dynamic question justification</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>if(index(ri!justificationAnswers_cdt.justificationDisplayType,ri!index,0)=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15103&quot;,
+/*render justification*/
+#&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+  label:&quot;&quot;,
+  choiceLabels:{index(ri!justificationAnswers_cdt.justificationText,ri!index,{})},
+  choiceValues:{index(ri!justificationAnswers_cdt.justificationValue,ri!index,{})},
+  value:index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{}),
+  saveInto:ri!justificationAnswers_cdt[ri!index].justificationAnswerText,
+  disabled:ri!readOnly_bln
+),
+/*
+a!checkboxField(
+  label:&quot;&quot;,
+  choiceLabels:{&quot;Yes&quot;,&quot;No&quot;},
+  choiceValues:{&quot;1&quot;,&quot;0&quot;},
+  value:index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{}),
+  saveInto:ri!justificationAnswers_cdt[ri!index].justificationAnswerText
+,*/
+
+if(index(ri!justificationAnswers_cdt.justificationDisplayType,ri!index,0)=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15106&quot;,
+#&quot;SYSTEM_SYSRULES_textField&quot;(
+  label:index(ri!justificationAnswers_cdt.justificationText,ri!index,{}),
+  value:index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{}),
+  saveInto:ri!justificationAnswers_cdt[ri!index].justificationAnswerText,
+  disabled:ri!readOnly_bln
+),
+if(index(ri!justificationAnswers_cdt.justificationDisplayType,ri!index,0)=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23288&quot;,
+#&quot;SYSTEM_SYSRULES_dateField&quot;(
+  label:index(ri!justificationAnswers_cdt.justificationText,ri!index,{}),
+  value:if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{})),{},todate(index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{}))),
+  saveInto:ri!justificationAnswers_cdt[ri!index].justificationAnswerText,
+  disabled:ri!readOnly_bln
+),
+if(index(ri!justificationAnswers_cdt.justificationDisplayType,ri!index,0)=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15108&quot;,
+  #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+  label:&quot;&quot;,
+  choiceLabels:{index(ri!justificationAnswers_cdt.justificationText,ri!index,{})},
+  choiceValues:{index(ri!justificationAnswers_cdt.justificationValue,ri!index,{})},
+  value:index(ri!justificationAnswers_cdt.justificationAnswerText,ri!index,{}),
+  saveInto:ri!justificationAnswers_cdt[ri!index].justificationAnswerText,
+  disabled:ri!readOnly_bln
+)
+,
+#&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(value:#&quot;SYSTEM_SYSRULES_richTextBulletedList&quot;(&quot;Unknown Type - &quot;&amp;index(ri!justificationAnswers_cdt.justificationDisplayType,ri!index,0)))
+))))</definition>
+        <namedTypedValue>
+            <name>justificationAnswers_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestion_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>readOnly_bln</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>justificationAnswers_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>readOnly_bln</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

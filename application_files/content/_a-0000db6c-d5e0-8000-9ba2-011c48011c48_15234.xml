@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dynamicQuestionOffline</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15234</uuid>
+        <description>Dynamically creates the questions for display to the user in offline mode</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!questionObservationsJustifications:index(ri!streamQuestions_cdt.uniqueId,fn!wherecontains(ri!questionIds_int[ri!index],ri!streamQuestions_cdt.questionId),{}),
+
+  local!arrayVariable,
+/*a!sectionLayout(
+  label: ri!questions_txt[ri!index],
+  firstColumnContents: {*/
+/*a!paragraphField(value:local!questionObservations, height:&quot;TALL&quot;),
+a!paragraphField(value:local!dedupeObservationIds, height:&quot;SHORT&quot;),
+a!paragraphField(value:local!observations, height:&quot;MEDIUM&quot;),
+a!paragraphField(value:local!observationId, height:&quot;SHORT&quot;),*/
+
+/*a!richTextDisplayField(value:a!richTextItem(text:ri!questions_txt[ri!index],style:&quot;HEADER_MEDIUM&quot;)),*/
+#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(label:ri!questions_txt[ri!index],
+  isCollapsible:true,
+  firstColumnContents:{
+  /*fn!reduce(fn!append,{},a!applyComponents(*/
+  /*     function:rule!CaRE_dynamicQuestionObservationOffline(readOnly_bln:false,*/
+  /*     observations_txt:local!observations,*/
+  /*     observationIds_int:local!dedupeObservationIds,*/
+  /*     streamQuestions_cdt:ri!streamQuestions_cdt,*/
+  /*     questionId_int:ri!questionIds_int[ri!index],*/
+  /*     index:_),*/
+  /*     array:1+enumerate(length(local!observations)),*/
+  /*     arrayVariable:local!arrayVariable*/
+  /*   ))*/
+  
+  fn!reduce(fn!append,{},#&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+    function: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20725&quot;(
+      streamQuestions_cdt:ri!streamQuestions_cdt,
+      uniqueIds_int:local!questionObservationsJustifications,
+      index:_
+    
+    ),
+    array:1+enumerate(length(local!questionObservationsJustifications)),
+    arrayVariable:local!arrayVariable
+  ))
+/*  a!imageField(
+    images:a!documentImage(
+      document:cons!CARE_IMG_HR),
+    size:&quot;STANDARD&quot;
+      
+      )*/
+  }
+  )
+
+)
+</definition>
+        <namedTypedValue>
+            <name>streamQuestions_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestionOffline_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questions_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionIds_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>true</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15261&quot;(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15264&quot;,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15034&quot;)</a:value>
+                <a:nameRef>streamQuestions_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">1</a:value>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;}</a:value>
+                <a:nameRef>questions_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{67,68,69}</a:value>
+                <a:nameRef>questionIds_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>TEN_addEditTenureDetails</name>
+        <uuid>24f66f9d-e027-4598-9f43-c4bf3b9b09b4</uuid>
+        <description>Interface to add or edit tenure details</description>
+        <parentUuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_25899</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+    label: &quot;Mining Tenure Details&quot;,
+    firstColumnContents: {
+      /*a!textField(
+        label: &quot;Tenure Number&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!permitTenure_cdt.tenureRef,
+        saveInto: ri!permitTenure_cdt.tenureRef,
+        align: &quot;LEFT&quot;
+      ),*/
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Tenure Type&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        required: true(),
+        choiceLabels: local!tenureType.description,
+        choiceValues: local!tenureType.commonCodeId,
+        value: ri!permitTenure_cdt.tenureType,
+        saveInto: ri!permitTenure_cdt.tenureType,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Status&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        required: true(),
+        choiceLabels: local!tenureStatus.description,
+        choiceValues: local!tenureStatus.commonCodeId,
+        value: ri!permitTenure_cdt.status,
+        saveInto: ri!permitTenure_cdt.status,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Mineral&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        required: true(),
+        choiceLabels: local!mineral.description,
+        choiceValues: local!mineral.commonCodeId,
+        value: ri!permitTenureMineral_cdt.mineralType,
+        saveInto: ri!permitTenureMineral_cdt.mineralType,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+        label: &quot;Locality&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!permitTenure_cdt.localityName,
+        saveInto: ri!permitTenure_cdt.localityName,
+        align: &quot;LEFT&quot;
+      ),
+      /*a!textField(
+        label: &quot;LGA&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!locationLga_cdt.lgaName,
+        saveInto: ri!locationLga_cdt.lgaName,
+        align: &quot;LEFT&quot;
+      ),*/
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;LGA&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        choiceLabels: local!lgaDetails.lgaName,
+        choiceValues: local!lgaDetails.locationLgaId,
+        value: ri!locationLgaMap_cdt.locationLgaId,
+        saveInto: ri!locationLgaMap_cdt.locationLgaId,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_integerField&quot;(
+        label: &quot;Term Sought&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!permitTenure_cdt.termSoughtValue,
+        saveInto: ri!permitTenure_cdt.termSoughtValue,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Term Sought Unit&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        choiceLabels: local!termUnit.description,
+        choiceValues: local!termUnit.commonCodeId,
+        value: ri!permitTenure_cdt.termSoughtUnit,
+        saveInto: ri!permitTenure_cdt.termSoughtUnit,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+        label: &quot;Additional Info&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: ri!permitTenure_cdt.localityDescription,
+        saveInto: ri!permitTenure_cdt.localityDescription,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+        label: &quot;Related Application&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        readOnly: true(),
+        value: local!relatedApplication,
+        align: &quot;LEFT&quot;
+      )
+    },
+    secondColumnContents: {
+      #&quot;SYSTEM_SYSRULES_floatingPointField&quot;(
+        label: &quot;Area&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!permitTenure_cdt.area,
+        saveInto: ri!permitTenure_cdt.area,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Area Unit&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        choiceLabels: local!areaUnit.description,
+        choiceValues: local!areaUnit.commonCodeId,
+        value: ri!permitTenure_cdt.areaUnit,
+        saveInto: ri!permitTenure_cdt.areaUnit,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_floatingPointField&quot;(
+        label: &quot;Surface Area&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        value: ri!permitTenure_cdt.surfaceArea,
+        saveInto: ri!permitTenure_cdt.surfaceArea,
+        align: &quot;LEFT&quot;
+      ),
+      /*a!textField(
+        label: &quot;Surface Area Unit&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: ri!permitTenure_cdt.surfaceAreaUnit,
+        saveInto: ri!permitTenure_cdt.surfaceAreaUnit,
+        align: &quot;LEFT&quot;
+      ),*/
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+        label: &quot;Surface Area Unit&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        required: true(),
+        placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+        choiceLabels: local!areaUnit.description,
+        choiceValues: local!areaUnit.commonCodeId,
+        value: ri!permitTenure_cdt.surfaceAreaUnit,
+        saveInto: ri!permitTenure_cdt.surfaceAreaUnit,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+        label: &quot;MMOL Maps URL&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: ri!permitTenure_cdt.mmolMapUrl,
+        saveInto: ri!permitTenure_cdt.mmolMapUrl
+      ),
+      #&quot;SYSTEM_SYSRULES_dateField&quot;(
+        label: &quot;Planned Operation Date&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(
+          ri!permitTenure_cdt.plannedOperationDate
+        ),
+        saveInto: ri!permitTenure_cdt.plannedOperationDate,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dateField&quot;(
+        label: &quot;Grant Date&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(
+          ri!permitTenure_cdt.grantedDate
+        ),
+        saveInto: ri!permitTenure_cdt.grantedDate,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_dateField&quot;(
+        label: &quot;Expiry Date&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(
+          ri!permitTenure_cdt.expiryDate
+        ),
+        saveInto: ri!permitTenure_cdt.expiryDate,
+        align: &quot;LEFT&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+        label: &quot; Reference ID&quot;,
+        labelPosition: &quot;ADJACENT&quot;,
+        readOnly: true(),
+        value: local!relatedApplication,
+        align: &quot;LEFT&quot;
+      )
+    },
+    isCollapsible: true
+  ),
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+    label: &quot;Block Details&quot;,
+    firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+        headerCells: {
+          #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+            label: &quot;BIM&quot;,
+            align: &quot;CENTER&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+            label: &quot;Block&quot;,
+            align: &quot;CENTER&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+            label: &quot;Sub Block&quot;,
+            align: &quot;CENTER&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+            label: &quot;&quot;
+          )
+        },
+        columnConfigs: {
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+            width: &quot;DISTRIBUTE&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+            width: &quot;DISTRIBUTE&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+            width: &quot;DISTRIBUTE&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+            width: &quot;NARROW&quot;
+          )
+        },
+        rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+          function: #&quot;933016cf-9148-40a5-b429-3101f72f45ad&quot;(
+            items: ri!items,
+            index: _,
+            itemsToken: ri!itemsToken,
+            deletedItemIds: ri!deletedItemIds
+          ),
+          array: if(
+            or(
+              isnull(
+                ri!items
+              ),
+              count(
+                ri!items
+              ) &lt; 1
+            ),
+            {},
+            1 + enumerate(
+              count(
+                ri!items
+              )
+            )
+          ),
+          arrayVariable: ri!itemsToken
+        )
+      ),
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value: #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+          text: &quot;Please specify the sub blocks using pipeline separator&quot;,
+          style: &quot;EMPHASIS&quot;
+        )
+      ),
+      #&quot;SYSTEM_SYSRULES_linkField&quot;(
+        label: &quot;Add Link&quot;,
+        labelPosition: &quot;COLLAPSED&quot;,
+        links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+          label: &quot;+Add Block&quot;,
+          value: {
+            id: null
+          },
+          saveInto: {
+            a!save(
+              ri!items,
+              append(
+                ri!items,
+                save!value
+              )
+            ),
+            a!save(
+              ri!itemsToken,
+              append(
+                ri!itemsToken,
+                save!value
+              )
+            )
+          }
+        )
+      )
+    },
+    secondColumnContents: {}
+  )
+}</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>CTPermitTenureBlock_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitTenureMineral_cdt</name>
+            <type>
+                <name>CTPermitTenureMineral</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationLgaMap_cdt</name>
+            <type>
+                <name>CTLocationLgaMap</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitTenure_cdt</name>
+            <type>
+                <name>CTPermitTenure</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>location_cdt</name>
+            <type>
+                <name>CTLocation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedItemIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>permitTenureMineral_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationLgaMap_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>permitTenure_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>location_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

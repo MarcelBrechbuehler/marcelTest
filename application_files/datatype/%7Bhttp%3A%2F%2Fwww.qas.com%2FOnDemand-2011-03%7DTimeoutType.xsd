@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="TimeoutType">
+    <xsd:annotation>
+      <xsd:documentation>The server searching timeout - how long before a search is aborted (milliseconds)</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:nonNegativeInteger">
+      <xsd:minInclusive value="0"/>
+      <xsd:maxInclusive value="600000"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

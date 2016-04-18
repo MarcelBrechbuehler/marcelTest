@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_activityLocation</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8607</uuid>
+        <description>Contains activity location details of permit</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;Activity/Location&quot;,
+  isCollapsible: true,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(
+      readOnly: true,
+      label: &quot;&quot;,
+      totalCount: 5,
+      columns: {
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Activity&quot;,
+          data: {
+            if(
+              length(
+                local!permitActivityMapDetails.permitActivityId
+              ) &gt; 0,
+              #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7637&quot;(
+                local!permitActivityMapDetails.permitActivityId
+              ).level4,
+              {}
+            )
+          },
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Permit Holder&quot;,
+          data: if(
+            length(
+              local!partyDetails
+            ) &lt; 1,
+            {},
+            local!partyDetails.partyName
+          ),
+          links: if(
+            length(
+              local!partyDetails
+            ) &lt; 1,
+            {},
+            apply(
+              #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+                recordtype: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3311&quot;,
+                identifier: _
+              ),
+              local!partyDetails.partyId
+            )
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Location Reference&quot;,
+          links: {
+            if(
+              length(
+                local!permitActivityMapDetails
+              ) &lt; 1,
+              {},
+              {
+                apply(
+                  #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+                    recordtype: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10177&quot;,
+                    identifier: _
+                  ),
+                  local!permitActivityMapDetails.locationId
+                )
+              }
+            )
+          },
+          data: {
+            if(
+              length(
+                local!locationDetails
+              ) = 0,
+                            {},
+                            local!locationDetails.locationRef
+            )
+          },
+          alignment: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Location Name&quot;,
+          data: {
+            if(
+              or(
+                isnull(
+                  local!permitTenure
+                ),
+                length(
+                  local!permitTenure
+                ) &lt; 1
+              ),
+              {},
+              local!permitTenure.localityName
+            )
+          },
+          alignment: &quot;LEFT&quot;
+        )
+      },
+      value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+        startIndex: 1,
+        batchSize: 5,
+        sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+          field: &quot;name&quot;,
+          ascending: true
+        )
+      )
+    )
+  }
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityApplicantsDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityApplicationContactDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityApplicationFeePaymentDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityBlockDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityDocumentDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityFinancialAssuranceDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityLocationLgaDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityMNESQuestionsDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityMineralDetails_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTEnvironmentalAuthorityTenureDetails_INT.xsd"/>
+  <xsd:complexType name="CTEnvironmentalAuthorityMRAStandardApplicationDetails_INT">
+    <xsd:sequence>
+      <xsd:element name="applicationType" nillable="true" type="xsd:string"/>
+      <xsd:element name="paperFormFlag" nillable="true" type="xsd:string"/>
+      <xsd:element name="applicationReceivedDate" nillable="true" type="xsd:date"/>
+      <xsd:element name="dnrmProjectId" nillable="true" type="xsd:int"/>
+      <xsd:element name="dnrmProjectName" nillable="true" type="xsd:string"/>
+      <xsd:element name="preferredCorrespondenceType" nillable="true" type="xsd:string"/>
+      <xsd:element name="mapOfEsa" nillable="true" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="applicantsDetails" type="tns:CTEnvironmentalAuthorityApplicantsDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="mnesQuestionsDetails" type="tns:CTEnvironmentalAuthorityMNESQuestionsDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="tenureDetails" type="tns:CTEnvironmentalAuthorityTenureDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="lgaDetails" type="tns:CTEnvironmentalAuthorityLocationLgaDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="mineralDetails" type="tns:CTEnvironmentalAuthorityMineralDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="blockDetails" type="tns:CTEnvironmentalAuthorityBlockDetails_INT"/>
+      <xsd:element name="applicationContact" nillable="true" type="tns:CTEnvironmentalAuthorityApplicationContactDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="applicationFeePayment" type="tns:CTEnvironmentalAuthorityApplicationFeePaymentDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="financialAssurance" type="tns:CTEnvironmentalAuthorityFinancialAssuranceDetails_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="documentDetails" type="tns:CTEnvironmentalAuthorityDocumentDetails_INT"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

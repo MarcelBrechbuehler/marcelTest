@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DAddressLineType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DDPVStatusType.xsd"/>
+  <xsd:complexType name="QAAddressType">
+    <xsd:annotation>
+      <xsd:documentation>QAAddressType describes a formatted addressThe child elements are as follows:AddressLine  : The individual lines of the addressThe attributes are as follows:Overflow   : There are not enough address lines configured to display the whole addressTruncated  : Truncation has occurred on one or more address linesDPVStatus : DPV Status for the AddressMissingSubPremise: Please refer to the associated Pro On Demand web service documentation for information about this feature.</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element form="qualified" maxOccurs="unbounded"
+        name="AddressLine" type="tns:AddressLineType"/>
+    </xsd:sequence>
+    <xsd:attribute name="DPVStatus" type="tns:DPVStatusType"/>
+    <xsd:attribute default="false" name="MissingSubPremise" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Overflow" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Truncated" type="xsd:boolean"/>
+  </xsd:complexType>
+</xsd:schema>

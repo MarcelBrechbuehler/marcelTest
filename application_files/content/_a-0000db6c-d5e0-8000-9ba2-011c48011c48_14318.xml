@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_viewOfficers</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14318</uuid>
+        <description>Views the selected Officers for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:  1,&#xD;
+                                 batchSize:   3,&#xD;
+                                 sort:  #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                                          field:  &quot;userId&quot;,&#xD;
+                                          ascending:  true&#xD;
+                                        )&#xD;
+                    ),&#xD;
+  with(&#xD;
+    local!userMap:  fn!todatasubset(if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                                      {},&#xD;
+                                      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14189&quot;(ri!careEvaluationId)&#xD;
+                                    ),&#xD;
+                                    local!pagingInfo&#xD;
+                    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label:  &quot;CaRE Officer(s)&quot;,&#xD;
+      firstColumnContents:  {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+          label: {},&#xD;
+          totalCount: local!userMap.totalCount,&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+  					  label:  &quot;Name&quot;,&#xD;
+  					  field:  &quot;userId&quot;,&#xD;
+  					  data: apply(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14397&quot;, index(local!userMap.data, &quot;userId&quot;, {}))&#xD;
+  					),&#xD;
+  					#&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+  					  label:  &quot;Role&quot;,&#xD;
+  					  field:  &quot;careOfficerPriority&quot;,&#xD;
+  					  data: apply(fn!displayvalue,&#xD;
+  					              index(local!userMap.data, &quot;careOfficerPriority&quot;, {}),&#xD;
+  					              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14426&quot;,&#xD;
+  					              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14424&quot;,&#xD;
+  					              {}&#xD;
+  					        )				  &#xD;
+  					)&#xD;
+          },&#xD;
+          value: local!pagingInfo,&#xD;
+          saveInto: {&#xD;
+            a!save(local!pagingInfo, save!value)&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      isCollapsible:  true&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

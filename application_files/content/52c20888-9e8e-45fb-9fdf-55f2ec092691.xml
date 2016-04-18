@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicationContactDetails</name>
+        <uuid>52c20888-9e8e-45fb-9fdf-55f2ec092691</uuid>
+        <description>This interface rule used to display permit application contact details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Contact Information&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      totalCount: if(&#xD;
+          or(&#xD;
+            isnull(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ),&#xD;
+            length(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ) = 0&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          local!partyContactDetailsDataSubset.totalCount&#xD;
+          ),&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Name&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!partyContactDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!partyContactDetails.partyName&#xD;
+          )          &#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Phone Number&quot;,&#xD;
+          field: &quot;phoneNumber&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!partyContactDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!partyContactDetails.phoneNumber&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Email&quot;,&#xD;
+          field: &quot;email&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!partyContactDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!partyContactDetails.email&#xD;
+          )&#xD;
+        )&#xD;
+      },&#xD;
+      value: local!partyContactPagingInfo&#xD;
+    )&#xD;
+  },&#xD;
+  isCollapsible: true&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

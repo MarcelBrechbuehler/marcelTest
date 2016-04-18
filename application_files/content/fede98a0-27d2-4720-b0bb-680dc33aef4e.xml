@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_searchCustomer</name>
+        <uuid>fede98a0-27d2-4720-b0bb-680dc33aef4e</uuid>
+        <description>This rule displays the search customer screen</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  /*================ LOAD ================*/&#xD;
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(&#xD;
+      loggedInUser(),{#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24493&quot;,#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24494&quot;}&#xD;
+  ),&#xD;
+  local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+    pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: 25/*,&#xD;
+      sort: a!sortInfo(&#xD;
+        field: &quot;partyName&quot;,&#xD;
+        ascending: true&#xD;
+      )*/&#xD;
+    )&#xD;
+  ),&#xD;
+  local!selectedCust,&#xD;
+  with(&#xD;
+    local!datasubset: todatasubset(&#xD;
+      ri!customer,&#xD;
+      local!gridSelection.pagingInfo&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: &quot;Customer Search&quot; &amp; ri!isFind,&#xD;
+      firstColumnContents: {&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!processMilestoneName_txt&#xD;
+          ),&#xD;
+          {},&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+            ri!processMilestoneName_txt,&#xD;
+            ri!processMilestoneIndex_int&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          firstColumnContents: {&#xD;
+/*&#xD;
+            a!checkboxField(&#xD;
+              label: &quot;&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: {&#xD;
+                cons!CUST_ACTIVE_CUSTOMERS_ONLY&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                cons!COM_STATUS_PARTY_ACTIVE&#xD;
+              },&#xD;
+              value: ri!isCustomerActive,&#xD;
+              saveInto: ri!isCustomerActive&#xD;
+            )&#xD;
+*/&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            if(or(ri!isRelatedCustomer = &quot;Find&quot;,ri!isRelatedCustomer = &quot;SOR&quot;),&#xD;
+              #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+                required: true,&#xD;
+                validationGroup: &quot;Search&quot;,&#xD;
+                choiceLabels: {&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2820&quot;[1],&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2820&quot;[2]&#xD;
+                },&#xD;
+                choiceValues: {&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[1],&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[2]&#xD;
+                },&#xD;
+                value: ri!partyType,&#xD;
+                saveInto: ri!partyType&#xD;
+              ),&#xD;
+      				#&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+      				  label: &quot;*&quot;,&#xD;
+      				  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      				  required: true,&#xD;
+      				  validationGroup: &quot;Search&quot;,&#xD;
+      				  choiceLabels: {&#xD;
+      					#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2820&quot;&#xD;
+      				  },&#xD;
+      				  choiceValues: {&#xD;
+      					#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[1],&#xD;
+      					#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[2],&#xD;
+      					#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[3]&#xD;
+      				  },&#xD;
+      				  value: ri!partyType,&#xD;
+      				  saveInto: ri!partyType&#xD;
+              )&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;&quot;,&#xD;
+              readOnly: true,&#xD;
+              value: &quot;&quot;&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;* Select Search&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              required: true,&#xD;
+              validationGroup: &quot;Search&quot;,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceLabels: {&#xD;
+                #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;&#xD;
+              },&#xD;
+              value: ri!selectedSearch,&#xD;
+              saveInto: {&#xD;
+                ri!selectedSearch,&#xD;
+                a!save(&#xD;
+                  ri!searchValue_txt,&#xD;
+                  if(&#xD;
+                    ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[3],&#xD;
+                    null,&#xD;
+                    ri!searchValue_txt&#xD;
+                  )&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            if(&#xD;
+              ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[3],&#xD;
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                label: &quot;* Search Value&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                required: true,&#xD;
+                validationGroup: &quot;Search&quot;,&#xD;
+                placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                choiceLabels: {&#xD;
+                  #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1555&quot;(&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                  ).description&#xD;
+                },&#xD;
+                choiceValues: {&#xD;
+                  #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1555&quot;(&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                  ).partyTypeId&#xD;
+                },&#xD;
+                value: if(&#xD;
+                  ri!searchValue_int &gt; 0,&#xD;
+                  ri!searchValue_int,&#xD;
+                  null&#xD;
+                ),&#xD;
+                saveInto: ri!searchValue_int&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;* Search Value&quot;,&#xD;
+                required: true,&#xD;
+                validationGroup: &quot;Search&quot;,&#xD;
+                validations: if(&#xD;
+                  len(ri!searchValue_txt) &gt;= 3,&#xD;
+                  null,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5417&quot;&#xD;
+                ),&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                value: ri!searchValue_txt,&#xD;
+                saveInto: {&#xD;
+                  a!save(&#xD;
+                    ri!searchValue_txt,&#xD;
+                    if(&#xD;
+                      ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[1],&#xD;
+                      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13812&quot;(&#xD;
+                        save!value&#xD;
+                      ),&#xD;
+                      save!value&#xD;
+                    )&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: if(&#xD;
+                ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[3],&#xD;
+                &quot;* Select Filter&quot;,&#xD;
+                &quot;Select Filter&quot;&#xD;
+              ),&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              validations: if(&#xD;
+                ri!selectedFilter = &quot;&quot;,&#xD;
+                &quot;&quot;,&#xD;
+                if(&#xD;
+                  ri!selectedSearch = ri!selectedFilter,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5418&quot;,&#xD;
+                  &quot;&quot;&#xD;
+                )&#xD;
+              ),&#xD;
+              required: if(&#xD;
+                ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[3],&#xD;
+                /*&#xD;
+                or(&#xD;
+                  ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[8],&#xD;
+                  ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[6],&#xD;
+                  ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[7]&#xD;
+                ),&#xD;
+*/true(),&#xD;
+                false()&#xD;
+              ),&#xD;
+              /*&#xD;
+              required: false,&#xD;
+*/validationGroup: &quot;Search&quot;,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceLabels: {&#xD;
+                if(&#xD;
+                  ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[8],&#xD;
+                  {&#xD;
+/*                    &#xD;
+                    cons!CUST_FILTER_SEARCH_DROPDOWN_VALUES[7],&#xD;
+*/                    &#xD;
+                    #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2885&quot;[8]&#xD;
+                  },&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2885&quot;&#xD;
+                )&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                if(&#xD;
+                  ri!selectedSearch = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[8],&#xD;
+                  {&#xD;
+/*                    &#xD;
+                    cons!CUST_FILTER_SEARCH_DROPDOWN_VALUES[7],&#xD;
+*/                    &#xD;
+                    #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2885&quot;[8]&#xD;
+                  },&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2885&quot;&#xD;
+                )&#xD;
+              },&#xD;
+              value: ri!selectedFilter,&#xD;
+              saveInto: ri!selectedFilter&#xD;
+            ),&#xD;
+            if(&#xD;
+              ri!selectedFilter = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1619&quot;[3],&#xD;
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                label: &quot;* Filter Value&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                required: true,&#xD;
+                validationGroup: &quot;Search&quot;,&#xD;
+                placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                choiceLabels: {&#xD;
+                  #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1555&quot;(&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                  ).description&#xD;
+                },&#xD;
+                choiceValues: {&#xD;
+                  #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1555&quot;(&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                  ).partyTypeId&#xD;
+                },&#xD;
+                value: if(&#xD;
+                  ri!filterValue_int &gt; 0,&#xD;
+                  ri!filterValue_int,&#xD;
+                  null&#xD;
+                ),&#xD;
+                saveInto: ri!filterValue_int&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;Filter Value&quot;,&#xD;
+                /*&#xD;
+                required: if(&#xD;
+                  or(&#xD;
+                    ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[8],&#xD;
+                    ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[6],&#xD;
+                    ri!selectedSearch = cons!CUST_SELECTED_SEARCH_DROPDOWN_VALUES[7]&#xD;
+                  ),&#xD;
+                  true(),&#xD;
+                  false()&#xD;
+                ),&#xD;
+                required: false,&#xD;
+                */&#xD;
+                required: if(ri!selectedFilter&gt;0,true(),false()),&#xD;
+                validationGroup: &quot;Search&quot;,&#xD;
+                validations: if(&#xD;
+                  len(ri!filterValue_txt) &gt;= 3,&#xD;
+                  null,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5417&quot;&#xD;
+                ),&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                value: ri!filterValue_txt,&#xD;
+                saveInto: {&#xD;
+                  a!save(&#xD;
+                    ri!filterValue_txt,&#xD;
+                    if(&#xD;
+                      ri!selectedFilter = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2885&quot;[1],&#xD;
+                      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13812&quot;(&#xD;
+                        save!value&#xD;
+                      ),&#xD;
+                      save!value&#xD;
+                    )&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+          primaryButtons: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,&#xD;
+              style: &quot;NORMAL&quot;,&#xD;
+              validationGroup: &quot;Search&quot;,&#xD;
+              validate: true,&#xD;
+              value: &quot;Search&quot;,&#xD;
+              saveInto: ri!buttonValue&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Select Customer&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              label: &quot;Customer&quot;,&#xD;
+              totalCount: local!datasubset.totalcount,&#xD;
+              selection: true,&#xD;
+              identifiers: index(&#xD;
+                local!datasubset.data,&#xD;
+                &quot;partyId&quot;,&#xD;
+                {}&#xD;
+              ),&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Name&quot;,&#xD;
+                  data: index(&#xD;
+                    local!datasubset.data,&#xD;
+                    &quot;partyName&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  links: apply(&#xD;
+                    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16058&quot;,&#xD;
+                    merge(&#xD;
+                      {&#xD;
+                        index(&#xD;
+                          local!datasubset.data,&#xD;
+                          &quot;partyName&quot;,&#xD;
+                          {}&#xD;
+                        )&#xD;
+                      },&#xD;
+                      {&#xD;
+                        index(&#xD;
+                          local!datasubset.data,&#xD;
+                          &quot;partyId&quot;,&#xD;
+                          {}&#xD;
+                        )&#xD;
+                      }&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Business Number&quot;,&#xD;
+                  data: index(&#xD;
+                    local!datasubset.data,&#xD;
+                    &quot;businessNumber&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Address&quot;,&#xD;
+                  links: &quot;&quot;,&#xD;
+                  data: index(&#xD;
+                    local!datasubset.data,&#xD;
+                    &quot;address&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Customer ID&quot;,&#xD;
+                  data: index(&#xD;
+                    local!datasubset.data,&#xD;
+                    &quot;businessRef&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                )&#xD;
+              },&#xD;
+              validations: if(&#xD;
+                count(&#xD;
+                  local!gridSelection.selected&#xD;
+                ) &gt; 1,&#xD;
+                &quot;You may only select one customer&quot;,&#xD;
+                null&#xD;
+              ),&#xD;
+              value: local!gridSelection,&#xD;
+              saveInto: {&#xD;
+                local!gridSelection,&#xD;
+                if(&#xD;
+                  count(&#xD;
+                    local!gridSelection.selected&#xD;
+                  ) &gt; 1,&#xD;
+                  {},&#xD;
+                  {&#xD;
+                    a!save(&#xD;
+                      ri!selectedCustomerId,&#xD;
+                      index(&#xD;
+                        save!value,&#xD;
+                        &quot;selected&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    ),&#xD;
+                    a!save(&#xD;
+                      local!selectedCust,&#xD;
+                      index(&#xD;
+                        save!value,&#xD;
+                        &quot;selected&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    )&#xD;
+                  }&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          validationGroup: &quot;Next&quot;,&#xD;
+          validations: if(&#xD;
+            isnull(&#xD;
+              local!gridSelection.selected&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+              message: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5414&quot;,&#xD;
+              validateAfter: &quot;SUBMIT&quot;&#xD;
+            ),&#xD;
+            {}&#xD;
+          )&#xD;
+        )&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          if(&#xD;
+            or(&#xD;
+              ri!isRelatedCustomer = &quot;&quot;,&#xD;
+              isnull(&#xD;
+                ri!isRelatedCustomer&#xD;
+              )&#xD;
+            ),&#xD;
+            {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+                style: &quot;PRIMARY&quot;,&#xD;
+                validationGroup: &quot;Next&quot;,&#xD;
+                value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+                saveInto: ri!buttonValue&#xD;
+              )&#xD;
+            },&#xD;
+            {&#xD;
+              if(&#xD;
+                ri!isRelatedCustomer = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                {&#xD;
+                  if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24494&quot;),&#xD;
+                    #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                      label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                      style: &quot;PRIMARY&quot;,&#xD;
+                      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                      validationGroup: &quot;Next&quot;,&#xD;
+                      saveInto: ri!buttonValue&#xD;
+                    ),&#xD;
+                    {}&#xD;
+                  )&#xD;
+                },&#xD;
+                {&#xD;
+                  #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                    label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                    style: &quot;PRIMARY&quot;,&#xD;
+                    validationGroup: &quot;Next&quot;,&#xD;
+                    value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                    saveInto: ri!buttonValue&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!buttonValue&#xD;
+          ),&#xD;
+          if(&#xD;
+            or(&#xD;
+              or(&#xD;
+                ri!isRelatedCustomer = &quot;&quot;,&#xD;
+                isnull(&#xD;
+                  ri!isRelatedCustomer&#xD;
+                )&#xD;
+              ),&#xD;
+              ri!isRelatedCustomer = &quot;SOR&quot;,&#xD;
+              ri!isRelatedCustomer = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+            ),&#xD;
+            {&#xD;
+              if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24493&quot;),&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                  label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5407&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  skipValidation: true(),&#xD;
+                  value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5407&quot;,&#xD;
+                  saveInto: ri!buttonValue&#xD;
+                ),&#xD;
+                {}&#xD;
+              ),&#xD;
+              if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24494&quot;),&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                  label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  validationGroup: &quot;Next&quot;,&#xD;
+                  value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                  saveInto: ri!buttonValue&#xD;
+                ),&#xD;
+                {}&#xD;
+              )&#xD;
+            },&#xD;
+            {}&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>isCustomerActive</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedSearch</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedFilter</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyType</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>filterValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customer</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCustomer</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isRelatedCustomer</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCustomerId</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchValue_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>filterValue_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isFind</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>isCustomerActive</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>searchValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>selectedSearch</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>selectedFilter</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>partyType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>filterValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customer</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>selectedCustomer</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isRelatedCustomer</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>selectedCustomerId</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>searchValue_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>filterValue_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isFind</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

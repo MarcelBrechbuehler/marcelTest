@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addCustomerBusinessAddress</name>
+        <uuid>d88348dd-b57b-4702-ac68-d4dea2f469c3</uuid>
+        <description>This rule is used to display add customer business address details.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    label: &quot;Property&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    value: ri!propertyValue,&#xD;
+    saveInto: ri!propertyValue,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                   fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22910&quot;,&#xD;
+                   fieldData: ri!propertyValue&#xD;
+                 )&#xD;
+  ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Unit No&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: ri!streetNoValue1,&#xD;
+        saveInto: ri!streetNoValue1,&#xD;
+        validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22911&quot;,&#xD;
+                       fieldData: ri!streetNoValue1&#xD;
+                     )&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Street No&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: ri!streetNoValue2,&#xD;
+        saveInto: ri!streetNoValue2,&#xD;
+        validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22912&quot;,&#xD;
+                       fieldData: ri!streetNoValue2&#xD;
+                     )&#xD;
+      ),&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    label: &quot;Street Name&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    value: ri!streetNameValue,&#xD;
+    saveInto: ri!streetNameValue,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                   fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22914&quot;,&#xD;
+                   fieldData: ri!streetNameValue&#xD;
+                 )&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+    label: &quot;Street Type&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+    choiceLabels: {&#xD;
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13768&quot;&#xD;
+    },&#xD;
+    choiceValues: {&#xD;
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13769&quot;&#xD;
+    },&#xD;
+    value: ri!streetValue,&#xD;
+    saveInto: ri!streetValue,&#xD;
+    required: false&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    label: &quot;Post Code&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    value:ri!postalCode,&#xD;
+    saveInto: {ri!postalCode,&#xD;
+    a!save(ri!suburbValue,&quot;&quot;),&#xD;
+    a!save(ri!stateValue,&quot;&quot;)&#xD;
+    &#xD;
+    },&#xD;
+    &#xD;
+    &#xD;
+    required: true&#xD;
+	/*readOnly: true()*/&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+    label: &quot;Suburb&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+    choiceLabels: local!getRegisteredSuburbDetails.suburbName,&#xD;
+    choiceValues: local!getRegisteredSuburbDetails.suburbName,&#xD;
+    value: &#xD;
+      ri!suburbValue,&#xD;
+    &#xD;
+    saveInto: {&#xD;
+      ri!suburbValue,&#xD;
+      a!save(&#xD;
+        ri!stateValue,&#xD;
+		if(isnull(ri!postalCode),&quot;&quot;,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15696&quot;(ri!postalCode,save!value).state))&#xD;
+&#xD;
+    },&#xD;
+    required: true&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    label: &quot;State&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    value:ri!stateValue, &#xD;
+    /*saveInto: ri!postStateValue,*/&#xD;
+    required: true,&#xD;
+    readOnly: true&#xD;
+  )&#xD;
+}</definition>
+        <namedTypedValue>
+            <name>propertyValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNameValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetValue</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postalCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suburbValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>stateValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>propertyValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetNoValue1</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetNoValue2</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetNameValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>streetValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>postalCode</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>suburbValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>stateValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

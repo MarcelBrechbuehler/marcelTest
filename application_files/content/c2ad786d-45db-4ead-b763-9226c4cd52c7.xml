@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_addEditUserDetails</name>
+        <uuid>c2ad786d-45db-4ead-b763-9226c4cd52c7</uuid>
+        <description>Add or edit user details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11467</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: /*if(
+    ri!isEdit = cons!COM_BUTTON_LABEL_EDIT,
+    &quot;Edit &quot;&amp;index(
+            cons!USR_USER_TYPE_DROPDOWN_NAMES,
+            wherecontains(
+              ri!userType,
+              cons!USR_USER_TYPE_DROPDOWN_VALUES
+            )
+          ),*/
+  &quot;New User Registration&quot;,
+  firstColumnContents: {
+    #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(
+      ri!processMilestoneName_txt,
+      ri!processMilestoneIndex_int
+    ),
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label: &quot;&quot;,
+      firstColumnContents: {
+        if(
+          ri!isEdit = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,
+          {
+            #&quot;SYSTEM_SYSRULES_textField&quot;(
+              label: &quot;Login ID&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              readOnly: true,
+              value: ri!username,
+              validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22926&quot;,
+                fieldData: ri!username
+              )
+            )
+          },
+          {}
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;User Type&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          readOnly: true,
+          value: index(
+            #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8296&quot;,
+            wherecontains(
+              ri!userType,
+              #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8297&quot;
+            )
+          ),
+          saveInto: {}
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Email Address&quot;,
+          required: true,
+          labelPosition: &quot;ADJACENT&quot;,
+          validations: {
+            if(
+              and(
+                like(
+                  ri!userEmail,
+                  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7257&quot;
+                ),
+                #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10514&quot;(
+                  ri!userEmail
+                )
+              ),
+              #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22926&quot;,
+                fieldData: ri!userEmail
+              ),
+              #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7272&quot;
+            ),
+            if(
+              ri!isEdit = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,
+              {},
+              if(
+                isusernametaken(
+                  ri!userEmail
+                ),
+                #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9124&quot;,
+                &quot;&quot;
+              )
+            ),
+            if(
+              len(
+                stripwith(
+                  ri!userEmail,
+                  &quot; &quot;
+                )
+              ) &lt; len(
+                ri!userEmail
+              ),
+              #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7272&quot;,
+              null
+            )
+          },
+          value: ri!userEmail,
+          saveInto: ri!userEmail
+        ),
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+          label: &quot;Title&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          required: true,
+          placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+          choiceLabels: {
+            #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3193&quot;
+          },
+          choiceValues: {
+            #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2440&quot;
+          },
+          value: if(ri!userTitle=888,null,ri!userTitle),
+          saveInto: ri!userTitle,
+          validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+            fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22902&quot;,
+            fieldData: ri!userTitle
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;First Name&quot;,
+          required: true,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!userFirstName,
+          saveInto: ri!userFirstName,
+          validations: {
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+              fieldMaxLength: #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27918&quot;,
+              fieldData: ri!userFirstName
+            ),
+            if(
+              len(
+                stripwith(
+                  ri!userFirstName,
+                  #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27933&quot;
+                )
+              ) &lt; len(
+                ri!userFirstName
+              ),
+              #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27930&quot;,
+              null
+            )
+          }
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Middle Name&quot;,
+          required: false,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!userMiddleName,
+          saveInto: ri!userMiddleName,
+          validations: {
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+              fieldMaxLength: #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27919&quot;,
+              fieldData: ri!userMiddleName
+            ),
+            if(
+              len(
+                stripwith(
+                  ri!userMiddleName,
+                  #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27933&quot;
+                )
+              ) &lt; len(
+                ri!userMiddleName
+              ),
+              #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27930&quot;,
+              null
+            )
+          }
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Surname&quot;,
+          required: true,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!userSurname,
+          saveInto: ri!userSurname,
+          validations: {
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+              fieldMaxLength: #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27920&quot;,
+              fieldData: ri!userSurname
+            ),
+            if(
+              len(
+                stripwith(
+                  ri!userSurname,
+                  #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27933&quot;
+                )
+              ) &lt; len(
+                ri!userSurname
+              ),
+              #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27930&quot;,
+              null
+            )
+          }
+        ),
+        if(ri!userType=0,
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(
+            label: &quot;Date of Birth&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!dateOfBirth,
+            saveInto: ri!dateOfBirth,
+            required: true,
+            validations: if(
+              ri!dateOfBirth &gt; #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;(),
+              &quot;DOB cannot be in the future&quot;,
+              if(
+                isnull(
+                  ri!dateOfBirth
+                ),
+                &quot;&quot;,
+                if(
+                  fn!year(
+                    ri!dateOfBirth
+                  ) &lt; #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23055&quot;,
+                  &quot;DOB Year cannot be less than &quot; &amp; #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23055&quot;,
+                  &quot;&quot;
+                )
+              )
+            )
+          ),
+          {}
+        )
+      }
+    )
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      if(
+        ri!userType = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8297&quot;[2],
+        {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+            style: &quot;PRIMARY&quot;,
+            validate: true,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+            saveInto: ri!buttonValue
+          )
+        },
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+          style: &quot;PRIMARY&quot;,
+          validate: true,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+          saveInto: ri!buttonValue
+        )
+      )
+    },
+    secondaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+        style: &quot;DESTRUCTIVE&quot;,
+        skipValidation: true,
+        confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,
+        value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+        saveInto: ri!buttonValue
+      )
+    }
+  )
+)</definition>
+        <namedTypedValue>
+            <name>userEmail</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userTitle</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userFirstName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userMiddleName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userSurname</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEdit</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>username</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>dateOfBirth</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>userEmail</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>userTitle</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>userFirstName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>userMiddleName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>userSurname</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isEdit</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>userType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>username</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>dateOfBirth</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

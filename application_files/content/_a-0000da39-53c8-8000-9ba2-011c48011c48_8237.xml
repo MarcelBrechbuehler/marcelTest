@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_integrationRegisterCheckOrganisationName</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8237</uuid>
+        <description>This purpose of this rule is to validate the payload &quot;firstname&quot; data 
+Business Rule: First name must be provided if Type is Individual otherwise &quot;Error 13&quot; will be generated
+IN: partyTypeCode e.g &quot;CMP&quot;, party name, field type e.g &quot;businessName&quot;
+OUT: blank if valid or the error code if invalid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=if(wherecontains(ri!partyTypeCode,#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8236&quot;) &gt; 0,
+
+  if(isnull(ri!businessName),
+  /*generate an error message*/
+  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+     #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+     824,
+     838,
+     &quot;9&quot;,
+     819
+     ),
+     ri!field_text,
+     ri!businessName),{}),{})</definition>
+        <namedTypedValue>
+            <name>partyTypeCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

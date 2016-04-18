@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_getEHPCustomerRecord</name>
+        <uuid>_a-0000db98-abcf-8000-9ba2-011c48011c48_17904</uuid>
+        <description></description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1633</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+/* */&#xD;
+  local!customers: &#xD;
+  if(isnull(ri!searchTerm_txt),&#xD;
+    #&quot;SYSTEM_SYSRULES_queryEntity&quot;(&#xD;
+      entity: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3392&quot;,&#xD;
+      query: #&quot;SYSTEM_SYSRULES_query&quot;(&#xD;
+        selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerId&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerRef&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerName&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerType.partyTypeId&quot;, alias:&quot;partyTypeId&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerType.description&quot;, alias:&quot;partyTypeDescription&quot;)&#xD;
+          }&#xD;
+        ),&#xD;
+        logicalExpression: #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(&#xD;
+          operator: &quot;AND&quot;,&#xD;
+          filters: {&#xD;
+            #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+            field: &quot;active&quot;,&#xD;
+            operator: &quot;=&quot;,&#xD;
+            value: 1&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+            field: &quot;customerType.partyTypeId&quot;,&#xD;
+            operator: &quot;&lt;&gt;&quot;,&#xD;
+            value: 12&#xD;
+            ),&#xD;
+            if(isnull(ri!customerId_int),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerId&quot;,&#xD;
+                operator: &quot;=&quot;,&#xD;
+                value: ri!customerId_int&#xD;
+              )&#xD;
+            ),&#xD;
+            if(isnull(ri!customerName_txt),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerName&quot;,&#xD;
+                operator: &quot;between&quot;,&#xD;
+                value: split(ri!customerName_txt,&quot;; &quot;)&#xD;
+              )&#xD;
+            ),&#xD;
+            if(isnull(ri!customerType_txt),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerType.description&quot;,&#xD;
+                operator: &quot;=&quot;,&#xD;
+                value: ri!customerType_txt&#xD;
+              )&#xD;
+            )&#xD;
+          }&#xD;
+        ),      &#xD;
+        pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+          startIndex: 1,&#xD;
+          batchSize: 100,&#xD;
+          sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+            field: &quot;customerName&quot;,&#xD;
+            ascending: true&#xD;
+          )&#xD;
+        )&#xD;
+      )&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_queryEntity&quot;(&#xD;
+      entity: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3392&quot;,&#xD;
+      query: #&quot;SYSTEM_SYSRULES_query&quot;(&#xD;
+        selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerId&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerRef&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerName&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerType.partyTypeId&quot;, alias:&quot;partyTypeId&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;customerType.description&quot;, alias:&quot;partyTypeDescription&quot;)&#xD;
+          }&#xD;
+        ),&#xD;
+        logicalExpression: #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(&#xD;
+          operator: &quot;AND&quot;,&#xD;
+          filters: {&#xD;
+            #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+            field: &quot;active&quot;,&#xD;
+            operator: &quot;=&quot;,&#xD;
+            value: 1&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+            field: &quot;customerType.partyTypeId&quot;,&#xD;
+            operator: &quot;&lt;&gt;&quot;,&#xD;
+            value: 12&#xD;
+            ),&#xD;
+            if(isnull(ri!customerId_int),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerId&quot;,&#xD;
+                operator: &quot;=&quot;,&#xD;
+                value: ri!customerId_int&#xD;
+              )&#xD;
+            ),&#xD;
+            if(isnull(ri!customerName_txt),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerName&quot;,&#xD;
+                operator: &quot;between&quot;,&#xD;
+                value: split(ri!customerName_txt,&quot;; &quot;)&#xD;
+              )&#xD;
+            ),&#xD;
+            if(isnull(ri!customerType_txt),&#xD;
+              null,&#xD;
+              #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                field: &quot;customerType.description&quot;,&#xD;
+                operator: &quot;=&quot;,&#xD;
+                value: ri!customerType_txt&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          logicalExpressions: {&#xD;
+            #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(&#xD;
+              operator: &quot;OR&quot;,&#xD;
+              filters: {&#xD;
+                if(isnull(ri!searchTerm_txt),&#xD;
+                  null,&#xD;
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                    field: &quot;customerRef&quot;,&#xD;
+                    operator: &quot;includes&quot;,&#xD;
+                    value: ri!searchTerm_txt&#xD;
+                  )&#xD;
+                ),&#xD;
+                if(isnull(ri!searchTerm_txt),&#xD;
+                  null,&#xD;
+                  #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+                    field: &quot;customerName&quot;,&#xD;
+                    operator: &quot;includes&quot;,&#xD;
+                    value: ri!searchTerm_txt&#xD;
+                  )&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        ),      &#xD;
+        pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+          startIndex: 1,&#xD;
+          batchSize: 100,&#xD;
+          sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+            field: &quot;customerName&quot;,&#xD;
+            ascending: true&#xD;
+          )&#xD;
+        )&#xD;
+      )&#xD;
+    )&#xD;
+  ),&#xD;
+/*&#xD;
+  local!customers: {&#xD;
+    customerId: 1,&#xD;
+    customerRef: ri!searchTerm_txt,&#xD;
+    customerName: ri!customerName_txt,&#xD;
+    partyTypeId: 1,&#xD;
+    partyTypeDescription: ri!customerType_txt,&#xD;
+  },&#xD;
+*/&#xD;
+  cast('type!{http://www.ehp.qld.gov.au/connect/types/}CTEHPCustomer?list',local!customers.data)&#xD;
+&#xD;
+  /*&#xD;
+  cast('type!{http://www.ehp.qld.gov.au/connect/types/}CTEHPCustomer?list',local!customers)&#xD;
+  cast('type!{http://www.ehp.qld.gov.au/connect/types/}CTEHPCustomer?list',local!customers.data)&#xD;
+    Check to see if response was a success.&#xD;
+    -If it was a success, convert the body of the response to a List of Dictionaries,&#xD;
+    and cast that List of Dictionaries to a List of Legislators.&#xD;
+    -If it was not a success, return the status of the query. (Good practice for debugging)&#xD;
+&#xD;
+  if(local!response.success,&#xD;
+    cast(&#xD;
+      'type!Legislator?list',&#xD;
+      a!fromJson(&#xD;
+        local!response.result.body&#xD;
+      )&#xD;
+    ),&#xD;
+    local!response.statusLine&#xD;
+  )&#xD;
+  */&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchTerm_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerType_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>searchTerm_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>customerName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>customerType_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

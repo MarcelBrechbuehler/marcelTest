@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_completion</name>
+        <uuid>f5b05e8d-3296-4b68-a18b-b3bdad9806c7</uuid>
+        <description>this screen shows the outcome of the suitable operator process</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  local!suitableOperator_cdt: if(ri!suitableOperatorId_int&gt;0,&#xD;
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4429&quot;(ri!suitableOperatorId_int),&#xD;
+    'type!{http://www.ehp.qld.gov.au/connect/types/}CTSuitableOperator'()&#xD;
+    ),&#xD;
+	local!customerInfo: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4421&quot;(ri!partyId_int),&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Suitable Operator Registration&quot;,&#xD;
+    firstColumnContents: {&#xD;
+     /* rule!COM_getProcessMilestoneData(&#xD;
+        ri!processMilestoneName_txt,&#xD;
+        ri!processMilestoneIndex_int&#xD;
+      ),*/&#xD;
+      &#xD;
+      #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(&#xD;
+        local!customerInfo.customerName,&#xD;
+        local!customerInfo.customerType.description,&#xD;
+        local!customerInfo.customerId,&#xD;
+        local!customerInfo.customerType.partyTypeId&#xD;
+      ),&#xD;
+      if(&#xD;
+        not(&#xD;
+          isnull(&#xD;
+            ri!message_txt&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Information&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: {&#xD;
+                #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                  text: ri!message_txt,&#xD;
+                  style: &quot;STRONG&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Registration Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          if(&#xD;
+            length(&#xD;
+              local!suitableOperator_cdt.suitableOperatorRef&#xD;
+            ) &gt; 0,&#xD;
+            {},&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Application Reference&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: local!suitableOperator_cdt.applicationRef,&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          ),&#xD;
+          if(&#xD;
+            length(&#xD;
+              local!suitableOperator_cdt.suitableOperatorRef&#xD;
+            ) &gt; 0,&#xD;
+            #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+              label: &quot;Reference&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                label: local!suitableOperator_cdt.suitableOperatorRef,&#xD;
+                recordType: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16447&quot;,&#xD;
+                identifier: local!suitableOperator_cdt.suitableOperatorId&#xD;
+              )&#xD;
+            ),&#xD;
+            {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Status&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!suitableOperator_cdt.statusRef.description,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          if(&#xD;
+            length(&#xD;
+              local!suitableOperator_cdt.suitableOperatorRef&#xD;
+            ) &gt; 0,&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Registration Date&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              instructions: if(&#xD;
+                local!suitableOperator_cdt.status = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3066&quot;,&#xD;
+                #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4978&quot;,&#xD;
+                &quot; &quot;&#xD;
+              ),&#xD;
+              value: datevalue(&#xD;
+                local!suitableOperator_cdt.registrationDate&#xD;
+              ),&#xD;
+              readOnly: true&#xD;
+            ),&#xD;
+            {}&#xD;
+          ),&#xD;
+          if(&#xD;
+            length(&#xD;
+              local!suitableOperator_cdt.suitableOperatorRef&#xD;
+            ) &gt; 0,&#xD;
+            {},&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Application Date&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: datevalue(&#xD;
+                local!suitableOperator_cdt.applicationDate&#xD;
+              ),&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          ),&#xD;
+          if(&#xD;
+            isnull(&#xD;
+              ri!document_doc&#xD;
+            ),&#xD;
+            {},&#xD;
+            #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+              label: &quot;Decision Notice&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              links: #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(&#xD;
+                label: document(&#xD;
+                  ri!document_doc,&#xD;
+                  &quot;name&quot;&#xD;
+                ),&#xD;
+                document: ri!document_doc&#xD;
+              )&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          submit: true,&#xD;
+          validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>message_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suitableOperatorId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>document_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

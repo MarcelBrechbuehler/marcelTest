@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_dynamicPhoneRowGrid</name>
+        <uuid>aa062c67-3931-4cb7-9c5c-b03dfb874944</uuid>
+        <description>Interface rule used for adding Contact Phone numbers in SOR</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  local!itemsToken,&#xD;
+ {&#xD;
+  #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+    headerCells: {&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Phone Type&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;International Code&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Area Code&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Phone Number&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Options&quot;),&#xD;
+      /* For the &quot;Remove&quot; column */&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;&quot;)&#xD;
+    },&#xD;
+    /* Only needed when some columns need to be narrow */&#xD;
+    columnConfigs: {&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)&#xD;
+    },&#xD;
+    rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+      function: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16750&quot;(&#xD;
+        items: ri!items,&#xD;
+        index: _,&#xD;
+        itemsToken: local!itemsToken&#xD;
+      ),&#xD;
+      array: if(or(isnull(ri!items), count(ri!items) &lt; 1), {}, 1+enumerate(count(ri!items))),&#xD;
+      arrayVariable: local!itemsToken&#xD;
+    )&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+    label: &quot;Add Link&quot;,&#xD;
+    labelPosition: &quot;COLLAPSED&quot;,&#xD;
+    links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+      label: &quot;+Add Phone Number&quot;,&#xD;
+      /*&#xD;
+       * For your use case, set the value to a blank instance of your CDT using&#xD;
+       * the type constructor, e.g. type!PurchaseRequestItem(). Only specify the field&#xD;
+       * if you want to give it a default value e.g. due: today()+1.&#xD;
+       */&#xD;
+      value: 'type!{http://www.ehp.qld.gov.au/connect/types/}CTPartyPhone'(),&#xD;
+      saveInto: {&#xD;
+        a!save(local!items, ri!items),&#xD;
+        a!save(local!items, append(local!items, save!value)),&#xD;
+        /* When modifying the size of the array used in a!applyComponents, /&#xD;
+        / make the same change in the &quot;token&quot; array variable               */&#xD;
+        a!save(local!itemsToken, append(local!itemsToken, save!value))&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

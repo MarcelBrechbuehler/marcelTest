@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCommonCodeCore.xsd"/>
+  <xsd:complexType name="CTLocationRelatedMapGeneral">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="location_related_map")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to record the details of location related map for dashboard]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="locationRelatedMapId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Id
+				  @GeneratedValue
+				  @Column( name="location_related_map_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="locationId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="location_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="locationRelatedId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="location_related_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="relationshipReason" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="relationship_reason")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="active")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="relationshipReasonRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="relationship_reason",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

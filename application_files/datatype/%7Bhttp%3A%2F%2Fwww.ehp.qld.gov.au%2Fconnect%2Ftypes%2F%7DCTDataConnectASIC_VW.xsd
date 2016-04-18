@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTDataConnectASIC_VW">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+					@Table( name="data_connect_asic_vw")
+			</xsd:appinfo>
+      <xsd:documentation><![CDATA[view for invalid connect asic report]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="connAsicId" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Id
+				  @Column( name="conn_asic_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connPartyId" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_party_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connPartyRef" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_party_ref", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connPartyTypeId" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_party_type_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connPartyName" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_party_name", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connAbn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_abn", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="connAcn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="conn_acn", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="asicPartyId" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="asic_party_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="asicEntityName" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="asic_entity_name", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="asicAbn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="asic_abn", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="asicAcn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="asic_acn", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="asicException" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="asic_exception", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="variance" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="Variance", columndefinition="varchar(250)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

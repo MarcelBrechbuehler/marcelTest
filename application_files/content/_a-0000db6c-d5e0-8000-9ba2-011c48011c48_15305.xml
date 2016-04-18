@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_startEvaluation</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15305</uuid>
+        <description>Starts the Evaluation</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!careEvaluation:#&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot;(ri!careEvaluationId_int),
+#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;You have been assigned: &quot;&amp;local!careEvaluation.careEvaluationRef,
+  instructions: &quot;Please review the CaRE you have been assigned to complete, when you are ready to start the Pre-Evaluation you may click the 'Start Evaluation' button&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      firstColumnContents:{
+        #&quot;SYSTEM_SYSRULES_linkField&quot;(links:#&quot;SYSTEM_SYSRULES_recordLink&quot;(label:&quot;Evaluation Dashboard&quot;,recordType:#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4769&quot;,identifier:ri!careEvaluationId_int))
+        }
+    ),
+   #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(careEvaluation: local!careEvaluation)
+  },
+
+  
+  secondColumnContents: {},
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Start Evaluation&quot;,
+        style: &quot;PRIMARY&quot;,
+        saveInto: {}
+      )
+    }
+  ),
+  validations: {}
+)
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

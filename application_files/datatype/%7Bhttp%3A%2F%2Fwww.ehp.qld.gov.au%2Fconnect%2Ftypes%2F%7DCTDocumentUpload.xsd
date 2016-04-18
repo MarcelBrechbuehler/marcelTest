@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTDocumentUpload">
+    <xsd:sequence>
+      <xsd:element name="documentId" nillable="true" type="xsd:int"/>
+      <xsd:element name="documentName" nillable="true" type="xsd:string"/>
+      <xsd:element name="documentExtension" nillable="true" type="xsd:string"/>
+      <xsd:element name="documentRef" nillable="true" type="xsd:string"/>
+      <xsd:element name="classificationId" nillable="true" type="xsd:int"/>
+      <xsd:element name="classification" nillable="true" type="xsd:string"/>
+      <xsd:element name="uploadedBy" nillable="true" type="xsd:string"/>
+      <xsd:element name="uploadedAt" nillable="true" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

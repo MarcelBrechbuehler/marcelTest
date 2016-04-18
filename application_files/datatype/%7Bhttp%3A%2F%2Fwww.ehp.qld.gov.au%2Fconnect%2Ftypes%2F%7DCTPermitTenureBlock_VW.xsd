@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTPermitTenureBlock_VW">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="permit_tenure_block_vw")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This data type is used to store permit tenure general details]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="id" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue @Column(name="id", columndefinition="varchar(36)")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitTenureId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="permit_tenure_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitTenureBlockId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="permit_tenure_block_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitTenureBlockSubId" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="permit_tenure_block_sub_id",columnDefinition="text")
+		  </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="blockIdentifierMap" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="block_identifier_map")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="blockIdentifierMapRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="block_identifier_map_ref", columndefinition="varchar(250)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="blockRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="block_ref", columndefinition="varchar(20)")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="subBlockRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="sub_block_ref" , columnDefinition="text")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

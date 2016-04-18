@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCommonCodeCore.xsd"/>
+  <xsd:complexType name="CTPermitGeneral">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+			@Table( name="permit")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This data type is used to store permit details for location dashboard]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="permitId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+			@Id
+			@GeneratedValue
+			@Column( name="permit_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column(name="permit_ref" ,columndefinition="varchar(20)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitVersion" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="permit_version")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="changeReason" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column(name="change_reason" ,columndefinition="varchar(1000)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="grantDate" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="grant_date")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="effectiveDate" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="effective_date")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitProjectId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="permit_project_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dnrmProjectRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="dnrm_project_ref" ,columndefinition="varchar(20)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dnrmProjectName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="dnrm_project_name" ,columndefinition="varchar(250)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="partyContactId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="party_contact_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="currentFee" nillable="true" type="xsd:decimal">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+			@Column( name="current_fee", columndefinition="decimal(14,2)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="anniversaryDate" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="anniversary_date")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitApplicationId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="permit_application_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="created_by")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="created_ts")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="updated_by")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="updated_ts")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="active")
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="permitTypeRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="permit_type",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="annualReturnStatusRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="annual_return_status",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="annualFeeStatusRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="annual_Fee_status",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="toadCategoryRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="toad_category",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="changeActionRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="change_action",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="statusRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="status",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

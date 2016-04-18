@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_dynamicPhoneRowGridForEditContact</name>
+        <uuid>67dec1e7-2bbe-4ba4-be62-be5d5d10ec7d</uuid>
+        <description>This rule is used to dynamically increase the row of grid in edit contact details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+	local!customerToUpdate,&#xD;
+	local!itemsToken,&#xD;
+	/*with(&#xD;
+	local!customerToUpdate: ri!customerToUpdate,&#xD;
+	*/&#xD;
+	/*local!customerToUpdate: {&#xD;
+	{&#xD;
+    partyId:164, contactId:167, partyName:&quot;James&quot;, partyContactId:106, contactType:69, description:&quot;Trackable Waste&quot;, position:&quot;Director&quot;, partyPhoneId:29, phoneNumber:&quot;8796542341&quot;, phoneType:48, receiveSMSFlag:&quot;&quot;, partyEmailId:73, email:&quot;jimmy.carter@ehp.co.in&quot;, emailType:1, receiveCorrespondenceFlag:0}&#xD;
+	},*/&#xD;
+	{	&#xD;
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+      headerCells: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Phone Type&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;International Code&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Area Code&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Phone Number&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Active&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;&quot;&#xD;
+        )&#xD;
+      },&#xD;
+	  columnConfigs: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+		  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+		  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)&#xD;
+		},&#xD;
+		&#xD;
+      rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+        function: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_6499&quot;(customerToUpdate: ri!customerToUpdate,index:_,itemsToken:local!itemsToken,removedPhoneNumbers:ri!removedPhoneNumbers),&#xD;
+		array: if(or(isnull(ri!customerToUpdate), count(ri!customerToUpdate) &lt; 1), {}, 1+enumerate(count(ri!customerToUpdate))),&#xD;
+		arrayVariable:local!itemsToken&#xD;
+       )&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+      label: &quot;Add Phone Number&quot;,&#xD;
+      labelPosition: &quot;COLLAPSED&quot;,&#xD;
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        label: &quot;+Add Phone Number&quot;,&#xD;
+        value: {partyId:null, contactId:null, partyName:null, partyContactId:null, contactType:null, description:null, position:null, partyPhoneId:null, phoneNumber:null, phoneType:null, receiveSMSFlag:null, partyEmailId:null, email:null, emailType:null, receiveCorrespondenceFlag:null,active:#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;},&#xD;
+        saveInto: {&#xD;
+          ri!customerToUpdate &lt;&lt; fn!append(ri!customerToUpdate,_)&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)&#xD;
+/*)*/&#xD;
+</definition>
+        <namedTypedValue>
+            <name>customerToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contactPhoneToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>removedPhoneNumbers</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

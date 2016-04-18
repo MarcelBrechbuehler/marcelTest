@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_approveEvaluationRecommendation</name>
+        <uuid>_a-0000db98-abcf-8000-9ba2-011c48011c48_18115</uuid>
+        <description>Approve a CaRE Evaluation Recommendation</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  
+    local!recommendation: if(
+      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!recommendation),
+      'type!{http://www.ehp.qld.gov.au/connect/types/}CTCaREEvaluationRecommendation'(),
+      ri!recommendation
+    ),
+    
+    local!labelPosition: &quot;ABOVE&quot;,
+
+    local!approved,
+    
+    local!approvalComments,
+  
+   #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: &quot;Approve CaRE Evaluation Recommendation&quot;,
+    instructions: 
+      &quot;Approve the outcome summary analysis and recommended actions 
+      that relate to the CaRE itself and not necessarily to any 
+      specific CaRE questions. &quot;,
+                  
+    firstColumnContents: {
+      
+      /* Details Section*/
+      #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(
+        careEvaluation: ri!evaluation
+      ),
+
+      #&quot;SYSTEM_SYSRULES_linkField&quot;(
+        links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+          label: &quot;CaRE Evaluation Dashboard&quot;,
+          recordType: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4769&quot;,
+          identifier: ri!evaluation.careEvaluationId,
+          dashboard: &quot;summary&quot;
+        )
+      ),
+      
+      /* CaRE Summary Section*/
+      #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_18126&quot;(ri!evaluation.careEvaluationId),
+      
+      /* CaRE Summary Approval Section*/      
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Recommendation Approval&quot;,
+        firstColumnContents: {
+          
+          #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+          label: &quot;Approval Choice&quot;,
+          labelPosition: local!labelPosition,
+          instructions :&quot;Selecting 'Complete' will update the status of the CaRE record to ‘Completed’, 
+          'Send for Rework' will route the task back to the CaRE Officer who originally 
+          completed the recommendation. &quot;,
+          choiceLabels: {&quot;Complete&quot;, &quot;Send for Rework&quot;},
+          choiceValues: {true, false},
+          value: local!approved,
+          saveInto: local!approved,
+          required: true,
+          choiceLayout: &quot;COMPACT&quot;
+          )
+
+        } 
+      ),
+
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+
+        firstColumnContents: {  
+          
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+            label:&quot;Comments&quot;,
+            labelPosition: local!labelPosition,
+            instructions: 
+              &quot;This is an optional field. The CaRE approval 
+              summary is limited to &quot; 
+              &amp; #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15595&quot; &amp; 
+              &quot; characters and will be published to the evaluation staus history&quot;,
+            value: local!approvalComments,
+            saveInto: local!approvalComments,
+            height: &quot;MEDIUM&quot;,
+            validations: if(
+              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12723&quot;(
+                local!approvalComments, 
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15595&quot;
+              ),
+              {},
+              &quot;Enter no more than&quot; &amp; #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15595&quot; &amp; &quot;characters&quot;
+            )            
+          )
+          
+        }
+      ),
+      
+      /* Evaluation Status History Section*/ 
+      if(
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluation),
+        {},
+        #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15058&quot;(ri!evaluation.careEvaluationId)
+      )
+
+    },
+    
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Submit&quot;,
+          style: &quot;PRIMARY&quot;,
+          saveInto: {
+            a!save(
+              ri!recommendation.approvalComments,
+              local!approvalComments
+            ),
+            a!save(
+              ri!approved,
+              local!approved
+            )
+          }
+        )
+      },
+      secondaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Cancel&quot;,
+          style: &quot;NORMAL&quot;,
+          value: true,
+          saveInto: ri!cancel,
+          skipValidation: true
+        )
+      }
+    ),
+    validations: {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>evaluation</name>
+            <type>
+                <name>CTCaREEvaluation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>recommendation</name>
+            <type>
+                <name>CTCaREEvaluationRecommendation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>approved</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>cancel</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>recommendation</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>approved</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

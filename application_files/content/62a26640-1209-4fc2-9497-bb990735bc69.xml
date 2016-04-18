@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addOverseasAddressDetails</name>
+        <uuid>62a26640-1209-4fc2-9497-bb990735bc69</uuid>
+        <description>This rule is used to display add tradinf entity overseas address details.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    label: &quot;Address&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+      fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22921&quot;,&#xD;
+      fieldData: ri!addressValue1&#xD;
+    ),&#xD;
+    value: ri!addressValue1,&#xD;
+    saveInto: ri!addressValue1,&#xD;
+    required: true&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+      fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22920&quot;,&#xD;
+      fieldData: ri!addressValue2&#xD;
+    ),&#xD;
+    value: ri!addressValue2,&#xD;
+    saveInto: ri!addressValue2&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+      fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22922&quot;,&#xD;
+      fieldData: ri!addressValue3&#xD;
+    ),&#xD;
+    value: ri!addressValue3,&#xD;
+    saveInto: ri!addressValue3&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+    label: &quot;Country&quot;,&#xD;
+    labelPosition: &quot;ADJACENT&quot;,&#xD;
+    validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+      fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22923&quot;,&#xD;
+      fieldData: ri!country&#xD;
+    ),&#xD;
+    choiceLabels: {&#xD;
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5819&quot;&#xD;
+    },&#xD;
+    placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+    choiceValues: {&#xD;
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5816&quot;&#xD;
+    },&#xD;
+    value: ri!country,&#xD;
+    saveInto: ri!country,&#xD;
+    required: true&#xD;
+  )&#xD;
+}</definition>
+        <namedTypedValue>
+            <name>addressValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue3</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>country</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

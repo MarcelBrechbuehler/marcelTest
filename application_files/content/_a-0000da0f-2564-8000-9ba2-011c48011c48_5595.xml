@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_getPartyTypeNVP</name>
+        <uuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5595</uuid>
+        <description></description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5185</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+  ri!partyClass = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5215&quot;,
+  {
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5191&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5190&quot;
+    },
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5194&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5192&quot;
+    },
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5196&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5195&quot;
+    },
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5200&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5199&quot;
+    },
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5189&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5188&quot;
+    },
+    {
+      name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5198&quot;,
+      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5197&quot;
+    }
+  },
+  if(
+    ri!partyClass = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,
+    {
+      {
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5206&quot;,
+        value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5205&quot;
+      },
+      {
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5202&quot;,
+        value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5201&quot;
+      },
+      {
+        name: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5204&quot;,
+        value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5203&quot;
+      }
+    },
+    if(
+      ri!partyClass = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5214&quot;,
+      {
+        {
+          name: &quot;Individual&quot;,
+          value: 1
+        }
+      },
+      null
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>partyClass</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

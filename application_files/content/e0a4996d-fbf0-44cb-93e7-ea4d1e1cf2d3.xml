@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicationFinanceDetails</name>
+        <uuid>e0a4996d-fbf0-44cb-93e7-ea4d1e1cf2d3</uuid>
+        <description>This interface rule used to display permit application finance details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Financial&quot;,
+        firstColumnContents: {
+          
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Application Fee&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8437&quot;(local!generalDetails.feeCharged),
+            readOnly: true
+          )
+        },
+        secondColumnContents: {
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Financial Assurance Type&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: local!generalDetails.toadCategoryRef.description,
+           
+            readOnly: true
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Financial Assurance Amount&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8437&quot;(local!generalDetails.financialAssuranceFee),
+            readOnly: true
+          )
+         
+        },
+        isCollapsible: true
+      )</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

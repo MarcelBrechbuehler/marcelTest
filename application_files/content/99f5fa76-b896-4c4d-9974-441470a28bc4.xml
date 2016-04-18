@@ -1,0 +1,1252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editAddressDetails</name>
+        <uuid>99f5fa76-b896-4c4d-9974-441470a28bc4</uuid>
+        <description>This rule is used to display edit address details sreen</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+ local!addressType,&#xD;
+ local!addressToAdd: 'type!{http://www.ehp.qld.gov.au/connect/types/}CTPartyAddressLinkAddress'(),&#xD;
+ local!postCode,&#xD;
+ local!state,&#xD;
+ local!enteredPostCode,&#xD;
+ local!selectedSuburbDetails,&#xD;
+ with(&#xD;
+   local!countries: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5401&quot;(),&#xD;
+   local!editSuburbDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15696&quot;(&#xD;
+      ri!customerToUpdate.partyAddress.postcode,&#xD;
+      ri!customerToUpdate.partyAddress.suburb&#xD;
+    ),&#xD;
+   local!getSuburbDetails: if(&#xD;
+      isnull(&#xD;
+        local!enteredPostCode&#xD;
+      ),&#xD;
+      local!editSuburbDetails,&#xD;
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(&#xD;
+        local!enteredPostCode&#xD;
+      )&#xD;
+    ),&#xD;
+   local!suburbDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(&#xD;
+      ri!customerToUpdate.partyAddress.postcode&#xD;
+    ),&#xD;
+   local!stateDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15696&quot;(&#xD;
+      ri!customerToUpdate.partyAddress.postcode,&#xD;
+      ri!customerToUpdate.partyAddress.suburb&#xD;
+    ).state,&#xD;
+   local!addSuburbDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(&#xD;
+      local!addressToAdd.partyAddress.postCode&#xD;
+    ),&#xD;
+   local!addStateDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15696&quot;(&#xD;
+      local!addressToAdd.partyAddress.postCode,&#xD;
+      local!addressToAdd.partyAddress.suburb&#xD;
+    ).state,&#xD;
+   local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: - 1&#xD;
+    ),&#xD;
+   local!buttonValue: 1,&#xD;
+   with(&#xD;
+     local!addressLinkDatasubset: if(&#xD;
+        isnull(ri!customers),&#xD;
+        {},&#xD;
+        todatasubset(&#xD;
+          ri!customers.customerAddress,&#xD;
+          local!pagingInfo&#xD;
+        )&#xD;
+      ),&#xD;
+     #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+       label: &quot;Edit Address&quot;,&#xD;
+       firstColumnContents: {&#xD;
+/*&#xD;
+          a!paragraphField(&#xD;
+            label: &quot;TEST&quot;,&#xD;
+            value: ri!customers&#xD;
+          ),&#xD;
+          a!paragraphField(&#xD;
+            label: &quot;TEST&quot;,&#xD;
+            value: ri!customerToUpdate&#xD;
+          ),&#xD;
+          a!paragraphField(&#xD;
+            label: &quot;TEST&quot;,&#xD;
+            value: local!addressLinkDatasubset &amp; length(local!addressLinkDatasubset.data)&#xD;
+          ),&#xD;
+*/&#xD;
+         if(&#xD;
+           contains(&#xD;
+             #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5532&quot;,&#xD;
+             tointeger(&#xD;
+               ri!custType&#xD;
+             )&#xD;
+           ),&#xD;
+           #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot;(&#xD;
+             ri!processMilestoneIndex&#xD;
+           ),&#xD;
+           #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+             ri!processMilestoneName,&#xD;
+             ri!processMilestoneIndex&#xD;
+           )&#xD;
+         ),&#xD;
+         #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5732&quot;(&#xD;
+           ri!customerDetails.customerName,&#xD;
+           ri!customerDetails.customerType.description,&#xD;
+           ri!customerDetails.customerRef&#xD;
+         ),&#xD;
+         #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+           label: &quot;  &quot;,&#xD;
+           firstColumnContents: {&#xD;
+             /*a!checkboxField(&#xD;
+                choiceLabels: {&#xD;
+                  &quot;Include Inactive&quot;&#xD;
+                },&#xD;
+                choiceValues: {&#xD;
+                  1&#xD;
+                },&#xD;
+                value: if(&#xD;
+                  ri!isIncludeActive = 0,&#xD;
+                  &quot;&quot;,&#xD;
+                  ri!isIncludeActive&#xD;
+                ),&#xD;
+                saveInto: ri!isIncludeActive&#xD;
+              )*/&#xD;
+           }&#xD;
+         ),&#xD;
+         #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+           label: &quot;Addresses&quot;,&#xD;
+           firstColumnContents: {&#xD;
+             #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+/*&#xD;
+                totalCount: if(length(local!addressLinkDatasubset.data)=0,cons!COM_COMMON_DATASET_COUNT,local!addressLinkDatasubset.totalCount),&#xD;
+*/&#xD;
+               totalCount: local!addressLinkDatasubset.totalCount,&#xD;
+               columns: {&#xD;
+                 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                   label: &quot;Type&quot;,&#xD;
+                   data: if(length(local!addressLinkDatasubset.data)=0,&quot;&quot;,if(&#xD;
+                     index(&#xD;
+                        local!addressLinkDatasubset.data,&#xD;
+                        &quot;addressType&quot;,&#xD;
+                        {}&#xD;
+                      ) = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5584&quot;,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5586&quot;,&#xD;
+                     if(&#xD;
+                       index(&#xD;
+                          local!addressLinkDatasubset.data,&#xD;
+                          &quot;addressType&quot;,&#xD;
+                          {}&#xD;
+                        ) = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,&#xD;
+                       #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5587&quot;,&#xD;
+                       &quot;&quot;&#xD;
+                     )&#xD;
+                   )),&#xD;
+                   links: apply(&#xD;
+                     #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+                        value: _,&#xD;
+                        saveInto: ri!customerToUpdate&#xD;
+                      ),&#xD;
+                     local!addressLinkDatasubset.data&#xD;
+                   )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                   label: &quot;Details&quot;,&#xD;
+                   data: apply(&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4286&quot;,&#xD;
+                     {&#xD;
+                       ri!customers.customerAddress&#xD;
+                     }&#xD;
+                   )&#xD;
+                 )&#xD;
+               },&#xD;
+               value: local!pagingInfo,&#xD;
+               saveInto: local!pagingInfo,&#xD;
+               validations: if(&#xD;
+                 length(&#xD;
+                    wherecontains(&#xD;
+                      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14839&quot;,&#xD;
+                      tointeger(&#xD;
+                        ri!customers.customerAddress.addressType&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ) = 0,&#xD;
+                 &quot;You must enter at least one residential address!!!&quot;,&#xD;
+                 {&#xD;
+                    if(&#xD;
+                      count(&#xD;
+                        wherecontains(&#xD;
+                          #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14839&quot;,&#xD;
+                          ri!customers.customerAddress.addressType&#xD;
+                        )&#xD;
+                      ) &gt; 1,&#xD;
+                     &quot;More than one Registered Address present.Please correct the same to proceed!!!&quot;,&#xD;
+                     &quot;&quot;)&#xD;
+                 }&#xD;
+               ),&#xD;
+               validationGroup: &quot;isResidentialExists&quot;&#xD;
+             )&#xD;
+           }&#xD;
+         ),&#xD;
+         if(&#xD;
+           isnull(&#xD;
+             ri!buttonValue&#xD;
+           ),&#xD;
+           {&#xD;
+#&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+               label: &quot;+Add Address&quot;,&#xD;
+               labelPosition: &quot;COLLAPSED&quot;,&#xD;
+               links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+                 label: &quot;+Add Address&quot;,&#xD;
+                 value: &quot;AddFromEdit&quot;,&#xD;
+                 saveInto: {&#xD;
+                   ri!buttonValueEdit_txt,&#xD;
+                   a!save(&#xD;
+                     ri!customerToUpdate,&#xD;
+                     null&#xD;
+                   )&#xD;
+                 }&#xD;
+               )&#xD;
+             )&#xD;
+           },&#xD;
+           {}&#xD;
+         ),&#xD;
+         if(&#xD;
+           isnull(&#xD;
+             ri!buttonValueEdit_txt&#xD;
+           ),&#xD;
+           {},&#xD;
+           if(&#xD;
+             not(&#xD;
+               isnull(&#xD;
+                 ri!customerToUpdate.partyAddressLinkId&#xD;
+               )&#xD;
+             ),&#xD;
+             {},&#xD;
+             {&#xD;
+               #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                 label: &quot;Address Type &quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                 choiceLabels: {&#xD;
+                   #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5586&quot;,&#xD;
+                   #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5587&quot;&#xD;
+                 },&#xD;
+                 choiceValues: {&#xD;
+                   #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14839&quot;,&#xD;
+                   #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14840&quot;&#xD;
+                 },&#xD;
+                 value: local!addressToAdd.addressType,&#xD;
+                 saveInto: local!addressToAdd.addressType,&#xD;
+                 required: true(),&#xD;
+                 validations: if(&#xD;
+                   local!addressToAdd.addressType = #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14839&quot;,&#xD;
+                   if(&#xD;
+                     length(&#xD;
+                        wherecontains(&#xD;
+                          local!addressToAdd.addressType,&#xD;
+                          ri!customers.customerAddress.addressType&#xD;
+                          &#xD;
+                        )&#xD;
+                      ) = 0,&#xD;
+                     &quot;&quot;,&#xD;
+                     &quot;Registered Address already present!!!&quot;&#xD;
+                   ),&#xD;
+                   &quot;&quot;&#xD;
+                 )&#xD;
+               ),&#xD;
+			if(&#xD;
+                   local!addressToAdd.addressType=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,&#xD;
+			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                           label: &quot;Post Office Box&quot;,&#xD;
+                     labelPosition: &quot;ADJACENT&quot;,&#xD;
+       instructions:&quot;Types include PO Box, MS, Locked Bag, GPO Box&quot;,&#xD;
+	                  value:local!addressToAdd.partyAddress.poBox,&#xD;
+                     saveInto: local!addressToAdd.partyAddress.poBox,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22909&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.poBox&#xD;
+                     )&#xD;
+                     ),{}),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;Property&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addressToAdd.partyAddress.property,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.property,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22910&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.property&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;Unit No&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addressToAdd.partyAddress.unitNo,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.unitNo,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22911&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.unitNo&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;Street No&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addressToAdd.partyAddress.streetNo,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.streetNo,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22912&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.streetNo&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;Street Name&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addressToAdd.partyAddress.streetName,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.streetName,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22914&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.streetName&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                 label: &quot;Street Type&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                 choiceLabels: {&#xD;
+                   #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13768&quot;&#xD;
+                 },&#xD;
+                 choiceValues: {&#xD;
+                   #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13769&quot;&#xD;
+                 },&#xD;
+                 value: local!addressToAdd.partyAddress.streetType,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.streetType,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22915&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.streetType&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;Post Code&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addressToAdd.partyAddress.postCode,&#xD;
+                 saveInto: local!addressToAdd.partyAddress.postCode,&#xD;
+                 required: true,&#xD;
+                 readOnly: false,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22916&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.postcode&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                 label: &quot;Suburb&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                 choiceLabels: local!addSuburbDetails.suburbName,&#xD;
+                 choiceValues: local!addSuburbDetails.suburbName,&#xD;
+                 value: upper(local!addressToAdd.partyAddress.suburb),&#xD;
+                 saveInto: {&#xD;
+                   local!addressToAdd.partyAddress.suburb,&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.status,&#xD;
+                     #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14640&quot;&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyId,&#xD;
+                     ri!custId&#xD;
+                   ),&#xD;
+                  a!save(&#xD;
+                     local!addressToAdd.partyAddress.state,&#xD;
+                     local!addStateDetails&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.createdBy,&#xD;
+                     loggedInUser()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.updatedBy,&#xD;
+                     loggedInUser()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.createdTimestamp,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.updatedTimestamp,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.active,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.source,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4549&quot;&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.createdBy,&#xD;
+                     loggedInUser()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.updatedBy,&#xD;
+                     loggedInUser()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.createdTimestamp,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.updatedTimestamp,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.active,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                   ),&#xD;
+                   a!save(&#xD;
+                     local!addressToAdd.partyAddress.source,&#xD;
+                     #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4549&quot;&#xD;
+                   )&#xD;
+                 },&#xD;
+                 required: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22917&quot;,&#xD;
+                       fieldData: local!addressToAdd.partyAddress.suburb&#xD;
+                     )&#xD;
+               ),&#xD;
+               #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                 label: &quot;State&quot;,&#xD;
+                 labelPosition: &quot;ADJACENT&quot;,&#xD;
+                 value: local!addStateDetails,&#xD;
+                 /*saveInto: local!addressToAdd.partyAddress.state,*/required: false,&#xD;
+                 readOnly: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22918&quot;,&#xD;
+                       fieldData:  local!addStateDetails&#xD;
+                     )&#xD;
+               )&#xD;
+			/* disabled until further notice&#xD;
+                ),&#xD;
+				a!checkboxField(&#xD;
+                  label: &quot;&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    &quot;Temporary&quot;&#xD;
+                  },&#xD;
+                  choiceValues: {&#xD;
+                    1&#xD;
+                  },&#xD;
+                  value: if(&#xD;
+                    local!addressToAdd.temporaryAddressFlag = 0,&#xD;
+                    &quot;&quot;,&#xD;
+                    local!addressToAdd.temporaryAddressFlag&#xD;
+                  ),&#xD;
+                  saveInto: local!addressToAdd.temporaryAddressFlag&#xD;
+                ),&#xD;
+                if(&#xD;
+                  local!addressToAdd.temporaryAddressFlag = 1,&#xD;
+                  {&#xD;
+                    a!dateField(&#xD;
+                      label: &quot;Start Date&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!addressToAdd.startDate,&#xD;
+                      saveInto: local!addressToAdd.startDate&#xD;
+                    ),&#xD;
+                    a!dateField(&#xD;
+                      label: &quot;End Date&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!addressToAdd.endDate,&#xD;
+                      saveInto: local!addressToAdd.endDate,&#xD;
+                      validations: if(&#xD;
+                        local!addressToAdd.endDate &lt; today(),&#xD;
+                        &quot;End date cannot set to a past date&quot;,&#xD;
+                        &quot;&quot;&#xD;
+                      )&#xD;
+                    )&#xD;
+                  },&#xD;
+                  {}&#xD;
+                )&#xD;
+				*/&#xD;
+             }&#xD;
+           )&#xD;
+         ),&#xD;
+         if(&#xD;
+           isnull(&#xD;
+             ri!customerToUpdate.partyId&#xD;
+           ),&#xD;
+           {},&#xD;
+           {&#xD;
+             #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+               label: &quot;Address Details: &quot; &amp; if(&#xD;
+                  ri!customerToUpdate.addressType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5584&quot;,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5586&quot;,&#xD;
+                  if(&#xD;
+                    ri!customerToUpdate.addressType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5587&quot;,&#xD;
+                    &quot;&quot;&#xD;
+                  )&#xD;
+                )&#xD;
+             ),&#xD;
+             #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+               label: &quot;&quot;,&#xD;
+               labelPosition: &quot;ADJACENT&quot;,&#xD;
+               choiceLabels: {&#xD;
+                 #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2811&quot;&#xD;
+               },&#xD;
+               choiceValues: {&#xD;
+                 #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;&#xD;
+               },&#xD;
+               value: if(&#xD;
+                 ri!customerToUpdate.partyAddress.overseasFlag = 0,&#xD;
+                 &quot;&quot;,&#xD;
+                 ri!customerToUpdate.partyAddress.overseasFlag&#xD;
+               ),&#xD;
+               /*value: ri!customerToUpdate.partyAddress.overseasFlag,*/saveInto: ri!customerToUpdate.partyAddress.overseasFlag&#xD;
+             ),&#xD;
+            &#xD;
+             #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+               label: &quot;Address Type&quot;,&#xD;
+               labelPosition: &quot;ADJACENT&quot;,&#xD;
+               placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+               choiceLabels: {&#xD;
+                 #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5586&quot;,&#xD;
+                 #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5587&quot;&#xD;
+               },&#xD;
+               choiceValues: {&#xD;
+                 #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5584&quot;,&#xD;
+                 #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;&#xD;
+               },&#xD;
+                 &#xD;
+               value: ri!customerToUpdate.addressType,&#xD;
+               saveInto: ri!customerToUpdate.addressType,&#xD;
+               required: true&#xD;
+             ),&#xD;
+             if(&#xD;
+               ri!customerToUpdate.partyAddress.overseasFlag = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,&#xD;
+               {&#xD;
+                 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                   label: &quot;Address&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddress.addressLine1,&#xD;
+                   saveInto: ri!customerToUpdate.partyAddress.addressLine1,&#xD;
+                   required: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22921&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.addressLine1&#xD;
+                     )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddress.addressLine2,&#xD;
+                   saveInto: ri!customerToUpdate.partyAddress.addressLine2,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22920&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.addressLine2&#xD;
+                     )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddress.addressLine3,&#xD;
+                   saveInto: ri!customerToUpdate.partyAddress.addressLine3,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22922&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.addressLine3&#xD;
+                     )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                   label: &quot;Country&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                   choiceLabels: {&#xD;
+                     local!countries.description&#xD;
+                   },&#xD;
+                   choiceValues: {&#xD;
+                     local!countries.commonCodeId&#xD;
+                   },&#xD;
+                   value: tointeger(&#xD;
+                     ri!customerToUpdate.partyAddress.country&#xD;
+                   ),&#xD;
+                   saveInto: a!save(&#xD;
+                     ri!customerToUpdate.partyAddress.country,&#xD;
+                     tointeger(&#xD;
+                       save!value&#xD;
+                     )&#xD;
+                   ),&#xD;
+                   required: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22923&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.country&#xD;
+                     )&#xD;
+                 )&#xD;
+               },&#xD;
+               {&#xD;
+                 #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+                   firstColumnContents: {&#xD;
+&#xD;
+			if(&#xD;
+                   ri!customerToUpdate.addressType=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                             label: &quot;Post Office Box&quot;,&#xD;
+                     labelPosition: &quot;ADJACENT&quot;,&#xD;
+       instructions:&quot;Types include PO Box, MS, Locked Bag, GPO Box&quot;,&#xD;
+	                  value: ri!customerToUpdate.partyAddress.poBox,&#xD;
+                     saveInto: ri!customerToUpdate.partyAddress.poBox,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22909&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.pobox&#xD;
+                     )&#xD;
+                     ),{}),&#xD;
+                     &#xD;
+                     #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                       label: &quot;Property&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       value: ri!customerToUpdate.partyAddress.property,&#xD;
+                       saveInto: ri!customerToUpdate.partyAddress.property,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22910&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.property&#xD;
+                     )&#xD;
+                     )&#xD;
+                   }&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                   label: &quot;Unit No&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddress.unitNo,&#xD;
+                   saveInto: ri!customerToUpdate.partyAddress.unitNo,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22911&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.unitNo&#xD;
+                     )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                   label: &quot;Street No&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddress.streetNo,&#xD;
+                   saveInto: ri!customerToUpdate.partyAddress.streetNo,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22912&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.streetNo&#xD;
+                     )&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+                   label: &quot;&quot;,&#xD;
+                   firstColumnContents: {&#xD;
+                     #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                       label: &quot;Street Name&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       value: ri!customerToUpdate.partyAddress.streetName,&#xD;
+                       saveInto: ri!customerToUpdate.partyAddress.streetName,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22914&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.streetName&#xD;
+                     )&#xD;
+                     ),&#xD;
+                     #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                       label: &quot;Street Type&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                       choiceLabels: {&#xD;
+                         #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13768&quot;&#xD;
+                       },&#xD;
+                       choiceValues: {&#xD;
+                         #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13769&quot;&#xD;
+                       },&#xD;
+                       value: ri!customerToUpdate.partyAddress.streetType,&#xD;
+                       saveInto: ri!customerToUpdate.partyAddress.streetType,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22915&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.streetType&#xD;
+                     )&#xD;
+                     ),&#xD;
+                     #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                       label: &quot;Post Code&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       value: if(&#xD;
+                         isnull(&#xD;
+                           local!selectedSuburbDetails&#xD;
+                         ),&#xD;
+                         ri!customerToUpdate.partyAddress.postcode,&#xD;
+                         local!selectedSuburbDetails.postcode&#xD;
+                       ),&#xD;
+                       saveInto: {&#xD;
+                         ri!customerToUpdate.partyAddress.postCode,&#xD;
+                         a!save(&#xD;
+                           ri!customerToUpdate.partyAddress.suburb,&#xD;
+                           &quot;&quot;&#xD;
+                         )&#xD;
+                       },&#xD;
+                       /*saveInto: ri!customerToUpdate.partyAddress.postCode,*/required: true,&#xD;
+                       readOnly: false,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22916&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.postcode&#xD;
+                     )&#xD;
+                     ),&#xD;
+                     #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                       label: &quot;Suburb&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                       choiceLabels: local!suburbDetails.suburbName,&#xD;
+                       choiceValues: local!suburbDetails.suburbName,&#xD;
+                       value: if(&#xD;
+                         length(&#xD;
+                            local!editSuburbDetails&#xD;
+                          ) = 0,&#xD;
+                         &quot;&quot;,&#xD;
+                         upper(ri!customerToUpdate.partyAddress.suburb)&#xD;
+                       ),&#xD;
+                       saveInto: {&#xD;
+                         ri!customerToUpdate.partyAddress.suburb,&#xD;
+                         a!save(&#xD;
+                           ri!customerToUpdate.partyAddress.state,&#xD;
+                           local!stateDetails&#xD;
+                         )&#xD;
+                       },&#xD;
+                       required: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22917&quot;,&#xD;
+                       fieldData:  ri!customerToUpdate.partyAddress.suburb&#xD;
+                     )&#xD;
+                     ),&#xD;
+                     #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                       label: &quot;State&quot;,&#xD;
+                       labelPosition: &quot;ADJACENT&quot;,&#xD;
+                       value: local!stateDetails,&#xD;
+                       /*saveInto: ri!customerToUpdate.partyAddress.state,*/&#xD;
+                       readOnly: true,&#xD;
+                     validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                       fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22918&quot;,&#xD;
+                       fieldData:   local!stateDetails&#xD;
+                     )&#xD;
+                     )&#xD;
+                   }&#xD;
+                 )&#xD;
+               }&#xD;
+             ),&#xD;
+		  if(&#xD;
+               ri!customerToUpdate.temporaryAddressFlag = 1,&#xD;
+               {&#xD;
+                 #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+                   label: &quot;Start Date&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.startDate,&#xD;
+                   saveInto: ri!customerToUpdate.startDate&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+                   label: &quot;End Date&quot;,&#xD;
+                   labelPosition: &quot;ADJACENT&quot;,&#xD;
+                   value: ri!customerToUpdate.endDate,&#xD;
+                   saveInto: ri!customerToUpdate.endDate&#xD;
+                 )&#xD;
+               },&#xD;
+               {}&#xD;
+             )&#xD;
+           }&#xD;
+         ),&#xD;
+         #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+           primaryButtons: if(&#xD;
+             and(&#xD;
+               isnull(&#xD;
+                 ri!buttonValueEdit_txt&#xD;
+               ),&#xD;
+               isnull(&#xD;
+                 ri!customerToUpdate.partyAddressLinkId&#xD;
+               ),&#xD;
+               isnull(&#xD;
+                 ri!customerToUpdate.partyId&#xD;
+               )&#xD;
+             ),&#xD;
+             {&#xD;
+               #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                 label: &quot;Next&quot;,&#xD;
+                 style: &quot;PRIMARY&quot;,&#xD;
+                 value: ri!customerToUpdate.partyAddressLinkId,&#xD;
+                 saveInto: {&#xD;
+                   /* a!save(&#xD;
+                      ri!customers.customerAddress,&#xD;
+                      updatearray(&#xD;
+                        ri!customers.customerAddress,&#xD;
+                        wherecontains(&#xD;
+                          save!value,&#xD;
+                          ri!customers.customerAddress.partyAddressLinkId&#xD;
+                        ),&#xD;
+                        ri!customerToUpdate&#xD;
+                      )&#xD;
+                    ),*/ri!buttonValue &lt;&lt; &quot;Next&quot;&#xD;
+                 },&#xD;
+                 validationGroup: &quot;isResidentialExists&quot;&#xD;
+               )&#xD;
+             },&#xD;
+             {&#xD;
+               if(&#xD;
+                 and(&#xD;
+&#xD;
+                   isnull(ri!customerToUpdate.partyAddressLinkId),&#xD;
+&#xD;
+&#xD;
+                   isnull(ri!customerToUpdate.partyId)&#xD;
+&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                   label: &quot;Save&quot;,&#xD;
+                   style: &quot;NORMAL&quot;,&#xD;
+                   value: local!addressToAdd,&#xD;
+                   saveInto: {										 &#xD;
+											a!save(&#xD;
+											 local!addressToAdd.partyAddressLinkId,&#xD;
+											 /** Generate temp key sequence to uniquely identify address rows added on the fly. We use negative numbers to separate from the existing addresses coming from database. **/&#xD;
+											 min(if(or(isnull(ri!customers.customerAddress), length(ri!customers.customerAddress)=0, length(where(ri!customers.customerAddress.partyAddressLinkId&lt;0))=0), 0, remove(ri!customers.customerAddress.partyAddressLinkId, where(ri!customers.customerAddress.partyAddressLinkId&gt;0)))) - 1&#xD;
+											),&#xD;
+&#xD;
+&#xD;
+                      a!save(&#xD;
+                        ri!customers.customerAddress,&#xD;
+&#xD;
+                        append(ri!customers.customerAddress,save!value)&#xD;
+&#xD;
+&#xD;
+                      ),&#xD;
+&#xD;
+&#xD;
+                     ri!buttonValue &lt;&lt; &quot;Save&quot;&#xD;
+                   }&#xD;
+                 ),&#xD;
+                 #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                   label: &quot;Save&quot;,&#xD;
+                   style: &quot;NORMAL&quot;,&#xD;
+                   value: ri!customerToUpdate.partyAddressLinkId,&#xD;
+                   saveInto: {&#xD;
+                     a!save(&#xD;
+                       ri!customers.customerAddress,&#xD;
+                       updatearray(&#xD;
+                         ri!customers.customerAddress,&#xD;
+                         wherecontains(&#xD;
+                           ri!customerToUpdate.partyAddressLinkId,&#xD;
+&#xD;
+                           ri!customers.customerAddress.partyAddressLinkId&#xD;
+                         ),&#xD;
+                         ri!customerToUpdate&#xD;
+                       )&#xD;
+                     ),&#xD;
+                     ri!buttonValue &lt;&lt; &quot;Save&quot;&#xD;
+                   }&#xD;
+                 )&#xD;
+               )&#xD;
+             }&#xD;
+           ),&#xD;
+           secondaryButtons: {&#xD;
+             #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+               label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+               style: &quot;DESTRUCTIVE&quot;,&#xD;
+               confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+               value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+               saveInto: ri!buttonValue,&#xD;
+               skipValidation: true&#xD;
+             ),&#xD;
+             #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+               label: &quot;Back&quot;,&#xD;
+               style: &quot;NORMAL&quot;,&#xD;
+               value: &quot;Back&quot;,&#xD;
+               saveInto: ri!buttonValue,&#xD;
+               skipValidation: true&#xD;
+             )&#xD;
+           }&#xD;
+         )&#xD;
+       }&#xD;
+     )&#xD;
+   )&#xD;
+ )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>custName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>custType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>custId</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>property</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suburb</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>state</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isIncludeActive</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isTemporary</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>unitNo</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>startDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>endDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customers</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tempData</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>country</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue3</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerDetails</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValueEdit_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>overseasFlag</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>flag</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>custName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>custType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>custId</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>addressType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>property</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>postCode</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>suburb</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>state</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isIncludeActive</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isTemporary</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetNoValue1</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>unitNo</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>startDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>endDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customers</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customerToUpdate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>tempData</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>country</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>addressValue1</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>addressValue2</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>addressValue3</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customerDetails</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValueEdit_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>overseasFlag</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>flag</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

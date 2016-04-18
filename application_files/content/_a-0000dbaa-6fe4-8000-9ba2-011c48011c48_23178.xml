@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_customerListSection</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23178</uuid>
+        <description>This section will list all the customer by a given set of customer ID. Current columns showing only name and customer ref.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load (&#xD;
+ local!customerInfo: if(or(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!customerId_int), ri!customerId_int&lt;1), null(), #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13096&quot;(ri!customerId_int)),&#xD;
+ 				   local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+										startIndex: 1,&#xD;
+										batchSize: 5,&#xD;
+										sort:  #&quot;SYSTEM_SYSRULES_sortInfo&quot;(field:  &quot;customerName&quot;, ascending:  true)&#xD;
+									),&#xD;
+					 local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+												pagingInfo: local!pagingInfo,&#xD;
+												selected: if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!selectedCustomerId_int), {}, {ri!selectedCustomerId_int})&#xD;
+											),&#xD;
+ if (&#xD;
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!customerInfo),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Customer name&quot;,&#xD;
+          labelPosition: &quot;ABOVE&quot;,&#xD;
+          value:&quot;n/a&quot;,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+				#&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+						label: if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!label_txt), &quot;Customer information&quot;, ri!label_txt),&#xD;
+						instructions: if(length(ri!customerId_int)&gt;1, if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!instructions_txt), &quot;Select a customer from the list below.&quot;, ri!instructions_txt), &quot;&quot;),&#xD;
+						totalCount: count(local!customerInfo),&#xD;
+						columns: {&#xD;
+							#&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+								label: &quot;Name&quot;,&#xD;
+								field: &quot;customerName&quot;,&#xD;
+								data: local!customerInfo.customerName,&#xD;
+								links: apply(&#xD;
+													#&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+													recordType: if(local!customerInfo.customerType.partyTypeId=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5210&quot;,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15180&quot;,#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4908&quot;),&#xD;
+													identifier: _&#xD;
+													),&#xD;
+														ri!customerId_int&#xD;
+												)&#xD;
+							),&#xD;
+							#&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+								label: &quot;Customer ID&quot;,&#xD;
+								field: &quot;customerRef&quot;,&#xD;
+								data: local!customerInfo.customerRef,&#xD;
+								links: apply(&#xD;
+													#&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+													recordType: if(local!customerInfo.customerType.partyTypeId=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5210&quot;,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15180&quot;,#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4908&quot;),&#xD;
+													identifier: _&#xD;
+													),&#xD;
+														ri!customerId_int&#xD;
+												)&#xD;
+							)&#xD;
+						},&#xD;
+						identifiers: ri!customerId_int,&#xD;
+						value: local!gridSelection,&#xD;
+						saveInto: {&#xD;
+									a!save(local!gridSelection, save!value),&#xD;
+                  a!save(ri!selectedCustomerId_int, save!value.selected),&#xD;
+								},&#xD;
+						selection: length(ri!customerId_int)&gt;1,&#xD;
+						validations: {&#xD;
+								if(and(ri!singleSelectValidation_bool, count(local!gridSelection.selected)&gt;1), &quot;You may only select one customer.&quot;, null) &#xD;
+						}&#xD;
+					)&#xD;
+ )&#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCustomerId_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>instructions_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>label_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>singleSelectValidation_bool</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>selectedCustomerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>instructions_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>label_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>singleSelectValidation_bool</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

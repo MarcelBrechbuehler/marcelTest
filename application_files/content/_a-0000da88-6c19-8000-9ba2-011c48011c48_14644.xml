@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>WS_addressLookupKlebber</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_14644</uuid>
+        <description>Looks up an address string based on the Klebber web service</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_14643</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(&#xD;
+  local!wsData: &#xD;
+    webservicequery(&#xD;
+      #&quot;SYSTEM_SYSRULES_wsConfig&quot;(&#xD;
+        wsdlUrl: &quot;https://kleber.datatoolscloud.net.au/KleberWebServiceSoap/DtKleberService.svc?singleWsdl&quot;,&#xD;
+        service: &quot;{http://tempuri.org/}DtKleberSoapService&quot;,&#xD;
+        port: &quot;BasicHttpsBinding_IDtKleberService&quot;,&#xD;
+        operation: &quot;{http://tempuri.org/}ProcessXmlRequest&quot;&#xD;
+      ),&#xD;
+      {&#xD;
+        IDtKleberService_ProcessXmlRequest_InputMessage: {&#xD;
+          DtXmlRequest: &quot;&lt;DtRequest Method='DataTools.Capture.Address.Predictive.AuNzPaf.SearchAddress' AddressLine='&quot; &amp; ri!addressString &amp; &quot;' ResultLimit='' DisplayOnlyCountryCode='' RequestId='' RequestKey='&quot; &amp; #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26356&quot; &amp; &quot;' DepartmentCode='' /&gt;&quot;&#xD;
+        }&#xD;
+      }&#xD;
+    ).returnValue.IDtKleberService_ProcessXmlRequest_OutputMessage.ProcessXmlRequestResult,&#xD;
+apply(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14663&quot;,merge(xpathsnippet(local!wsData,&quot;//@RecordId&quot;), xpathsnippet(local!wsData,&quot;//@AddressLine&quot;), xpathsnippet(local!wsData,&quot;//@Locality&quot;),xpathsnippet(local!wsData,&quot;//@State&quot;),xpathsnippet(local!wsData,&quot;//@Postcode&quot;)))&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>addressString</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>addressString</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_selectCaREOfficers</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13752</uuid>
+        <description>Allows the selection of CaRE Officers for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  local!itemsToken: null,&#xD;
+  with(&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;CaRE Officers&quot;,&#xD;
+      firstColumnContents:  {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+          headerCells: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Name&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Role&quot;), &#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(label: &quot;Remove&quot;)&#xD;
+          },&#xD;
+          columnConfigs: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)&#xD;
+          },&#xD;
+          rows: {&#xD;
+            #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+              function: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13751&quot;(&#xD;
+                          evaluationUserMap:  ri!evaluationUserMap,&#xD;
+                          itemsToken: local!itemsToken,&#xD;
+                          deletedUserMapIds: ri!deletedUserMapIds,&#xD;
+                          index:  _&#xD;
+                        ),&#xD;
+              array:  if(or(fn!isnull(ri!evaluationUserMap), count(ri!evaluationUserMap) &lt; 1),&#xD;
+                        {},&#xD;
+                        1+fn!enumerate(fn!count(ri!evaluationUserMap))&#xD;
+                      ),&#xD;
+              arrayVariable: local!itemsToken&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        /* Add a new officer */&#xD;
+        #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+          labelPosition: &quot;COLLAPSED&quot;,&#xD;
+          links: {&#xD;
+            #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(label: fn!concat(&quot;+ Add Officer&quot;),&#xD;
+              value:  'type!{http://www.ehp.qld.gov.au/connect/types/}CTCaREEvaluationUserMap'(),&#xD;
+              saveInto: {&#xD;
+                a!save(ri!evaluationUserMap, append(ri!evaluationUserMap, save!value)),&#xD;
+                a!save(local!itemsToken, append(local!itemsToken, save!value))&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      validations:  {&#xD;
+        if(count(ri!evaluationUserMap) &lt; 1,&#xD;
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+            message: fn!concat(&quot;You must select at least &quot; &amp; &quot;1&quot; &amp; &quot; Officer(s)&quot;),&#xD;
+            validateAfter: &quot;SUBMIT&quot;&#xD;
+          ),&#xD;
+          if(count(ri!evaluationUserMap) &gt; 1,&#xD;
+            if(count(ri!evaluationUserMap.userId) &lt;&gt; count(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12581&quot;(ri!evaluationUserMap.userId)),&#xD;
+              #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+                message: fn!concat(&quot;The same officer has been selected more than once&quot;),&#xD;
+                validateAfter: &quot;SUBMIT&quot;&#xD;
+              ),&#xD;
+              {}&#xD;
+            ),&#xD;
+            {}&#xD;
+          )&#xD;
+        ),&#xD;
+        /* 'Primary' officer count validation */&#xD;
+        if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluationUserMap),&#xD;
+          {},&#xD;
+          if(count(wherecontains(1, ri!evaluationUserMap.careOfficerPriority)) = 0,&#xD;
+            #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+              message: fn!concat(&quot;You must select one Officer with 'Primary' priority&quot;),&#xD;
+              validateAfter: &quot;SUBMIT&quot;&#xD;
+            ),&#xD;
+            if(count(wherecontains(1, ri!evaluationUserMap.careOfficerPriority)) &gt; 1,&#xD;
+              #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+                message: fn!concat(&quot;You must only select one Officer withe 'Primary' priority&quot;),&#xD;
+                validateAfter: &quot;SUBMIT&quot;&#xD;
+              ),&#xD;
+              {}&#xD;
+            )&#xD;
+          )&#xD;
+        )&#xD;
+      },&#xD;
+      validationGroup:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>evaluationUserMap</name>
+            <type>
+                <name>CTCaREEvaluationUserMap?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedUserMapIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluationUserMap</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedUserMapIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

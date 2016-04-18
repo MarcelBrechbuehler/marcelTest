@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_dynamicPhoneRowGrid</name>
+        <uuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2499</uuid>
+        <description>This rule is used to dynamically increase the row of grid in contact details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(&#xD;
+&#xD;
+ri!itemsToken,&#xD;
+  {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+      headerCells: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Phone Type&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;International Code&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Area Code&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Phone Number&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Options&quot;&#xD;
+        ),&#xD;
+		#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;&quot;&#xD;
+        )&#xD;
+      },&#xD;
+	  columnConfigs: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+		  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+		  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)&#xD;
+        },&#xD;
+      rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+        function: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2496&quot;(&#xD;
+          items: ri!items,&#xD;
+          index: _,&#xD;
+          itemsToken: ri!itemsToken,&#xD;
+          itemSave: ri!itemsSave&#xD;
+        ),&#xD;
+        array: if(&#xD;
+          or(&#xD;
+            isnull(&#xD;
+              ri!items&#xD;
+            ),&#xD;
+            count(&#xD;
+              ri!items&#xD;
+            ) &lt; 1&#xD;
+          ),&#xD;
+          {},&#xD;
+          1 + enumerate(&#xD;
+            count(&#xD;
+              ri!items&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        arrayVariable: ri!itemsToken&#xD;
+      )&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+      label: &quot;Add Phone Number&quot;,&#xD;
+      labelPosition: &quot;COLLAPSED&quot;,&#xD;
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        label: &quot;+Add Phone Number&quot;,&#xD;
+        value: {&#xD;
+          &quot;&quot;&#xD;
+        },&#xD;
+        saveInto: {&#xD;
+          ri!items &lt;&lt; fn!append(&#xD;
+            ri!items,&#xD;
+            _&#xD;
+          ),&#xD;
+          ri!itemsSave &lt;&lt; fn!append(&#xD;
+            ri!itemsSave,&#xD;
+            _&#xD;
+          )&#xD;
+          &#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsSave</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

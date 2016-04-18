@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_applicationInformation</name>
+        <uuid>73b99a65-8cbe-4874-bc40-e8ac308f5e2e</uuid>
+        <description>allows internal users to enter the application received date</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5559</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Office Use Only&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+      label: &quot;Application received &quot;,&#xD;
+      labelPosition: &quot;ADJACENT&quot;,&#xD;
+      instructions: &quot;Date when application was received by EHP&quot;,&#xD;
+      value: ri!applicationDate_dti,&#xD;
+      validations: if(&#xD;
+        ri!applicationDate_dti &gt; #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;(),&#xD;
+        &quot;Received date cannot be in the future&quot;,&#xD;
+        &quot;&quot;&#xD;
+      ),&#xD;
+      saveInto: ri!applicationDate_dti,&#xD;
+      required: true&#xD;
+    )&#xD;
+  },&#xD;
+  isCollapsible: true&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

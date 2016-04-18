@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTABRResults">
+    <xsd:sequence>
+      <xsd:element name="recordLastUpdated" nillable="true" type="xsd:string"/>
+      <xsd:element name="abn" nillable="true" type="xsd:string"/>
+      <xsd:element name="abnIsCurrent" nillable="true" type="xsd:string"/>
+      <xsd:element name="abnReplacedFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityStatusCode" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityStatusEffectiveFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityStatusEffectiveTo" nillable="true" type="xsd:string"/>
+      <xsd:element name="ASICNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityTypeCode" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityTypeDescription" nillable="true" type="xsd:string"/>
+      <xsd:element name="gstEffectiveFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="gstEffectiveTo" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityMainName" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityMainNameEffectiveFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityMainTradingName" nillable="true" type="xsd:string"/>
+      <xsd:element name="entityMainTradingNameEffectiveFrom"
+        nillable="true" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="entityOtherTradingName" nillable="true" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="entityOtherTradingNameEffectiveFrom" nillable="true" type="xsd:string"/>
+      <xsd:element name="mainBusinessPhysicalAddressStateCode"
+        nillable="true" type="xsd:string"/>
+      <xsd:element name="mainBusinessPhysicalAddressPostcode"
+        nillable="true" type="xsd:string"/>
+      <xsd:element name="mainBusinessPhysicalAddressEffectiveFrom"
+        nillable="true" type="xsd:string"/>
+      <xsd:element name="mainBusinessPhysicalAddressEffectiveTo"
+        nillable="true" type="xsd:string"/>
+      <xsd:element name="exception" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

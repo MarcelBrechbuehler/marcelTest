@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_generalInformation</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8769</uuid>
+        <description>Contains general information of document</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;General Information&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Document Id&quot;,
+      value: local!commonDocumentVersionDocumentDetails.commonDocument.commonDocumentId,
+      readOnly: true
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Document Name&quot;,
+      value: local!commonDocumentVersionDocumentDetails.documentName,
+      readOnly: true
+    ),
+    if(
+        trim(local!commonDocumentVersionDocumentDetails.dmId) = &quot;?&quot;
+      ,
+      #&quot;SYSTEM_SYSRULES_imageField&quot;(
+        label: &quot;&quot;,
+        images: {
+          #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+            document: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11162&quot;,
+            caption: &quot;Download &quot; &amp; local!commonDocumentVersionDocumentDetails.documentName,
+            link: &quot;&quot;
+          )
+        },
+        size: &quot;ICON&quot;
+      ),
+      #&quot;SYSTEM_SYSRULES_imageField&quot;(
+        label: &quot;&quot;,
+        images: {
+          #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+            document: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11162&quot;,
+            caption: &quot;Download &quot; &amp; local!commonDocumentVersionDocumentDetails.documentName,
+            link: #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(
+              document: local!commonDocumentVersionDocumentDetails.dmId
+            )
+          )
+        },
+        size: &quot;ICON&quot;
+      )
+    )
+  },
+  secondColumnContents: {
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;File Name&quot;,
+      value: local!commonDocumentVersionDocumentDetails.fileName,
+      readOnly: true
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Reference&quot;,
+      value: local!commonDocumentVersionDocumentDetails.commonDocument.documentRef,
+      readOnly: true
+    )
+  },
+  isCollapsible: true
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

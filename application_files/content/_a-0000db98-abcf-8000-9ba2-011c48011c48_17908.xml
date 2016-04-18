@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_ehpCustomerRecordExpression</name>
+        <uuid>_a-0000db98-abcf-8000-9ba2-011c48011c48_17908</uuid>
+        <description></description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1633</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+  local!queryInformation: #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17915&quot;(ri!rspQuery),&#xD;
+  /* Get filters' fields and values to avoid function repetition */&#xD;
+  local!filterFields: index(local!queryInformation.filters, &quot;field&quot;, {}),&#xD;
+  local!filterValues: index(local!queryInformation.filters, &quot;value&quot;, {}),&#xD;
+  /* Get unique idenifier if present in filters */&#xD;
+  local!uniqueIdentifier: displayvalue(&#xD;
+    &quot;rp!id&quot;,&#xD;
+    local!filterFields,&#xD;
+    local!filterValues,&#xD;
+    null&#xD;
+  ),&#xD;
+  /* Get filtered Customer Name */&#xD;
+  local!customerName: displayvalue(&#xD;
+    &quot;customerName&quot;,&#xD;
+    local!filterFields,&#xD;
+    local!filterValues,&#xD;
+    null&#xD;
+  ),&#xD;
+  local!customerType: displayvalue(&#xD;
+    &quot;partyTypeDescription&quot;,&#xD;
+    local!filterFields,&#xD;
+    local!filterValues,&#xD;
+    null&#xD;
+  ),&#xD;
+  local!user_cdt : #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7904&quot;(loggedInUser()),&#xD;
+  local!partyId: if(local!user_cdt.internalFlag=1,&#xD;
+    null,&#xD;
+    #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26605&quot;(&#xD;
+    {8,9},&#xD;
+    local!user_cdt.userId&#xD;
+    ).partyId&#xD;
+  ),&#xD;
+  /*&#xD;
+    If there is no unique identifier, the expression gets the data for the list view and applies &#xD;
+    the record's pagingInfo. Because we know the number of legislators is capped, we can sort it &#xD;
+    here without much worry. Be careful sorting with todatasubset() if you do not know the size of &#xD;
+    the response.&#xD;
+  */&#xD;
+  local!data: if(isnull(local!uniqueIdentifier),&#xD;
+    if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!partyId),&#xD;
+      todatasubset(&#xD;
+        #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17904&quot;(null,local!queryInformation.searchText,local!customerName,local!customerType),&#xD;
+        local!queryInformation.pagingInfo&#xD;
+      ).data,&#xD;
+      todatasubset(&#xD;
+        #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17904&quot;(local!partyId,local!queryInformation.searchText,local!customerName,local!customerType),&#xD;
+        local!queryInformation.pagingInfo&#xD;
+      ).data&#xD;
+    ),&#xD;
+    todatasubset(&#xD;
+      #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17904&quot;(local!uniqueIdentifier,local!queryInformation.searchText,local!customerName,local!customerType),&#xD;
+      local!queryInformation.pagingInfo&#xD;
+    ).data&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dataSubset&quot;(&#xD;
+    data: local!data,&#xD;
+    identifiers: index(local!data, &quot;customerId&quot;, {}),&#xD;
+    /* PLACEHOLDER FOR PAGING INFO */&#xD;
+    startIndex: index(local!queryInformation.pagingInfo, &quot;startIndex&quot;, 1),&#xD;
+    batchSize: index(local!queryInformation.pagingInfo, &quot;totalCount&quot;, 10),&#xD;
+    sortInfo: index(local!queryInformation.pagingInfo, &quot;sort&quot;, null),&#xD;
+    totalCount: index(local!queryInformation.pagingInfo, &quot;batchSize&quot;, 10)&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>rspQuery</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>rspQuery</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

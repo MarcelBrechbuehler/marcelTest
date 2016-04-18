@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTSuitableOperatorQuestion">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+			  @Table( name="suitable_operator_question")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This datatype is used to record the details for the suitable operator question.]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="suitableOperatorQuestionId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+ 					@Id
+	   			     @GeneratedValue
+ 		       @Column( name="suitable_operator_question_id")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="suitableOperatorQuestionGroupId"
+        nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+         @Column( name="suitable_operator_question_group_id")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="questionRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+    @Column( name="question_ref",columnDefinition="varchar(20)")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="versionNo" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+         @Column( name="version_no")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="questionText" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+  @Column( name="question_text",columnDefinition="varchar(8000)")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="displayOrder" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+         @Column( name="display_order")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="helpText" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+  @Column( name="help_text",columnDefinition="varchar(8000)")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="commonDocumentClassificationId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+         @Column( name="common_document_classification_id")
+ 	    </xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="created_by")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="createdTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="created_ts")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedBy" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="updated_by")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="updatedTimestamp" nillable="true" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="updated_ts")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="active")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="source" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@Column( name="source",columnDefinition="varchar(100)")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

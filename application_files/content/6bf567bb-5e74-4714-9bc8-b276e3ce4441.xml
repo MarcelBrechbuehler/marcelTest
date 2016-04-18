@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_permitDashboard</name>
+        <uuid>6bf567bb-5e74-4714-9bc8-b276e3ce4441</uuid>
+        <description>This interface rule is used to display permit dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  /*================ LOAD ================*/
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(
+    loggedinuser(),
+    {
+      #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23017&quot;
+    }
+  ),
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: 13
+  ),
+  local!permitVersion,
+  local!partyContactPagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: - 1
+  ),
+  with(
+    local!permitInfo: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7652&quot;(
+      rf!permitId
+    ),
+    local!permitInfoByPermitRef: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10655&quot;(
+      local!permitInfo.permitRef
+    ),
+    local!permitId: if(
+      local!permitVersion,
+      {
+        #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10228&quot;(
+          local!permitInfo.permitRef,
+          local!permitVersion
+        ).permitId
+      },
+      rf!permitId
+    ),
+    local!permitDetails: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10600&quot;(
+      local!permitId
+    ),
+    local!permitApplication: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7645&quot;(
+      local!permitDetails.permitApplicationId
+    ),
+    local!partyContactDetails: if(
+      length(
+        local!permitApplication
+      ) = 0,
+      &quot;&quot;,
+      #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19595&quot;(
+        local!permitApplication.partyContactId
+      )
+    ),
+    local!partyContactDetailsDataSubset: todatasubset(
+      local!partyContactDetails,
+      local!partyContactPagingInfo
+    ),
+    local!permitApplicationDetails: apply(
+      #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10463&quot;,
+      local!permitInfoByPermitRef.permitApplicationId
+    ),
+    local!activityMapDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13266&quot;(
+      local!permitApplication.permitApplicationId
+    ),
+    local!activityDetails: if(
+      or(
+        isnull(
+          local!activityMapDetails
+        ),
+        length(
+          local!activityMapDetails
+        ) = 0
+      ),
+      &quot;&quot;,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7637&quot;(
+        local!activityMapDetails.permitActivityId
+      )
+    ),
+    local!commonDocumentId: if(
+      or(
+        isnull(
+          local!activityMapDetails
+        ),
+        length(
+          local!activityMapDetails
+        ) = 0
+      ),
+      {},
+      #&quot;a5b586ce-808c-4c5b-b0cd-684068237696&quot;(
+        local!activityMapDetails.permitActivityId
+      ).commonDocumentId
+    ),
+    local!commonDocumentVersionDocumentDetails: if(
+      isnull(
+        local!commonDocumentId
+      ),
+      {},
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15992&quot;(
+        local!commonDocumentId
+      )
+    ),
+    local!documentId: local!commonDocumentVersionDocumentDetails.dmId,
+    local!permitPartyMapDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8383&quot;(
+      local!permitId
+    ),
+    local!partyDetails: if(
+      not(
+        isnull(
+          local!permitPartyMapDetails.partyId
+        )
+      ),
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1565&quot;(
+        local!permitPartyMapDetails.partyId
+      ),
+      {}
+    ),
+    local!partyPhoneDetails: if(
+      local!permitPartyMapDetails.partyId,
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4507&quot;(
+        local!permitPartyMapDetails.partyId
+      ),
+      {}
+    ),
+    local!partyEmailDetails: if(
+      local!permitPartyMapDetails.partyId,
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4509&quot;(
+        local!permitPartyMapDetails.partyId
+      ),
+      {}
+    ),
+    local!permitTenureMapDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8183&quot;(
+      local!permitId
+    ),
+    local!permitActivityMapDetails: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10136&quot;(
+      local!permitId
+    ),
+    local!locationEntityMapDetails: if(
+      or(
+        isnull(
+          local!permitActivityMapDetails
+        ),
+        length(
+          local!permitActivityMapDetails
+        ) &lt; 1
+      ),
+      {},
+      #&quot;9dd00ff0-c60c-472b-b5ff-d26ce7dc8417&quot;(
+        local!permitActivityMapDetails.locationId,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15400&quot;
+      )
+    ),
+    local!permitTenure: if(
+      or(
+        isnull(
+          local!locationEntityMapDetails
+        ),
+        length(
+          local!locationEntityMapDetails
+        ) &lt; 1
+      ),
+      {},
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7674&quot;(
+        local!locationEntityMapDetails.entityId
+      )
+    ),
+    local!locationDetails: if(
+      or(isnull(local!permitActivityMapDetails),length(local!permitActivityMapDetails)&lt;1),{},
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7681&quot;(
+        local!permitActivityMapDetails.locationId
+      )
+    ),
+    local!suitableOperatorDetails: if(
+      local!permitPartyMapDetails.partyId,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7930&quot;(
+        local!permitPartyMapDetails.partyId
+      ),
+      {}
+    ),
+    local!permitTenureDetails: if(
+      local!permitTenureMapDetails.permitTenureId,
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7674&quot;(
+        local!permitTenureMapDetails.permitTenureId
+      ),
+      {}
+    ),
+    local!permitAssuranceDetails: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10142&quot;(
+      local!permitId
+    ),
+    #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+      /*================ DASHBOARD ================*/
+      firstColumnContents: {
+        if(
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(
+            loggedInUser(),
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23017&quot;
+          ),
+          {
+            
+            #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8604&quot;(),
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8605&quot;(),
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8608&quot;(),
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8606&quot;(),
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8607&quot;(),
+        #&quot;2f6e0595-465d-46d4-b9b5-fbc0bb5d16b7&quot;(),
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8609&quot;(),
+        #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(
+          #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15401&quot;,
+          local!permitId
+        )
+            
+          },
+          {
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+              label: &quot;Permission Error&quot;,
+              firstColumnContents: {
+                #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+                  label: &quot;&quot;,
+                  labelPosition: &quot;ABOVE&quot;,
+                  value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22554&quot;,
+                  readOnly: true
+                )
+              }
+            )
+          }
+        )
+      }
+    )
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

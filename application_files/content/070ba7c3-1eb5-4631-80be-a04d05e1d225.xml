@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_searchLocationForEdit</name>
+        <uuid>070ba7c3-1eb5-4631-80be-a04d05e1d225</uuid>
+        <description>This interface rule used to search the location for edit</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!selectedLocationId,&#xD;
+  local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+    pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: - 1,&#xD;
+      sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+        field: &quot;locationRef&quot;,&#xD;
+        ascending: true&#xD;
+      )&#xD;
+    )&#xD;
+  ),&#xD;
+  local!locationDetailsDataSubset,&#xD;
+  with(&#xD;
+    local!locationDetails: if(&#xD;
+      isnull(&#xD;
+        ri!locationType_int&#xD;
+      ),&#xD;
+      &quot;&quot;,&#xD;
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8975&quot;(&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!locationType_int&#xD;
+          ),&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8833&quot;&#xD;
+              ).commonCodeId,&#xD;
+          ri!locationType_int&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!locationRef_txt&#xD;
+          ),&#xD;
+          &quot;&quot;,&#xD;
+          ri!locationRef_txt&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!otherNames_txt&#xD;
+          ),&#xD;
+          &quot;&quot;,&#xD;
+          ri!otherNames_txt&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!tenureType_int&#xD;
+          ),&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8883&quot;&#xD;
+                  ).commonCodeId,&#xD;
+          ri!tenureType_int&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!tenureRef_txt&#xD;
+          ),&#xD;
+          &quot;&quot;,&#xD;
+          ri!tenureRef_txt&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!lga_txt&#xD;
+          ),&#xD;
+          &quot;&quot;,&#xD;
+          ri!lga_txt&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!bimName_int&#xD;
+          ),&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9007&quot;&#xD;
+                  ).commonCodeId,&#xD;
+          ri!bimName_int&#xD;
+        )&#xD;
+      )&#xD;
+    ),&#xD;
+    local!locationDetailsDataSubset: todatasubset(&#xD;
+      local!locationDetails,&#xD;
+      local!gridSelection.pagingInfo&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      firstColumnContents: {&#xD;
+         #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+      ri!processMilestoneName,&#xD;
+      ri!processMilestoneIndex&#xD;
+    ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Location Search&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Location Type:&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8833&quot;&#xD;
+              ).description,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8833&quot;&#xD;
+              ).commonCodeId,&#xD;
+              value: ri!locationType_int,&#xD;
+              saveInto: ri!locationType_int&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!locationType_int&#xD;
+          ),&#xD;
+          {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+              secondaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                  label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                  saveInto: ri!buttonValue_txt&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          {&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Location Ref:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!locationRef_txt,&#xD;
+                  saveInto: ri!locationRef_txt&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;Tenure Type:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8883&quot;&#xD;
+                  ).description,&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8883&quot;&#xD;
+                  ).commonCodeId,&#xD;
+                  value: ri!tenureType_int,&#xD;
+                  saveInto: ri!tenureType_int&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Tenure Number:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!tenureRef_txt,&#xD;
+                  saveInto: ri!tenureRef_txt&#xD;
+                )&#xD;
+              },&#xD;
+              secondColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Other Names:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!otherNames_txt,&#xD;
+                  saveInto: ri!otherNames_txt&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;BIM Name:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9007&quot;&#xD;
+                  ).description,&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9007&quot;&#xD;
+                  ).commonCodeId,&#xD;
+                  value: ri!bimName_int,&#xD;
+                  saveInto: ri!bimName_int&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;LGA:&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: union(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7685&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7452&quot;&#xD;
+                  ).lgaName,#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7685&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7452&quot;&#xD;
+                  ).lgaName),&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: union(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7685&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7452&quot;&#xD;
+                  ).lgaName,#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7685&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7452&quot;&#xD;
+                  ).lgaName),&#xD;
+                  value: ri!lga_txt,&#xD;
+                  saveInto: ri!lga_txt&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            ri!locationType_int&#xD;
+          ),&#xD;
+          {},&#xD;
+          {&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              label: &quot;Location Search Results&quot;,&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+                  totalCount: local!locationDetailsDataSubset.totalCount,&#xD;
+                  columns: {&#xD;
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                      label: &quot;Location Ref&quot;,&#xD;
+                      field: &quot;locationRef&quot;,&#xD;
+                      data: index(&#xD;
+                        local!locationDetailsDataSubset.data,&#xD;
+                        &quot;locationRef&quot;,&#xD;
+                        null&#xD;
+                      ),&#xD;
+                      links: apply(&#xD;
+                        #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                          recordtype: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9103&quot;,&#xD;
+                          identifier: _&#xD;
+                        ),&#xD;
+                        local!locationDetails.locationId&#xD;
+                      )&#xD;
+                    ),&#xD;
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                      label: &quot;Tenure Type&quot;,&#xD;
+                      field: &quot;tenureType&quot;,&#xD;
+                      data: apply(&#xD;
+                        #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10114&quot;,&#xD;
+                        local!locationDetails.tenureType&#xD;
+                      )&#xD;
+                    ),&#xD;
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                      label: &quot;Tenure Number&quot;,&#xD;
+                      field: &quot;tenureRef&quot;,&#xD;
+                      data: index(&#xD;
+                        local!locationDetailsDataSubset.data,&#xD;
+                        &quot;tenureRef&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    ),&#xD;
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                      label: &quot;LGA&quot;,&#xD;
+                      field: &quot;lgaName&quot;,&#xD;
+                      data: index(&#xD;
+                        local!locationDetailsDataSubset.data,&#xD;
+                        &quot;lgaName&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    ),&#xD;
+                    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                      label: &quot;Permit Ref&quot;,&#xD;
+                      field: &quot;permitRef&quot;,&#xD;
+                      data: index(&#xD;
+                        local!locationDetailsDataSubset.data,&#xD;
+                        &quot;permitRef&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    )&#xD;
+                  },&#xD;
+                  identifiers: index(&#xD;
+                    local!locationDetailsDataSubset.data,&#xD;
+                    &quot;locationId&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  value: local!gridSelection,&#xD;
+                  saveInto: {&#xD;
+                    local!gridSelection,&#xD;
+				          	if(count(&#xD;
+                        local!gridSelection.selected&#xD;
+                      ) &gt; 1,{},a!save(&#xD;
+                      ri!selectedLocationId,&#xD;
+                      index(&#xD;
+                        save!value,&#xD;
+                        &quot;selected&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    ))&#xD;
+                    &#xD;
+                  },&#xD;
+                  selection: true,&#xD;
+                  validations: if(&#xD;
+                    ri!selectedLocationId = 0,&#xD;
+                    #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10885&quot;,&#xD;
+                    if(&#xD;
+                      count(&#xD;
+                        local!gridSelection.selected&#xD;
+                      ) &gt; 1,&#xD;
+                      #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10880&quot;,&#xD;
+                      if(&#xD;
+                        ri!locationId = ri!selectedLocationId,&#xD;
+                        #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10881&quot;,&#xD;
+                        &quot;&quot;&#xD;
+                      )&#xD;
+                    )&#xD;
+                  )&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+                  primaryButtons: {&#xD;
+                    #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                      label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                      style: &quot;PRIMARY&quot;,&#xD;
+                      validations:if(&#xD;
+                    ri!selectedLocationId = 0,&#xD;
+                    #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10885&quot;,&quot;&quot;),&#xD;
+                      value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                      saveInto: ri!buttonValue_txt&#xD;
+                    )&#xD;
+                  },&#xD;
+                  secondaryButtons: {&#xD;
+                    #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                      label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                      style: &quot;NORMAL&quot;,&#xD;
+                      value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                      saveInto: ri!buttonValue_txt&#xD;
+                    )&#xD;
+                  }&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>otherNames_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tenureType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedLocationId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tenureRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lga_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>bimName_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

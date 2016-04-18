@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>COM_REQUIRES_FURTHER_ASSESSMENT</name>
+        <uuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5801</uuid>
+        <description>current assessment advice when suitable operator application needs further assessment</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1365</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>&quot;Your application requires further assessment by the Department of Environment and Heritage Protection (EHP) due to your responses regarding the suitability criteria. This assessment may take up to 10 or 20 Business Day, depending on your situation. For further information please contact &quot; &amp; #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1367&quot; &amp; &quot;.&quot;</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

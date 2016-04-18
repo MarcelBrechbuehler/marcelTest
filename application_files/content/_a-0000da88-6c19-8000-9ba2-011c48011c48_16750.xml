@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_phoneRowEach</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_16750</uuid>
+        <description>Interface rule used for adding Contact Phone numbers in SOR</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(
+  id: ri!index,
+  contents: {
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+      label: &quot;phoneType&quot; &amp; ri!index,
+      required: if(
+        isnull(
+          ri!items[ri!index].phoneNumber
+        ),
+        false(),
+        true()
+      ),
+      choiceLabels: {
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5702&quot;().name
+      },
+      choiceValues: {
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5702&quot;().value
+      },
+      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+      validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+      value: ri!items[ri!index].phoneType,
+      saveInto: {
+        ri!items[ri!index].phoneType,
+        a!save(
+          ri!items[ri!index].areaCode,
+          if(
+            isnull(
+              ri!items[ri!index].areaCode
+            ),
+            if(
+              or(
+                ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5698&quot;,
+                ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5697&quot;
+              ),
+              &quot;07&quot;,
+              if(
+                ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5696&quot;,
+                null,
+                ri!items[ri!index].areaCode
+              )
+            ),
+            ri!items[ri!index].areaCode
+          )
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;internationalCode&quot; &amp; ri!index,
+      readOnly: true(),
+      value: &quot;+61&quot;,
+      saveInto: ri!items[ri!index].internationalCode
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;areaCode&quot; &amp; ri!index,
+      disabled: if(
+        ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5696&quot;,
+        true(),
+        false()
+      ),
+      validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+      /*validations: if(
+        len(
+          cleanwith(
+            ri!items[ri!index].areaCode,
+            &quot;0123456789&quot;
+          )
+        ) &lt;&gt; len(
+          ri!items[ri!index].areaCode
+        ),
+        &quot;Only Numbers are allowed&quot;,
+        &quot;&quot;
+      ),*/value: ri!items[ri!index].areaCode,
+      saveInto: {
+        ri!items[ri!index].areaCode/* a!save(
+        ri!items[ri!index].areaCode,
+        local!areaCode
+        )       */
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;phoneNumber&quot; &amp; ri!index,
+      validations: if(
+        or(
+          ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5698&quot;,
+          ri!items[ri!index].phoneType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5697&quot;
+        ),
+        if(
+          len(
+            substitute(
+              ri!items[ri!index].phoneNumber,
+              &quot; &quot;,
+              &quot;&quot;
+            )
+          ) = 8,
+          if(
+            len(
+              cleanwith(
+                ri!items[ri!index].phoneNumber,
+                &quot;0123456789&quot;
+              )
+            ) &lt;&gt; len(
+              ri!items[ri!index].phoneNumber
+            ),
+            &quot;Only Numbers are allowed&quot;,
+            &quot;&quot;
+          ),
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23610&quot;
+        ),
+        if(
+          len(
+            substitute(
+              ri!items[ri!index].phoneNumber,
+              &quot; &quot;,
+              &quot;&quot;
+            )
+          ) = 10,
+          if(
+            len(
+              cleanwith(
+                ri!items[ri!index].phoneNumber,
+                &quot;0123456789&quot;
+              )
+            ) &lt;&gt; len(
+              ri!items[ri!index].phoneNumber
+            ),
+            &quot;Only Numbers are allowed&quot;,
+            &quot;&quot;
+          ),
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23611&quot;
+        )
+      ),
+      validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+      required: if(
+        ri!items[ri!index].phoneType,
+        false(),
+        true()
+      ),
+      value: ri!items[ri!index].phoneNumber,
+      saveInto: a!save(
+        ri!items[ri!index].phoneNumber,
+        substitute(
+          save!value,
+          &quot; &quot;,
+          &quot;&quot;
+        )
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+      label: &quot;recieveSmsFlag&quot; &amp; ri!index,
+      choiceLabels: {
+        #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2836&quot;
+      },
+      choiceValues: {
+        #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[1]
+      },
+      validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+      value: if(
+        ri!items[ri!index].recieveSmsFlag = 0,
+        &quot;&quot;,
+        ri!items[ri!index].recieveSmsFlag
+      ),
+      saveInto: ri!items[ri!index].recieveSmsFlag
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;delete &quot; &amp; ri!index,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: char(
+          10005
+        ),
+        value: ri!index,
+        saveInto: {
+          a!save(
+            local!items,
+            remove(
+              local!items,
+              save!value
+            )
+          ),
+          /* When modifying the size of the array used in a!applyComponents, /
+          / make the same change in the &quot;token&quot; array variable               */a!save(
+            ri!itemsToken,
+            remove(
+              ri!itemsToken,
+              save!value
+            )
+          )
+        },
+        align: &quot;CENTER&quot;
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

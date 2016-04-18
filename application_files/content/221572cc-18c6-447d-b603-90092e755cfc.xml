@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>CT_getSuitableOperatorAnswerQuestion_VWBySuitableOperatorId</name>
+        <uuid>221572cc-18c6-447d-b603-90092e755cfc</uuid>
+        <description>This query rule fetches all active answer question details for a suitable operator</description>
+        <folderUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1388</folderUuid>
+        <dataStoreEntityCompositeUuid>c7a31f31-362d-4b45-8d58-fa228c3bd564@_a-0000da0f-2564-8000-9ba2-011c48011c48_4206</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>suitableOperatorId</name>
+                <type>{http://www.w3.org/2001/XMLSchema}int</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>suitableOperatorId</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>=</op>
+                <value>suitableOperatorId</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

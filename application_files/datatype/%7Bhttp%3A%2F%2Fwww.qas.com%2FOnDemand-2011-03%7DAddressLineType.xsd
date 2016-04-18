@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DDataplusGroupType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DLineContentType.xsd"/>
+  <xsd:complexType name="AddressLineType">
+    <xsd:annotation>
+      <xsd:documentation>AddressLineType describes one line of a formatted addressThe child elements are as follows:Label  : The name of any address element fixed to this lineLine   : The formatted address lineDataplusGroup: DataPlus groups associated with this lineThe attributes are as follows:LineContent      : The type of data on this lineOverflow         : Some address elements were lost from this lineTruncated        : Truncation occurred on this line</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element form="qualified" minOccurs="0" name="Label" type="xsd:string"/>
+      <xsd:element form="qualified" minOccurs="0" name="Line" type="xsd:string"/>
+      <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0"
+        name="DataplusGroup" type="tns:DataplusGroupType"/>
+    </xsd:sequence>
+    <xsd:attribute default="Address" name="LineContent" type="tns:LineContentType"/>
+    <xsd:attribute default="false" name="Overflow" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Truncated" type="xsd:boolean"/>
+  </xsd:complexType>
+</xsd:schema>

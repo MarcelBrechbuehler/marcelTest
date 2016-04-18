@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dataStoreHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <dataStore>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23953</uuid>
+        <name>Connect_User</name>
+        <description></description>
+        <dataSourceKey>java:/jdbc/Appian</dataSourceKey>
+        <adaptingExplicitSqlNames>false</adaptingExplicitSqlNames>
+        <entities>
+            <entity>
+                <uuid>f81d5ca1-47e7-4288-b2f5-9fcb823e73e2</uuid>
+                <name>CTUser</name>
+                <type>{http://www.ehp.qld.gov.au/connect/types/}CTUser</type>
+            </entity>
+            <entity>
+                <uuid>a4c89506-ea2d-44d1-b253-5c65104fa529</uuid>
+                <name>CTUserRoleMap</name>
+                <type>{http://www.ehp.qld.gov.au/connect/types/}CTUserRoleMap</type>
+            </entity>
+            <entity>
+                <uuid>d2111e11-e51b-439d-bafe-c80fd9aa29fd</uuid>
+                <name>CTUserApplication</name>
+                <type>{http://www.ehp.qld.gov.au/connect/types/}CTUserApplication</type>
+            </entity>
+        </entities>
+    </dataStore>
+    <isPublished>true</isPublished>
+    <roleMap>
+        <role allowForAll="false" inherit="false" name="administrators">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="readers">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</dataStoreHaul>

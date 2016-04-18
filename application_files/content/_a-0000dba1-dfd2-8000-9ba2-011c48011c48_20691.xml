@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>CT_getCaRERelatedQuestionsToUpdateMap_VWByJustificationAnswerId</name>
+        <uuid>_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20691</uuid>
+        <description>Get the related questions to update by Justification Answer Ids</description>
+        <folderUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</folderUuid>
+        <dataStoreEntityCompositeUuid>6c47f1a9-933e-4505-a029-c21e37495c74@_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12994</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>careJustificationAnswerId</name>
+                <type>{http://www.appian.com/ae/types/2009}Integer?list</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>careJustificationAnswerId</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>in</op>
+                <value>careJustificationAnswerId</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

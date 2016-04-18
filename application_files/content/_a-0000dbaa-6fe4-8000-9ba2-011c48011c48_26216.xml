@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_offlineSelectEvaluationId</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26216</uuid>
+        <description>Select from current active CaRE evaluations in Evaluation state.</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+
+#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;CaRE Offline Submission - Select Evaluation&quot;,
+  instructions: if(ri!unauthorisedEvaluationFlag=true,
+    &quot;The CaRE Reference you entered when completing the questions matched an Evaluation for which you are not the Primary or Secondary Officer. Please select from the list of available active CaRE References currently in the Evaluation state for which you are the Primary or Secondary Officer.&quot;,
+    &quot;The CaRE Reference you entered when completing the questions has not been recognised. Please select from the list of available active CaRE References currently in the Evaluation state.&quot;
+  ),
+  firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label:&quot;Offline Evaluation Reference Entered&quot;,
+          instructions: &quot;This is the Evaluation Reference you entered when completing the offline questions.&quot;,
+          value: if(ri!searchString=&quot;&quot;,&quot;(No reference entered)&quot;,ri!searchString),
+          readOnly: true
+      ),
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+          label:&quot;Select Evaluation&quot;,
+          instructions: &quot;Select the evaluation to submit the questions against&quot;,
+          placeholderLabel:&quot;--Please Select--&quot;,
+          choiceLabels:index(ri!careEvaluations,&quot;careEvaluationRef&quot;,{}),
+          choiceValues:index(ri!careEvaluations, &quot;careEvaluationId&quot;,{}),
+          required: true,
+          value:ri!selectedEvaluation,
+          saveInto:{
+            ri!selectedEvaluation,
+            a!save(ri!unauthorisedEvaluationFlag,false) 
+          }
+        )
+  },
+   
+  secondColumnContents: {},
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Submit&quot;,
+        style: &quot;PRIMARY&quot;,
+        saveInto: {}
+      )
+    }
+  ),
+  validations: {
+    if(ri!unauthorisedEvaluationFlag=true,
+      #&quot;SYSTEM_SYSRULES_validationMessage&quot;(
+        message: &quot;The reference you entered matched an Evaluation for which you are not the Primary or Secondary Officer. Please select a different Evaluation.&quot;,
+        validateAfter: &quot;REFRESH&quot;
+      ),
+      {}
+    )
+  }
+)
+)</definition>
+        <namedTypedValue>
+            <name>searchString</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>careEvaluations</name>
+            <type>
+                <name>CTCaREEvaluation?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedEvaluation</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>unauthorisedEvaluationFlag</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>true</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>searchString</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>careEvaluations</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>selectedEvaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>unauthorisedEvaluationFlag</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

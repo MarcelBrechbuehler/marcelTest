@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_validateUserCustomerRelationshipByInternalUser</name>
+        <uuid>_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23046</uuid>
+        <description>This is the form that the customer service team group (i.e. internal user) uses to validate the external user before linking to the nominated customer(s).</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1305</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+ local!selectedCustomerIds_int: {},&#xD;
+ #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+   label: &quot;Authorise user to access customer account&quot;,&#xD;
+   firstColumnContents: {&#xD;
+     #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+       label: &quot;&quot;,&#xD;
+       firstColumnContents: {&#xD;
+         #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+           label: &quot;&quot;,&#xD;
+           labelPosition: &quot;COLLAPSED&quot;,&#xD;
+           value: &quot;Please review the information provided by the external user to determine that they are a valid user. The information shown below was provided by the user to demonstrate their knowledge and association with a customer.  Compare the user supplied information with the existing customer record by opening the customer dashboard.&quot;,&#xD;
+           saveInto: {},&#xD;
+           refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+           readonly: true,&#xD;
+           validations: {}&#xD;
+         )&#xD;
+       },&#xD;
+       secondColumnContents: {}&#xD;
+     ),&#xD;
+     #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20515&quot;(&#xD;
+       ctuser_cdt: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7824&quot;(&#xD;
+         if(&#xD;
+           #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+             ri!userId_int&#xD;
+           ),&#xD;
+           0,&#xD;
+           ri!userId_int&#xD;
+         )&#xD;
+       ),&#xD;
+       sectionTitle_txt: &quot;User provided information&quot;,&#xD;
+       collapsible_bool: false&#xD;
+     ),&#xD;
+     if(&#xD;
+       #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!customerId_int),&#xD;
+       #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23178&quot;(null(),null(),&quot;&quot;,&quot;&quot;, false()),&#xD;
+       #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23178&quot;(&#xD;
+           ri!customerId_int,&#xD;
+           local!selectedCustomerIds_int,&#xD;
+           &quot;&quot;,&#xD;
+           &quot;&quot;,&#xD;
+           false()&#xD;
+        )&#xD;
+      ),&#xD;
+      if(&#xD;
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!newParty_cdt),&#xD;
+        {},&#xD;
+        #&quot;f587570c-615c-4f32-9d60-14e0f161cec0&quot;(&#xD;
+         name_txt: ri!newParty_cdt.partyName,&#xD;
+         businessno_txt: ri!newPartyExternalId_cdt.externalId,&#xD;
+         type_txt: #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1569&quot;(&#xD;
+            ri!newParty_cdt.partyTypeId&#xD;
+          ).description&#xD;
+        )&#xD;
+      ),&#xD;
+     if(&#xD;
+       #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+           ri!newPartyAddress_cdt&#xD;
+       ),&#xD;
+       #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23211&quot;(&#xD;
+         null(),&#xD;
+         &quot;&quot;&#xD;
+       ),&#xD;
+       #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23211&quot;(&#xD;
+         ri!newPartyAddress_cdt,&#xD;
+         &quot;Address details&quot;&#xD;
+       )&#xD;
+     ),&#xD;
+     #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23182&quot;(&#xD;
+       ri!newPartyContact_cdt,&#xD;
+       if(&#xD;
+         #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+           ri!newPartyContact_cdt&#xD;
+         ),&#xD;
+         &quot;&quot;,&#xD;
+         &quot;Primary contact information&quot;&#xD;
+       )&#xD;
+     ),&#xD;
+     with(&#xD;
+       local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+          startIndex: 1,&#xD;
+          batchSize: 13&#xD;
+        ),&#xD;
+       #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(&#xD;
+         #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15415&quot;,&#xD;
+         ri!userId_int&#xD;
+       )&#xD;
+     ),&#xD;
+     #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+       label: &quot;&quot;,&#xD;
+       firstColumnContents: {&#xD;
+         #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+           label: &quot;Validation result&quot;,&#xD;
+           labelPosition: &quot;ABOVE&quot;,&#xD;
+           value: ri!validationResult_txt,&#xD;
+           saveInto: {&#xD;
+             ri!validationResult_txt&#xD;
+           },&#xD;
+           refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+           required: true,&#xD;
+           height: &quot;MEDIUM&quot;&#xD;
+         ),&#xD;
+         #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+           label: &quot;&quot;,&#xD;
+           labelPosition: &quot;COLLAPSED&quot;,&#xD;
+           choiceLabels: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20512&quot;,&#xD;
+           choiceValues: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20512&quot;,&#xD;
+           value: ri!approvalValue_txt,&#xD;
+           saveInto: {&#xD;
+             ri!approvalValue_txt&#xD;
+             &#xD;
+           },&#xD;
+           required: true,&#xD;
+           choiceLayout: &quot;COMPACT&quot;,&#xD;
+           validations: {}&#xD;
+         )&#xD;
+       },&#xD;
+       secondColumnContents: {}&#xD;
+     )&#xD;
+   },&#xD;
+   secondColumnContents: {},&#xD;
+   buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+     primaryButtons: {&#xD;
+       #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+         label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+         style: &quot;PRIMARY&quot;,&#xD;
+         value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+         saveInto: {&#xD;
+           ri!buttonValue_txt,&#xD;
+           a!save(&#xD;
+             ri!selectedCustomerId_int,&#xD;
+             if(&#xD;
+               #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+                 local!selectedCustomerIds_int&#xD;
+               ),&#xD;
+               null(),&#xD;
+               local!selectedCustomerIds_int[1]&#xD;
+             )&#xD;
+           )&#xD;
+         }&#xD;
+       )&#xD;
+     },&#xD;
+     secondarybuttons: {&#xD;
+       #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+         label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+         style: &quot;DESTRUCTIVE&quot;,&#xD;
+         confirmmessage: &quot;Data will not be saved. Do you still want to cancel?&quot;,&#xD;
+         value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+         saveInto: ri!buttonValue_txt,&#xD;
+         skipvalidation: true&#xD;
+       )&#xD;
+     }&#xD;
+   ),&#xD;
+   validations: {&#xD;
+     if(&#xD;
+       and(&#xD;
+         ri!approvalValue_txt = #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20365&quot;,&#xD;
+         count(&#xD;
+            local!selectedCustomerIds_int&#xD;
+          ) &gt; 1&#xD;
+       ),&#xD;
+       #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+         message: &quot;You may only select one customer.&quot;,&#xD;
+         validateAfter: &quot;SUBMIT&quot;&#xD;
+       ),&#xD;
+       null()&#xD;
+     ),&#xD;
+     if(&#xD;
+       and(&#xD;
+         ri!approvalValue_txt = #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20365&quot;,&#xD;
+         if(&#xD;
+            #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+              ri!customerId_int&#xD;
+            ),&#xD;
+            0,&#xD;
+            length(&#xD;
+              ri!customerId_int&#xD;
+            )&#xD;
+          ) &gt; 1,&#xD;
+         #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(&#xD;
+           local!selectedCustomerIds_int&#xD;
+         )&#xD;
+       ),&#xD;
+       #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+         message: &quot;You must select a customer from the list.&quot;,&#xD;
+         validateAfter: &quot;SUBMIT&quot;&#xD;
+       ),&#xD;
+       null()&#xD;
+     )&#xD;
+   }&#xD;
+ )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>approvalValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>validationResult_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedCustomerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newParty_cdt</name>
+            <type>
+                <name>CTParty</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newPartyContact_cdt</name>
+            <type>
+                <name>CTPartyContacts_VW</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newPartyAddress_cdt</name>
+            <type>
+                <name>CTPartyAddressLinkAddress?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>newPartyExternalId_cdt</name>
+            <type>
+                <name>CTPartyExternalId</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>userId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>approvalValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>validationResult_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>selectedCustomerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>newParty_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>newPartyContact_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>newPartyAddress_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>newPartyExternalId_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

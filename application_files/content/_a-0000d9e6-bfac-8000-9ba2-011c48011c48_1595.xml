@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>COM_getProcessMilestoneData</name>
+        <uuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595</uuid>
+        <description>This rule is used to generate a milestone based on the milestone name passed as parameter</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1621</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>if(
+  ri!processMilestoneName = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1586&quot;,
+  #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1589&quot;(
+    processMilestoneIndex
+  ),
+  if(
+    ri!processMilestoneName = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1587&quot;,
+    #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1591&quot;(
+      processMilestoneIndex
+    ),
+    if(or(
+      ri!processMilestoneName = #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1588&quot;,
+      ri!processMilestoneName = #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14894&quot;
+      ),
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1604&quot;(
+        ri!processMilestoneIndex
+      ),
+      if(
+        ri!processMilestoneName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7265&quot;,
+        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7029&quot;(
+          ri!processMilestoneIndex
+        ),
+        if(
+          ri!processMilestoneName = #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10483&quot;,
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10484&quot;(
+            ri!processMilestoneIndex
+          ),
+          if(
+            ri!processMilestoneName = #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10899&quot;,
+            #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10894&quot;(
+              ri!processMilestoneIndex
+            ),
+            if(
+              ri!processMilestoneName = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14589&quot;,
+              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14594&quot;(
+                ri!processMilestoneIndex
+              ),
+              if(
+                ri!processMilestoneName = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13996&quot;,
+                #&quot;2db0a0d2-ba42-4dbb-9e3a-d7743b24ffbc&quot;(
+                  ri!processMilestoneIndex
+                ),
+                if(
+                  ri!processMilestoneName = #&quot;_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23082&quot;,
+                  #&quot;_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23084&quot;(
+                    ri!processMilestoneIndex
+                  ),
+                  if(
+                    ri!processMilestoneName = #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26950&quot;,
+                    #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26948&quot;(
+                      ri!processMilestoneIndex
+                    ),
+                    if(
+                      ri!processMilestoneName = #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26926&quot;,
+                      #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26929&quot;(
+                        ri!processMilestoneIndex
+                      ),
+                      &quot;&quot;
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>processMilestoneName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>processMilestoneIndex</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

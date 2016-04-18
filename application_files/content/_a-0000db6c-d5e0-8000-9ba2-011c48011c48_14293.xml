@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_evaluationDashboard</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14293</uuid>
+        <description>Summary Dashboard for the CaRE Evaluation record</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  /*  Load Security cache */&#xD;
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(loggedInUser(), {#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23530&quot;}),&#xD;
+  local!pagingInfo:       #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:  1,&#xD;
+                                       batchSize:   5&#xD;
+                          ),&#xD;
+  local!careEvaluation:   if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                            {},&#xD;
+                            index(#&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot; (ri!careEvaluationId), 1, {})&#xD;
+                          ),&#xD;
+  local!evaluationUserMap:  if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                              {},&#xD;
+                              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14189&quot;(ri!careEvaluationId)&#xD;
+                            ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(&#xD;
+    label:  {},&#xD;
+    firstColumnContents: {&#xD;
+      /* Apply Security validation */&#xD;
+      if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23530&quot;),&#xD;
+        {&#xD;
+          /* CaRE Summary Details */&#xD;
+          #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(careEvaluation: local!careEvaluation),&#xD;
+          /* CaRE Officers */&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14318&quot;(careEvaluationId:  local!careEvaluation.careEvaluationId),&#xD;
+          /* Locations */&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14453&quot;(careEvaluationId: local!careEvaluation.careEvaluationId),&#xD;
+          /* Customers */&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14719&quot;(careEvaluationId: local!careEvaluation.careEvaluationId),&#xD;
+          /* Permit &amp; Activity Attributes */&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14729&quot;(careEvaluationId: local!careEvaluation.careEvaluationId),&#xD;
+          /* Status History */&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15058&quot;(careEvaluationId: local!careEvaluation.careEvaluationId),&#xD;
+          /* Related Documents */&#xD;
+          #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15451&quot;, local!careEvaluation.careEvaluationId),&#xD;
+          /* Outcome Summary*/&#xD;
+          #&quot;_a-0000db98-abcf-8000-9ba2-011c48011c48_17748&quot;(local!careEvaluation.careEvaluationId)&#xD;
+        },&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Permission Error&quot; ,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+              label: &quot;&quot;,&#xD;
+              labelPosition : &quot;ABOVE&quot;,&#xD;
+              value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22554&quot;,&#xD;
+              readOnly: true&#xD;
+            )  &#xD;
+          }&#xD;
+        )&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

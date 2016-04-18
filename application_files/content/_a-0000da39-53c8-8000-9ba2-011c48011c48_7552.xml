@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>UTIL_integrationCheckSourceSystem</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_7552</uuid>
+        <description>check if Source System is provided by the web service caller</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=if(isnull(ri!sourceSystem_txt),#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(837,838,&quot;1&quot;,819),ri!field_txt,ri!sourceSystem_txt),if(not(ri!sourceSystem_txt=#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7710&quot;),#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(837,838,&quot;2&quot;,819),ri!field_txt,ri!sourceSystem_txt),{}))
+
+
+
+</definition>
+        <namedTypedValue>
+            <name>sourceSystem_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

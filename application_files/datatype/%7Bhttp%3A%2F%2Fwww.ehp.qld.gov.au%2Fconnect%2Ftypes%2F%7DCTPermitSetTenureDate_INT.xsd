@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTPermitSetTenureDate_INT">
+    <xsd:sequence>
+      <xsd:element name="eaNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="tenureNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="tenureGrantedDate" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="tenureExpiryDate" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="formOfAssurance" nillable="true" type="xsd:string"/>
+      <xsd:element name="assuranceLodgementDate" nillable="true" type="xsd:dateTime"/>
+      <xsd:element name="plannedOperationDate" nillable="true" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

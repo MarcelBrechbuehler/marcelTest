@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editContactDetails</name>
+        <uuid>3d7a7396-f032-4874-bb5b-42e1f8110c8c</uuid>
+        <description></description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+    startIndex: 1,&#xD;
+    batchSize: 25&#xD;
+  ),&#xD;
+  local!customerContactToUpdate,&#xD;
+  with(&#xD;
+    local!customerDataSubset: todatasubset(&#xD;
+      ri!customerContacts,&#xD;
+      local!pagingInfo&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: &quot;Edit Contact&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        if(&#xD;
+          contains(&#xD;
+            #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5532&quot;,&#xD;
+            ri!customer.customerType.partyTypeId&#xD;
+          ),&#xD;
+          #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot;(&#xD;
+            ri!processMilestoneIndex&#xD;
+          ),&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+            ri!processMilestoneName,&#xD;
+            ri!processMilestoneIndex&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5732&quot;(&#xD;
+          ri!customer.customerName,&#xD;
+          ri!customer.customerType.description,&#xD;
+          ri!customer.customerRef&#xD;
+        ),&#xD;
+/*&#xD;
+        a!paragraphField(&#xD;
+          label: &quot;ri!customer&quot;,&#xD;
+          value: ri!customer&#xD;
+        ),&#xD;
+        a!paragraphField(&#xD;
+          label: &quot;ri!customerContacts&quot;,&#xD;
+          value: ri!customerContacts&#xD;
+        ),&#xD;
+        a!paragraphField(&#xD;
+          label: &quot;ri!customerContactToUpdate&quot;,&#xD;
+          value: ri!customerContactToUpdate&#xD;
+        ),&#xD;
+*/&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              totalCount: local!customerDataSubset.totalCount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Type&quot;,&#xD;
+                  data: if(isnull(local!customerDataSubset),null,index(&#xD;
+                    local!customerDataSubset.data.contactTypeCommonCode,&#xD;
+                    &quot;description&quot;,&#xD;
+                    {}&#xD;
+                  ))&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Name&quot;,&#xD;
+                  data: index(&#xD;
+                    local!customerDataSubset.data.partyPhoneDetails,&#xD;
+                    &quot;partyName&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  /* Creates a dynamic link for every item in local!data */links: apply(&#xD;
+                    #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+                      value: _,&#xD;
+                      saveInto: ri!customerContactToUpdate&#xD;
+                    ),&#xD;
+                    local!customerDataSubset.data&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Position&quot;,&#xD;
+                  data: index(&#xD;
+                    local!customerDataSubset.data,&#xD;
+                    &quot;position&quot;,&#xD;
+                    null&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Phone&quot;,&#xD;
+                  data: apply(&#xD;
+                    #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17766&quot;,&#xD;
+                    merge(&#xD;
+                      index(&#xD;
+                        local!customerDataSubset.data.partyPhoneDetails,&#xD;
+                        &quot;partyId&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    )&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Email&quot;,&#xD;
+                  data: apply(&#xD;
+                    #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17781&quot;,&#xD;
+                    merge(&#xD;
+                      index(&#xD;
+                        local!customerDataSubset.data.partyPhoneDetails,&#xD;
+                        &quot;partyId&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    )&#xD;
+                  )&#xD;
+                )&#xD;
+              },&#xD;
+              value: local!pagingInfo,&#xD;
+              saveInto: local!pagingInfo&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        /*a!linkField(&#xD;
+          links: {&#xD;
+          a!dynamicLink(&#xD;
+            label: &quot;Add&quot;,&#xD;
+            value: ri!buttonValue,&#xD;
+            saveInto: ri!buttonValue&#xD;
+          )&#xD;
+          }&#xD;
+        ),*/#&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+          secondaryButtons: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15931&quot;,&#xD;
+              style: &quot;NORMAL&quot;,&#xD;
+              value: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15931&quot;,&#xD;
+              saveInto: ri!buttonValue&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        if(&#xD;
+          and(&#xD;
+            not(&#xD;
+              isnull(&#xD;
+                ri!customerContactToUpdate&#xD;
+              )&#xD;
+            ),&#xD;
+            not(&#xD;
+              ri!buttonValue = &quot;Add&quot;&#xD;
+            )&#xD;
+          ),&#xD;
+          {&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              label: &quot;Contact Details&quot;,&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;Type&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2834&quot;&#xD;
+                  },&#xD;
+                  placeholderLabel: &quot;Select Type&quot;,&#xD;
+                  choiceValues: {&#xD;
+                    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5063&quot;&#xD;
+                  },&#xD;
+                  value: ri!customerContactToUpdate.contactType,&#xD;
+                  saveInto: ri!customerContactToUpdate.contactType,&#xD;
+                  required: true&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Name&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!customerContactToUpdate.partyPhoneDetails.partyName,&#xD;
+                  saveInto: ri!customerContactToUpdate.partyPhoneDetails.partyName,&#xD;
+                  required: true,&#xD;
+                  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22908&quot;,&#xD;
+                    fieldData: ri!customerContactToUpdate.partyPhoneDetails.partyName&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Position&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!customerContactToUpdate.position,&#xD;
+                  saveInto: ri!customerContactToUpdate.position,&#xD;
+                  required: false,&#xD;
+                  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22925&quot;,&#xD;
+                    fieldData: ri!customerContactToUpdate.position&#xD;
+                  )&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              label: &quot;&quot;,&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Email Address&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  /* need to check if there is a email for the contact */&#xD;
+                  value: if(&#xD;
+                    isnull(&#xD;
+                      ri!customerContactToUpdate.partyPhoneDetails.contactEmail&#xD;
+                    ),&#xD;
+                    null,&#xD;
+                    ri!customerContactToUpdate.partyPhoneDetails.contactEmail.email&#xD;
+                  ),&#xD;
+                  saveInto: ri!customerContactToUpdate.partyPhoneDetails.contactEmail.email,&#xD;
+                  /* need to check if there is a email for the contact */&#xD;
+                  validations: if(&#xD;
+                    isnull(&#xD;
+                      ri!customerContactToUpdate.partyPhoneDetails.contactEmail&#xD;
+                    ),&#xD;
+                    null,&#xD;
+                    if(&#xD;
+                      like(&#xD;
+                        ri!customerContactToUpdate.partyPhoneDetails.contactEmail.email,&#xD;
+                        #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7257&quot;&#xD;
+                      ),&#xD;
+                     #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22926&quot;,&#xD;
+                    fieldData: ri!customerContactToUpdate.partyPhoneDetails.contactEmail.email&#xD;
+                  ),&#xD;
+                      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7272&quot;&#xD;
+                    )&#xD;
+                  )&#xD;
+                )&#xD;
+              },&#xD;
+              secondColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+                  label: &quot;&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2835&quot;&#xD;
+                  },&#xD;
+                  choiceValues: {&#xD;
+                    #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[1]&#xD;
+                  },&#xD;
+                  /* need to check if there is a email for the contact */value: if(&#xD;
+                    isnull(&#xD;
+                      ri!customerContactToUpdate.partyPhoneDetails.contactEmail&#xD;
+                    ),&#xD;
+                    null,&#xD;
+                    if(&#xD;
+                      ri!customerContactToUpdate.partyPhoneDetails.contactEmail.receiveCorrespondenceFlag = 0,&#xD;
+                      null,&#xD;
+                      #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3385&quot;[1]&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  saveInto: ri!customerContactToUpdate.partyPhoneDetails.contactEmail.receiveCorrespondenceFlag&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;67dec1e7-2bbe-4ba4-be62-be5d5d10ec7d&quot;(&#xD;
+                  ri!customerContactToUpdate.partyPhoneDetails.contactPhoneDetails,&#xD;
+                  ri!customerContactToUpdate,&#xD;
+                  ri!removedPhoneNumbers&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          {}&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+          primaryButtons: {&#xD;
+            if(&#xD;
+              contains(&#xD;
+                #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;,&#xD;
+                tointeger(&#xD;
+                  ri!customer.customerType.partyTypeId&#xD;
+                )&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                style: &quot;PRIMARY&quot;,&#xD;
+                value: ri!customerContactToUpdate.partyContactId,&#xD;
+                saveInto: {&#xD;
+                  a!save(&#xD;
+                    ri!customerContacts,&#xD;
+                    if(&#xD;
+                      isnull(&#xD;
+                        ri!customerContactToUpdate.partyContactId&#xD;
+                      ),&#xD;
+                      ri!customerContacts,&#xD;
+                      updatearray(&#xD;
+                        ri!customerContacts,&#xD;
+                        wherecontains(&#xD;
+                          save!value,&#xD;
+                          ri!customerContacts.partyContactId&#xD;
+                        ),&#xD;
+                        ri!customerContactToUpdate&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  ri!buttonValue &lt;&lt; #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+                }&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: if(&#xD;
+                  isnull(&#xD;
+                    ri!isSOR&#xD;
+                  ),&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+                  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+                ),&#xD;
+                style: &quot;PRIMARY&quot;,&#xD;
+                value: ri!customerContactToUpdate.partyContactId,&#xD;
+                saveInto: {&#xD;
+                  a!save(&#xD;
+                    ri!customerContacts,&#xD;
+                    if(&#xD;
+                      isnull(&#xD;
+                        ri!customerContactToUpdate.partyContactId&#xD;
+                      ),&#xD;
+                      ri!customerContacts,&#xD;
+                      updatearray(&#xD;
+                        ri!customerContacts,&#xD;
+                        wherecontains(&#xD;
+                          save!value,&#xD;
+                          ri!customerContacts.partyContactId&#xD;
+                        ),&#xD;
+                        ri!customerContactToUpdate&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  ri!buttonValue &lt;&lt; #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;&#xD;
+                }&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          secondaryButtons: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+              style: &quot;DESTRUCTIVE&quot;,&#xD;
+              confirmMessage: &quot;Data will not be saved. Do you still want to cancel?&quot;,&#xD;
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+              saveInto: ri!buttonValue,&#xD;
+              skipValidation:true()&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,&#xD;
+              style: &quot;NORMAL&quot;,&#xD;
+              value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,&#xD;
+              saveInto: ri!buttonValue&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerContacts</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customer</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerContactToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>removedPhoneNumbers</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isSOR</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

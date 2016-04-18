@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_selectCampaign</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13555</uuid>
+        <description>Allows the selection of the Campaign details for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!campaigns:  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_6429&quot;(#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;),&#xD;
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    label:  {},&#xD;
+    firstColumnContents:  {&#xD;
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+          label: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26894&quot;,&#xD;
+          labelPosition: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13530&quot;,&#xD;
+          placeHolderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+          choiceLabels: local!campaigns.campaignName,&#xD;
+          choiceValues: local!campaigns.careEvaluationCampaignId,&#xD;
+          value: ri!evaluation.careEvaluationCampaignId,&#xD;
+          saveInto: ri!evaluation.careEvaluationCampaignId,&#xD;
+          required: true,&#xD;
+          requiredMessage:  &quot;You must select a &quot; &amp; #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26894&quot;&#xD;
+        )&#xD;
+      /*a!checkboxField(&#xD;
+        label: &quot;Evaluation Components&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        choiceLabels:{&quot;CAP&quot;,&quot;Risk Evaluation&quot;,&quot;Compliance Evaluation&quot;},&#xD;
+        choiceValues:{cons!CARE_EVALUATION_COMPONENT_ID_CAP ,cons!CARE_EVALUATION_COMPONENT_ID_RISK,cons!CARE_EVALUATION_COMPONENT_ID_COMP},&#xD;
+        value: ri!selectedEvaluationComponents_int,&#xD;
+        saveInto: ri!selectedEvaluationComponents_int,&#xD;
+        required:true&#xD;
+      )*/&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>evaluation</name>
+            <type>
+                <name>CTCaREEvaluation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>evaluation</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

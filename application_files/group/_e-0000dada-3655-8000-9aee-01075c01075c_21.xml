@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <group>
+        <name>System Support L1</name>
+        <securityMap>SECURITYMAP_PERSONAL</securityMap>
+        <uuid>_e-0000dada-3655-8000-9aee-01075c01075c_21</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <description></description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_HIGH</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users>
+            <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            <userUuid>marcel.brechbuehler@procensol.co.uk</userUuid>
+            <userUuid>kate.fyfe@ehp.qld.gov.au</userUuid>
+            <userUuid>timocles.copland@appian.com</userUuid>
+            <userUuid>katrina.mckenna@ehp.qld.gov.au</userUuid>
+            <userUuid>Peter.Thomas@ehp.qld.gov.au</userUuid>
+            <userUuid>Tom.Verkaaik@ehp.qld.gov.au</userUuid>
+            <userUuid>nathan.sirl@ehp.qld.gov.au</userUuid>
+        </users>
+        <groups/>
+    </members>
+    <admins>
+        <users/>
+        <groups/>
+    </admins>
+    <ruleSet/>
+</groupHaul>

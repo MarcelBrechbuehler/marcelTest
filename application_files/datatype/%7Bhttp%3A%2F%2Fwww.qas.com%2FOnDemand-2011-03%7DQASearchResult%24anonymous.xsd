@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DQAAddressType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DQAPicklistType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DVerificationFlagsType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DVerifyLevelType.xsd"/>
+  <xsd:element name="QASearchResult">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element form="qualified" minOccurs="0" name="QAPicklist" type="tns:QAPicklistType"/>
+        <xsd:element form="qualified" minOccurs="0" name="QAAddress" type="tns:QAAddressType"/>
+        <xsd:element form="qualified" minOccurs="0"
+          name="VerificationFlags" type="tns:VerificationFlagsType"/>
+      </xsd:sequence>
+      <xsd:attribute default="None" name="VerifyLevel" type="tns:VerifyLevelType"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_integrationCheckPhoneEmailFormatResultSet</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_21647</uuid>
+        <description></description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1304</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= with(
+  local!validation: if(
+    isnull(
+      ri!sorContact_INT[1]
+    ),
+    null,
+    apply(
+      #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_21059&quot;,
+      merge(
+        ri!sorContact_INT[1].CTSuitableOperatorRegisterPhone_INT,
+        repeat(
+          count(
+            ri!sorContact_INT[1].CTSuitableOperatorRegisterPhone_INT
+          ),
+          ri!sorContact_INT[1].emailAddress
+        ),
+        repeat(
+          count(
+            ri!sorContact_INT[1].CTSuitableOperatorRegisterPhone_INT
+          ),
+          ri!field_txt
+        )
+      )
+    )
+  ),
+  local!resultSet: if(
+    or(
+      isnull(
+        local!validation
+      ),
+      length(
+        local!validation
+      ) = 0
+    ),
+    null,
+    local!validation[1]
+  ),
+  local!resultSet
+)</definition>
+        <namedTypedValue>
+            <name>sorContact_INT</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

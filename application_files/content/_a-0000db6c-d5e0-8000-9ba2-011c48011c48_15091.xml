@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dashboardDynamicQuestion</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15091</uuid>
+        <description>Dynamically creates the question/answer dashboard for display to the user</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  
+  local!questionAnswer: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15094&quot;(
+    ri!questionAnswerId_int,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;
+  ),
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex:  1,
+    batchSize:   5
+  ),
+  local!justificationAnswers_cdt: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14580&quot;(
+    local!questionAnswer.careQuestionId,
+    local!questionAnswer.careEvaluationComponentId
+  ),
+  local!evaluationId: #&quot;56966b51-a90a-41ef-986b-a1e8de3bb53d&quot;(
+    index(local!justificationAnswers_cdt.careEvaluationComponentId,1,{})
+  ).careEvaluationId,
+  
+  local!observations: union(local!justificationAnswers_cdt.observationText,local!justificationAnswers_cdt.observationText),
+  local!streamId: index(local!justificationAnswers_cdt.questionStreamId,1,{}),
+  local!questionTypeId: index(local!justificationAnswers_cdt.questionTypeId,1,{}),
+  
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    
+    label: index(local!justificationAnswers_cdt.questionText,1,{}),
+    instructions: index(local!justificationAnswers_cdt.questionGuidance,1,{}),
+    
+    firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_linkField&quot;(
+        links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+          label: &quot;Return to Evaluation&quot;, 
+          recordType: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4769&quot;,
+          identifier: local!evaluationId,
+          dashboard: if(
+            local!questionTypeId=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15034&quot;,&quot;_1FEbdA&quot;,
+            if(local!questionTypeId=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15032&quot;,&quot;_VneKpA&quot;,&quot;_TzgMkw&quot;)
+            )
+          )
+        ),
+        
+      #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+       function:#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14002&quot;(
+         readOnly_bln: true,
+         observations_txt: local!observations,
+         justificationAnswers_cdt: local!justificationAnswers_cdt,index:_
+         ),
+        array: 1+enumerate(length(local!observations))
+       ),
+
+      if(
+        index(local!justificationAnswers_cdt.questionTypeId,1,{})=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15032&quot;,
+        {},
+        #&quot;_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23013&quot;(ri!questionAnswerId_int)
+      ),
+      
+      if(length(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_20916&quot;(
+        #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15399&quot;, 
+        ri!questionAnswerId_int
+        ))&lt;1,
+        {},
+        #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15399&quot;, ri!questionAnswerId_int)
+      )
+    },
+    secondColumnContents: {},
+    validations: {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>questionAnswerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>questionAnswerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_suitableOperatorDashboard</name>
+        <uuid>16029b14-ed24-467f-b165-d6b88f621256</uuid>
+        <description>This rule is used to display the Suitable Operator details</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  /*================ LOAD ================*/&#xD;
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(&#xD;
+      loggedinuser(),{#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23019&quot;}&#xD;
+  ),&#xD;
+	local!customerInfo: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4421&quot;(ri!customerId_int),&#xD;
+	local!suitableOperator: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4429&quot;(ri!suitableOperatorId_int),&#xD;
+	local!suitableOperatorQA: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4585&quot;(ri!suitableOperatorId_int),&#xD;
+	local!suitableOperatorStatus: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4615&quot;(ri!suitableOperatorId_int),&#xD;
+	local!suitableOperatorCurrentStatus: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4423&quot;(ri!suitableOperatorId_int,local!suitableOperator.status),&#xD;
+	local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 13, sort: {#&quot;SYSTEM_SYSRULES_sortInfo&quot;(field: &quot;groupDisplayOrder&quot;, ascending: true),#&quot;SYSTEM_SYSRULES_sortInfo&quot;(field: &quot;questionDisplayOrder&quot;, ascending: true)}),&#xD;
+	local!pagingInfo2: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 13, sort: {#&quot;SYSTEM_SYSRULES_sortInfo&quot;(field: &quot;startDate&quot;, ascending: false)}),&#xD;
+	local!showSuitabilityDetails: false,&#xD;
+  with(&#xD;
+    local!suitableOperatorQADataSubset: todatasubset(&#xD;
+      local!suitableOperatorQA,&#xD;
+      local!pagingInfo&#xD;
+    ),&#xD;
+    local!suitableOperatorStatusDataSubset: todatasubset(&#xD;
+      local!suitableOperatorStatus,&#xD;
+      local!pagingInfo2&#xD;
+    ),&#xD;
+  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(&#xD;
+  /*================ DASHBOARD ================*/&#xD;
+    firstColumnContents: {&#xD;
+      if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23019&quot;),&#xD;
+      {&#xD;
+    		#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    		  label: &quot;Suitable Operator Dashboard&quot;,&#xD;
+    		  firstColumnContents: {&#xD;
+    		  }&#xD;
+    		),&#xD;
+    		#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(local!customerInfo.customerName,local!customerInfo.customerType.description,local!customerInfo.customerId,local!customerInfo.customerType.partyTypeId),&#xD;
+    		#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    		  label: &quot;Registration Details&quot;,&#xD;
+    		  firstColumnContents: {&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Reference Number&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: local!suitableOperator.suitableOperatorRef,&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Status&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: local!suitableOperator.statusRef.description,&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			if(local!suitableOperatorCurrentStatus.statusReasonText&gt;&quot;&quot;,&#xD;
+        			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        			  label: &quot;Status Reason&quot;,&#xD;
+        			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+        			  value: local!suitableOperatorCurrentStatus.statusReasonText,&#xD;
+        			  readOnly: true&#xD;
+        			),&#xD;
+        			{}&#xD;
+      			)&#xD;
+    		  },&#xD;
+    		  secondColumnContents: {&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Application Date&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(local!suitableOperator.applicationDate),&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Registration Date&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(local!suitableOperator.registrationDate),&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			if(local!suitableOperatorCurrentStatus.status=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4633&quot;,&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Suspension End Date&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(local!suitableOperatorCurrentStatus.endDate),&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Suspension End Date&quot;,&#xD;
+      			  labelPosition: &quot;COLLAPSED&quot;,&#xD;
+      			  value: &quot;&quot;,&#xD;
+      			  readOnly: true&#xD;
+      			)&#xD;
+      			),&#xD;
+      			if(1=2,&#xD;
+      			#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      			  label: &quot;Status Notes&quot;,&#xD;
+      			  labelPosition: &quot;ADJACENT&quot;,&#xD;
+      			  value: &quot;Sed vestibulum auctor dapibus. Sed nec suscipit enim, eu eleifend.&quot;,&#xD;
+      			  readOnly: true&#xD;
+      			),&#xD;
+      			{}&#xD;
+      			)&#xD;
+    		  },&#xD;
+    		  isCollapsible: true&#xD;
+    		),&#xD;
+    		if(count(local!suitableOperatorQA)&gt;0,&#xD;
+    		#&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+          label: &quot;Link Field&quot;,&#xD;
+          labelPosition: &quot;COLLAPSED&quot;,&#xD;
+          links: {&#xD;
+        		#&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        		  label: if(local!showSuitabilityDetails = true,&quot;Hide Suitability Details&quot;,&quot;View Suitability Details&quot;),&#xD;
+        		  value: if(local!showSuitabilityDetails = true,false,true),&#xD;
+        		  saveInto: local!showSuitabilityDetails&#xD;
+        		)&#xD;
+          }&#xD;
+        ),&#xD;
+        {}&#xD;
+        ),&#xD;
+        if(local!showSuitabilityDetails = true,&#xD;
+        #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+          function: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5101&quot;(&#xD;
+            groupText_txt: local!suitableOperatorQA.groupText,&#xD;
+            questionText_txt: local!suitableOperatorQA.questionText,&#xD;
+            answer_txt: local!suitableOperatorQA.answer,&#xD;
+            questionDisplayOrder_int: local!suitableOperatorQA.questionDisplayOrder,&#xD;
+            index_int: _&#xD;
+          ),&#xD;
+          array: 1+enumerate(count(local!suitableOperatorQA))&#xD;
+        ),&#xD;
+    		{}&#xD;
+    		),&#xD;
+        if(count(local!suitableOperatorStatus)&gt;0,&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    		  label: &quot;Application History&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              totalCount: local!suitableOperatorStatusDataSubset.totalCount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Event&quot;,&#xD;
+                  data: index(&#xD;
+                    local!suitableOperatorStatusDataSubset.data.statusRef,&#xD;
+                    &quot;description&quot;,&#xD;
+                    null&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;User&quot;,&#xD;
+                  data: index(&#xD;
+                    local!suitableOperatorStatusDataSubset.data,&#xD;
+                    &quot;createdBy&quot;,&#xD;
+                    null&#xD;
+                  )&#xD;
+                ),&#xD;
+               #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Date&quot;,&#xD;
+                  data: apply(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;,index(&#xD;
+                    local!suitableOperatorStatusDataSubset.data,&#xD;
+                    &quot;startDate&quot;,&#xD;
+                    null&#xD;
+                  )&#xD;
+                ))&#xD;
+              },&#xD;
+              value: local!pagingInfo,&#xD;
+              saveInto: local!pagingInfo&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+    		),&#xD;
+        {}&#xD;
+        ),&#xD;
+        #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14570&quot;,ri!suitableOperatorId_int)&#xD;
+      },&#xD;
+      {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Permission Error&quot; ,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition : &quot;ABOVE&quot;,&#xD;
+            value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22554&quot;,&#xD;
+            readOnly: true&#xD;
+          )  &#xD;
+        }&#xD;
+      )&#xD;
+      }&#xD;
+    )&#xD;
+	   }&#xD;
+  	)&#xD;
+	)&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>suitableOperatorId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

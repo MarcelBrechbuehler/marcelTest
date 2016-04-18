@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_integrationRegisterCheckOrganisationBusinessNumberType</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8242</uuid>
+        <description>This purpose of this rule is to validate the payload &quot;business type&quot; data 
+Business Rule: 
+a) Business Number Type must be provided if Type is CMP, ARB or GOV
+b) Business Number Type cannot be blank if Type is CMP, ARB or GOV
+IN: partyClass e.g &quot;GOV&quot;,  businessTypeNumber e.g &quot;ABN&quot;, field type e.g &quot;businessNumberType&quot;
+OUT: blank if valid or the error code if invalid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!validTypes : #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8243&quot;,
+  local!isEmptyBusinessNumType : fn!isnull(ri!businessNumberType),
+  local!validBusinessNumType : #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3064&quot;(
+#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25813&quot;(ri!classType_text).externalIdType).codeRef,  
+  
+  if(wherecontains(ri!classType_text,local!validTypes ) &gt; 0,
+
+      /*validate business number type*/
+      if(isEmptyBusinessNumType, 
+       /*generate an error message as it cannot be empty*/
+       #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+       #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+     824,
+     838,
+     &quot;10&quot;,
+     819
+     ),
+     ri!field_text,
+     ri!businessNumberType
+     ), 
+       /*validate it against the business number type for the entered org type*/
+       
+      if(ri!businessNumberType = local!validBusinessNumType,{},
+
+      /* generate the error code message*/ 
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+       #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+     824,
+     838,
+     &quot;11&quot;,
+     819
+     ),
+     ri!field_text,
+     ri!businessNumberType
+     )
+ 
+       ))
+
+    ,{})
+
+
+)</definition>
+        <namedTypedValue>
+            <name>classType_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessNumberType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

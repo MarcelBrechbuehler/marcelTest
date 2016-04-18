@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_relationshipDetails</name>
+        <uuid>92295db2-1241-4022-9774-75086dcb35e6</uuid>
+        <description>This interface rule generates relationship details of a customer</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!partyLinkDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14348&quot;(&#xD;
+    ri!customerId_int&#xD;
+  ),&#xD;
+  local!relationshipType: local!partyLinkDetails.partyLinkType.description,&#xD;
+  local!relatedCustomer: #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1565&quot;(&#xD;
+    local!partyLinkDetails.entityId&#xD;
+  ).partyName,&#xD;
+  /*local!entityTypeId: intersection(&#xD;
+    cons!DOC_COMMON_CODE_ID_ENTITY_TYPE_RESTRICTED,&#xD;
+    local!partyLinkDetails.entityType&#xD;
+  ),*/&#xD;
+  local!entityTypeId: local!partyLinkDetails.entityType,&#xD;
+  local!entityId: local!partyLinkDetails.entityId,&#xD;
+  #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+    label: &quot;&quot;,&#xD;
+    totalCount: count(&#xD;
+      local!partyLinkDetails&#xD;
+    ),&#xD;
+    columns: {&#xD;
+      #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+        label: &quot;Type&quot;,&#xD;
+        data: {&#xD;
+          local!relationshipType&#xD;
+        },&#xD;
+        alignment: &quot;LEFT&quot;&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+        label: &quot;Related Customer&quot;,&#xD;
+        data: {&#xD;
+          local!relatedCustomer&#xD;
+        },&#xD;
+        alignment: &quot;LEFT&quot;,&#xD;
+		links: apply(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14382&quot;,merge({local!entityTypeId},{local!entityId}))&#xD;
+      )&#xD;
+    },&#xD;
+    value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: 10,&#xD;
+      sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+        field: &quot;name&quot;,&#xD;
+        ascending: true&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

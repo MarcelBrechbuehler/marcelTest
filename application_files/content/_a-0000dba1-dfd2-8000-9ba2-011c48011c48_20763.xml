@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_matchCustomerWithReference</name>
+        <uuid>_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20763</uuid>
+        <description>Allows the user to enter a reference number or select with which type of customer he wants to be matched. Also user can select if he will be acting of behalf.</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1305</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+/*######       LOAD       ######*/&#xD;
+  local!customerRef,&#xD;
+  local!partyClass: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5221&quot;(),&#xD;
+  with(&#xD;
+  /*######       WITH       ######*/&#xD;
+    local!party_cdt: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7859&quot;(local!customerRef),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    /*######       FORM       ######*/&#xD;
+      label: &quot;Match Customer&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        if(isnull(ri!processMilestoneName_txt),&#xD;
+          {},&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+            ri!processMilestoneName_txt,&#xD;
+            ri!processMilestoneIndex_int&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Instructions&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: {&#xD;
+                #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                  text: {&#xD;
+                    &quot;Either enter a &quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                      text: &quot;Customer Reference&quot;,&#xD;
+                      style: &quot;EMPHASIS&quot;&#xD;
+                    ),&#xD;
+                    &quot; or Select a  &quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                      text: &quot;Customer Type&quot;,&#xD;
+                      style: &quot;EMPHASIS&quot;&#xD;
+                    ),&#xD;
+                    &quot; and tick the box when you want to be &quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                      text: &quot;Acting on behalf&quot;,&#xD;
+                      style: &quot;EMPHASIS&quot;&#xD;
+                    )&#xD;
+                  },&#xD;
+                  style: &quot;STRONG&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Customer Information&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Customer Reference&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              instructions: &quot;Please enter an EHP Customer Reference or Select a Customer Type&quot;,&#xD;
+              value: local!customerRef,&#xD;
+              saveInto: {&#xD;
+                local!customerRef,&#xD;
+                if(not(isnull(local!customerRef)),&#xD;
+                  a!save(ri!partyMainType_int,null),&#xD;
+                  null&#xD;
+                )&#xD;
+              },&#xD;
+              required: false,&#xD;
+              readOnly: false&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Customer Type&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceLabels: {&#xD;
+                local!partyClass.name[1],&#xD;
+                local!partyClass.name[2]&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                local!partyClass.value[1],&#xD;
+                local!partyClass.value[2]&#xD;
+              },&#xD;
+              value: ri!partyMainType_int,&#xD;
+              saveInto: {&#xD;
+                ri!partyMainType_int,&#xD;
+                if(not(isnull(ri!partyMainType_int)),&#xD;
+                  a!save(local!customerRef,null),&#xD;
+                  null&#xD;
+                ),&#xD;
+                a!save(ri!partyMainType_int,ri!partyMainType_int)&#xD;
+              },&#xD;
+              required: false,&#xD;
+              disabled: false,&#xD;
+              validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22901&quot;,&#xD;
+                fieldData: ri!partyMainType_int&#xD;
+              )&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+              label: &quot;&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: {&#xD;
+                &quot;Acting on behalf&quot;&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                &quot;Yes&quot; &#xD;
+              },&#xD;
+              value: ri!isActingOnBehalf_txt,&#xD;
+              saveInto: ri!isActingOnBehalf_txt,&#xD;
+              disabled: if(ri!partyMainType_int=1,&#xD;
+                false,&#xD;
+                if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!party_cdt),&#xD;
+                  true,&#xD;
+                  if(local!party_cdt.partyTypeId&lt;&gt;1,&#xD;
+                    true,&#xD;
+                    false&#xD;
+                  )&#xD;
+                )&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Empty&quot;,&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: {},&#xD;
+              saveInto: {},&#xD;
+              required: false,&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+/*&#xD;
+            a!textField(&#xD;
+              label: &quot;Customer Reference&quot;,&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: local!party_cdt,&#xD;
+              saveInto: local!party_cdt,&#xD;
+              required: false,&#xD;
+              readOnly: true&#xD;
+            ),&#xD;
+            a!paragraphField(&#xD;
+              label: &quot;test&quot;,&#xD;
+              value: local!partyClass&#xD;
+            )&#xD;
+*/&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+        )&#xD;
+      },&#xD;
+      /*######      BUTTON       ######*/&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            saveInto: {&#xD;
+              ri!buttonValue_txt,&#xD;
+              if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!party_cdt),&#xD;
+                null,&#xD;
+                a!save(ri!party_cdt,local!party_cdt)&#xD;
+              )&#xD;
+            },&#xD;
+            skipValidation: false&#xD;
+          )&#xD;
+/*&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          a!buttonWidgetSubmit(&#xD;
+            label: cons!COM_BUTTON_LABEL_CANCEL,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: cons!COM_BUTTON_CANCEL_MESSAGE,&#xD;
+            value: cons!COM_BUTTON_LABEL_CANCEL,&#xD;
+            saveInto: ri!buttonValue_txt,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+*/&#xD;
+        }&#xD;
+      ),&#xD;
+      validations: &#xD;
+      {&#xD;
+        if(&#xD;
+          #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!customerRef),&#xD;
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+            message: &#xD;
+            if(&#xD;
+              #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!partyMainType_int),&#xD;
+              &quot;Enter a customer reference or select a customer type.&quot;,&#xD;
+              null&#xD;
+            ),&#xD;
+            validateAfter: &quot;SUBMIT&quot;&#xD;
+          ),&#xD;
+          if(&#xD;
+            #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!party_cdt),&#xD;
+            &quot;No Customer with that Reference found&quot;,&#xD;
+            null&#xD;
+          )&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyMainType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isActingOnBehalf_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>party_cdt</name>
+            <type>
+                <name>CTParty</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>partyMainType_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isActingOnBehalf_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>party_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

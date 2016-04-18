@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="CaRE Question Answer" a:uuid="bf92b516-d905-4c8a-aa56-fd482fab5819">
+        <a:pluralName>CaRE Question Answers</a:pluralName>
+        <a:description>The Record of every Question that has been answered for every evaluation</a:description>
+        <a:urlStub>urcFWw</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="12b67f10-11d8-4841-9373-446039e1fe2c@_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12994"/>
+        <a:listViewTemplateExpr>#&quot;SYSTEM_SYSRULES_listViewItem&quot;(
+  title:&quot;Q&quot;&amp;rf!careQuestionAnswerId&amp;&quot; - &quot;&amp;rf!questionStream
+)</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15091&quot;(rf!careQuestionAnswerId)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>57c72efe-5258-424d-b960-31523382b8f8</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultSortInfo>
+            <field>careQuestionAnswerId</field>
+            <ascending>false</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002db91-eb24-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{questionToRender_int:rf!careQuestionId,
+evaluationComponentId_int:rf!careEvaluationComponentId
+}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_25903&quot;(rf!careEvaluationComponentId)</a:visibilityExpr>
+            <a:refId>57c72efe-5258-424d-b960-31523382b8f8</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dbaa-6fd0-8000-9aee-01075c01075c_49</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

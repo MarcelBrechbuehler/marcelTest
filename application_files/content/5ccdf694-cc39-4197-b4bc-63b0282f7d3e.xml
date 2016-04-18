@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_DownloadSuitableOperatorPublicRegisterExtract</name>
+        <uuid>5ccdf694-cc39-4197-b4bc-63b0282f7d3e</uuid>
+        <description>This rule presents a screen to download the SO publicg register extract</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  label: &quot;Download an Extract of Suitable Operator Public Register&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    if(&#xD;
+      ri!documentFlag,&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Document Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Name&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!generatedDocument&#xD;
+              ),&#xD;
+              &quot;&quot;,&#xD;
+              document(&#xD;
+                ri!generatedDocument,&#xD;
+                &quot;name&quot;&#xD;
+              )&#xD;
+            ),&#xD;
+            readOnly: true()&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_imageField&quot;(&#xD;
+            label: &quot;Download&quot;,&#xD;
+			labelPosition:&quot;ABOVE&quot;,&#xD;
+            images: {&#xD;
+              if(&#xD;
+                isnull(&#xD;
+                  ri!generatedDocument&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_documentImage&quot;(&#xD;
+                  document: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11162&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_documentImage&quot;(&#xD;
+                  document: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11162&quot;,&#xD;
+                  caption: &quot;Download &quot; &amp; fn!document(&#xD;
+                    ri!generatedDocument,&#xD;
+                    &quot;name&quot;&#xD;
+                  ),&#xD;
+                  link: #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(&#xD;
+                    document: ri!generatedDocument&#xD;
+                  )&#xD;
+                )&#xD;
+              )&#xD;
+            },&#xD;
+            size: &quot;ICON&quot;&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Date Created&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!generatedDocument&#xD;
+              ),&#xD;
+              {},&#xD;
+              {&#xD;
+                text(&#xD;
+                  document(&#xD;
+                    ri!generatedDocument,&#xD;
+                    &quot;lastUserToModify&quot;&#xD;
+                  ),&#xD;
+                  &quot;dd/mmm/yyyy HH:SS AM/PM&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            readOnly: true()&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Last user to modify&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!generatedDocument&#xD;
+              ),&#xD;
+              {},&#xD;
+              {&#xD;
+                user(&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!generatedDocument&#xD;
+                    ),&#xD;
+                    &quot;&quot;,&#xD;
+                    document(&#xD;
+                      ri!generatedDocument,&#xD;
+                      &quot;lastUserToModify&quot;&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  &quot;firstName&quot;&#xD;
+                ) &amp; &quot; &quot; &amp; user(&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!generatedDocument&#xD;
+                    ),&#xD;
+                    &quot;&quot;,&#xD;
+                    document(&#xD;
+                      ri!generatedDocument,&#xD;
+                      &quot;lastUserToModify&quot;&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  &quot;lastName&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            readOnly: true()&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true()&#xD;
+      ),&#xD;
+&#xD;
+          		 &#xD;
+&#xD;
+&#xD;
+      {}&#xD;
+    ),#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Disclaimer&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            readOnly: true(),&#xD;
+            value:#&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19838&quot;&#xD;
+			)&#xD;
+  },&#xD;
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+    primaryButtons: {&#xD;
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+        label: if(&#xD;
+          ri!documentFlag,&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12417&quot;&#xD;
+        ),&#xD;
+        style: &quot;PRIMARY&quot;,&#xD;
+        value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+        saveInto: ri!buttonValue_txt&#xD;
+      )&#xD;
+    },&#xD;
+    secondaryButtons: {&#xD;
+      if(&#xD;
+        ri!documentFlag,&#xD;
+        {},&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentFlag</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>generatedDocument</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

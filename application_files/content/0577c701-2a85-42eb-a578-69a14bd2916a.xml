@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicationApplicantDetails</name>
+        <uuid>0577c701-2a85-42eb-a578-69a14bd2916a</uuid>
+        <description>This interface rule used to display permit application applicant details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Applicant Information&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      totalCount: if(&#xD;
+          or(&#xD;
+            isnull(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ),&#xD;
+            length(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ) = 0&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          local!permitApplicantMapDetailsDataSubset.totalCount&#xD;
+        ),&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Applicant&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!permitPartyDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!permitPartyDetails.partyName&#xD;
+          ),&#xD;
+          links: if(&#xD;
+            isnull(&#xD;
+              local!permitPartyDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            apply(&#xD;
+              #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                recordtype: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4908&quot;,&#xD;
+                identifier: _&#xD;
+              ),&#xD;
+              local!permitPartyDetails.partyId&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Applicant SO Number&quot;,&#xD;
+          field: &quot;suitableOperatorRef&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!sorDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!sorDetails.suitableOperatorRef&#xD;
+          ),&#xD;
+          links: if(&#xD;
+            isnull(&#xD;
+              local!sorDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            apply(&#xD;
+              #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                recordtype: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16447&quot;,&#xD;
+                identifier: _&#xD;
+              ),&#xD;
+              local!sorDetails.suitableOperatorId&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Share %&quot;,&#xD;
+          field: &quot;sharePercentage&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!permitApplicantMapDetails.sharePercentage&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Prinicipal Applicant&quot;,&#xD;
+          field: &quot;primaryFlag&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!permitApplicantMapDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            apply(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13434&quot;,&#xD;
+              local!permitApplicantMapDetails.primaryFlag&#xD;
+            )&#xD;
+          )&#xD;
+        )&#xD;
+      },&#xD;
+      value: local!permitApplicantMapPagingInfo&#xD;
+      &#xD;
+    )&#xD;
+  },&#xD;
+  isCollapsible: true&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>ConnectAdministrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

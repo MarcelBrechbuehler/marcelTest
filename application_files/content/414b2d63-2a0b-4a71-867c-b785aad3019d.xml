@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addCustomerContactDetails</name>
+        <uuid>414b2d63-2a0b-4a71-867c-b785aad3019d</uuid>
+        <description>This rule is used to display the add customer contact details screen</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  label:&quot;Enter Customer Contact Details&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    if(not(isnull(ri!processMilestoneName)),&#xD;
+                   if(&#xD;
+          ri!customerType= #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,&#xD;
+           #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot; (&#xD;
+            ri!processMilestoneIndex&#xD;
+    ),&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+           ri!processMilestoneName,&#xD;
+           ri!processMilestoneIndex&#xD;
+    )),{}),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;Customer Contact Details&quot;,&#xD;
+      firstColumnContents: {&#xD;
+			if(ri!isEditProcess,&#xD;
+				{&#xD;
+					#&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+					  label: &quot;Type&quot;,&#xD;
+					  labelPosition: &quot;ADJACENT&quot;,&#xD;
+					  required: true,&#xD;
+					  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+					 choiceLabels: {&#xD;
+										#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2834&quot;&#xD;
+									  },&#xD;
+									  &#xD;
+									  choiceValues: {&#xD;
+										#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5063&quot;&#xD;
+									  },&#xD;
+					  value: ri!contactType,&#xD;
+					  saveInto: ri!contactType,&#xD;
+					  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22924&quot;,&#xD;
+                    fieldData: ri!contactType&#xD;
+                  )&#xD;
+					)&#xD;
+				},&#xD;
+				{&#xD;
+					#&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+					  label: &quot;Type&quot;,&#xD;
+					  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+					  labelPosition: &quot;ADJACENT&quot;,&#xD;
+					  required: true,&#xD;
+					  choiceLabels: {&#xD;
+						#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5367&quot;&#xD;
+					  },&#xD;
+					  choiceValues: {&#xD;
+						#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5378&quot;&#xD;
+					  },&#xD;
+					  value: ri!contactType,&#xD;
+					  saveInto: ri!contactType,&#xD;
+					  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22924&quot;,&#xD;
+                    fieldData: ri!contactType&#xD;
+                  )&#xD;
+					)&#xD;
+				}&#xD;
+			),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Name&quot;,&#xD;
+          required: true,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: ri!partyName,&#xD;
+          saveInto: ri!partyName,&#xD;
+					  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22908&quot;,&#xD;
+                    fieldData: ri!partyName&#xD;
+                  )&#xD;
+          &#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Position&quot;,&#xD;
+          required: false,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: ri!contactPosition,&#xD;
+          saveInto: ri!contactPosition,&#xD;
+					  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22925&quot;,&#xD;
+                    fieldData: ri!contactPosition&#xD;
+                  )&#xD;
+          &#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Email Address&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          validations: if(&#xD;
+            like(&#xD;
+              ri!contactEmail,&#xD;
+              #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7257&quot;&#xD;
+            ),&#xD;
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22926&quot;,&#xD;
+                    fieldData: ri!contactEmail&#xD;
+                  ),&#xD;
+            #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7272&quot;&#xD;
+          ),&#xD;
+          value: ri!contactEmail,&#xD;
+          saveInto: ri!contactEmail&#xD;
+        )&#xD;
+      },&#xD;
+      secondColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+          label: &quot;&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          validations: &#xD;
+          if(and(isnull(ri!contactEmail),ri!receiveCorrespondence=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5385&quot;),&quot;Email Address required to send correspondence&quot;,&quot;&quot;),&#xD;
+          choiceLabels: {&#xD;
+            #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2835&quot;&#xD;
+          },&#xD;
+          choiceValues: {&#xD;
+            #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5385&quot;&#xD;
+          },&#xD;
+          value: ri!receiveCorrespondence,&#xD;
+          saveInto: ri!receiveCorrespondence&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2499&quot;(&#xD;
+          items: ri!items,&#xD;
+          index: ri!index,&#xD;
+          itemsToken: ri!itemsToken&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  },&#xD;
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+    primaryButtons: {&#xD;
+      if(&#xD;
+        ri!customerType =  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          validate: true,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          skipValidation: false,&#xD;
+          validate: true,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      )&#xD;
+    },&#xD;
+    secondaryButtons: {&#xD;
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+        label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+        style: &quot;DESTRUCTIVE&quot;,&#xD;
+        skipValidation: true,&#xD;
+        confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+        value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+        saveInto: ri!buttonValue&#xD;
+      )&#xD;
+    }&#xD;
+  ), &#xD;
+  validations: {&#xD;
+if(&#xD;
+  and(isnull(ri!contactEmail),&#xD;
+            or(&#xD;
+            isnull(&#xD;
+              ri!items&#xD;
+            ),count(ri!items)&lt;1)),&#xD;
+            {&#xD;
+        #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+          message: &quot;Either Email or Phone is Mandatory&quot;,&#xD;
+          validateAfter: &quot;SUBMIT&quot;&#xD;
+        )},{})&#xD;
+        &#xD;
+      &#xD;
+    }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>contactType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contactPosition</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>contactEmail</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>receiveCorrespondence</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>note</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEditProcess</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

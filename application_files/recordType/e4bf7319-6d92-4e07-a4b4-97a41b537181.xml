@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Permit Application" a:uuid="e4bf7319-6d92-4e07-a4b4-97a41b537181">
+        <a:pluralName>Permit Applications</a:pluralName>
+        <a:description>Directory of Permit Applications</a:description>
+        <a:urlStub>3WYPaA</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="c88b25ea-b768-4ae3-b9cd-f7b92f2c2257@_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1299"/>
+        <a:listViewTemplateExpr>#&quot;2ef557b4-0b83-4c3a-8cb6-32e5a1d33759&quot;()</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;89d21c5f-eed9-42e2-81e5-50af701ebd7b&quot;(rf!permitApplicationId)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>95a01255-3aed-44a6-a01a-f8cb6527ebed</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>applicationRef</a:field>
+            <a:operator>&lt;&gt;</a:operator>
+            <a:valueExpression>&quot;&quot;</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultFilter>
+            <a:field>active</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultSortInfo>
+            <field>permitApplicationId</field>
+            <ascending>false</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0005dbb6-d3f1-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{recordId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_25878&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>95a01255-3aed-44a6-a01a-f8cb6527ebed</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_37</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

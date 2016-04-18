@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DQAAddressType.xsd"/>
+  <xsd:complexType name="PicklistEntryType">
+    <xsd:annotation>
+      <xsd:documentation>PicklistEntryType describes an entry in a picklistThe child elements are as follows:Moniker        : The Search Point Moniker that represents this picklist entryPartialAddress : The full details of the address captured so farPicklist       : The picklist text to displayPostcode       : The postcode to displayScore          : The percentage score assigned to the matchQAAddress      : The Full Address for the monikerThe attributes are as follows:FullAddress         : This picklist entry is a full deliverable addressMultiples           : This entry represents multiple address linesCanStep             : This entry can be stepped intoAliasMatch          : This match is an aliasPostcodeRecoded     : This entry has a recoded postcodeCrossBorderMatch    : This entry represents a nearby area, outside the strict initial boundaries of the searchDummyPOBox          : This entry is the dummy PO Box entryName                : This entry is a Names resultInformation         : This entry is an informational promptWarnInformation     : This entry is a warning informational promptIncompleteAddr      : This entry is the dummy item (for premise-less countries)UnresolvableRange   : This entry is a static range item that cannot be expandedPhantomPrimaryPoint : This entry is a Phantom Primary Point (AUS only)SubsidiaryData      : This entry is from the subsidiary rather than the base datasetExtendedData        : This entry is from the base dataset but extended by the subsidiary datasetEnhancedData        : This entry is from the base dataset but enhanced by the subsidiary data set</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element form="qualified" name="Moniker" type="xsd:string"/>
+      <xsd:element form="qualified" name="PartialAddress" type="xsd:string"/>
+      <xsd:element form="qualified" name="Picklist" type="xsd:string"/>
+      <xsd:element form="qualified" name="Postcode" type="xsd:string"/>
+      <xsd:element form="qualified" name="Score" type="xsd:nonNegativeInteger"/>
+      <xsd:element form="qualified" minOccurs="0" name="QAAddress" type="tns:QAAddressType"/>
+    </xsd:sequence>
+    <xsd:attribute default="false" name="AliasMatch" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="CanStep" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="CrossBorderMatch" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="DummyPOBox" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="EnhancedData" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="ExtendedData" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="FullAddress" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="IncompleteAddr" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Information" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Multiples" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Name" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="PhantomPrimaryPoint" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="PostcodeRecoded" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="SubsidiaryData" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="UnresolvableRange" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="WarnInformation" type="xsd:boolean"/>
+  </xsd:complexType>
+</xsd:schema>

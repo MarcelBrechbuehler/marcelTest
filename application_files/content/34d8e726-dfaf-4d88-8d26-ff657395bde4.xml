@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_displayGeneralDetails</name>
+        <uuid>34d8e726-dfaf-4d88-8d26-ff657395bde4</uuid>
+        <description>This rule is used to display general details of location dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>{&#xD;
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    label: &quot;General Details&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Location Ref:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.locationRef,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Location Type:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.locationTypeRef.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Location Name:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.locationName,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Officer Safety Risk:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.safetyRiskStatusRef.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+        label: &quot;Description&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.description,&#xD;
+        readOnly: true&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;CLR:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.clrStatusRef.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;EMR:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.emrStatusRef.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Operational Status:&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        value: local!generalDetails.operationalStatusRef.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+	   #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;Ecotrack Location Name&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!generalDetails.ecotrackName,&#xD;
+                      readOnly: true&#xD;
+                ),&#xD;
+		#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;Ecotrack Location Ref&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!generalDetails.ecotrackRef,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+		/*  &#xD;
+       if(&#xD;
+        local!generalDetails.locationType = cons!COM_COMMON_CODE_ID_LOCATION_TYPE_PERMIT_TENURE,&#xD;
+          {&#xD;
+           a!textField(&#xD;
+                      label: &quot;Ecotrack Location Name&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!generalDetails.ecotrackName,&#xD;
+                      readOnly: true&#xD;
+                )&#xD;
+          }&#xD;
+        ,{&#xD;
+          a!textField(&#xD;
+                      label: &quot;&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: &quot;&quot;,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+        }&#xD;
+        ),&#xD;
+        if(&#xD;
+        local!generalDetails.locationType = cons!COM_COMMON_CODE_ID_LOCATION_TYPE_PERMIT_TENURE,&#xD;
+          {&#xD;
+           a!textField(&#xD;
+                      label: &quot;Ecotrack Location Ref&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!generalDetails.ecotrackRef,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+          }&#xD;
+        ,{&#xD;
+          a!textField(&#xD;
+                      label: &quot;&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: &quot;&quot;,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+        }&#xD;
+        ) */&#xD;
+        ,&#xD;
+        if(&#xD;
+        local!generalDetails.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+          {&#xD;
+           #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;Other Names&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: local!generalDetails.otherNames,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+          }&#xD;
+        ,{&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: &quot;&quot;,&#xD;
+                      readOnly: true&#xD;
+          )&#xD;
+        }&#xD;
+        ) &#xD;
+    },&#xD;
+    isCollapsible: false&#xD;
+  )&#xD;
+}</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

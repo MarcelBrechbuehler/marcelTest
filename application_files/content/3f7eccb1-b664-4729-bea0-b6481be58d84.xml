@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_suitabilityQuestions</name>
+        <uuid>3f7eccb1-b664-4729-bea0-b6481be58d84</uuid>
+        <description>this screen captures the information about the applicant's suitability to be a suitable operator</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+	local!customerInfo: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4421&quot;(ri!customerId_int),&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Suitable Operator Registration&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+        pv!processMilestoneName_txt,&#xD;
+        ri!processMilestoneIndex_int&#xD;
+      ),&#xD;
+      #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(&#xD;
+        local!customerInfo.customerName,&#xD;
+        local!customerInfo.customerType.description,&#xD;
+        local!customerInfo.customerId,&#xD;
+        local!customerInfo.customerType.partyTypeId&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+        function: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2880&quot;(&#xD;
+          questionText:pv!suitableOperatorDisplay_VW_cdt.questionText,&#xD;
+          groupText:pv!suitableOperatorDisplay_VW_cdt.groupText,&#xD;
+          questionId:pv!suitableOperatorDisplay_VW_cdt.questionId,&#xD;
+          groupId:pv!suitableOperatorDisplay_VW_cdt.groupId, &#xD;
+          index: _, &#xD;
+          questionDisplayOrder:pv!suitableOperatorDisplay_VW_cdt.questionDisplayOrder&#xD;
+        ),&#xD;
+        array: 1+enumerate(count(pv!suitableOperatorDisplay_VW_cdt))&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          submit: true,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          skipValidaton: true,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+  /*&#xD;
+        ),&#xD;
+        a!buttonWidgetSubmit(&#xD;
+          label: cons!COM_BUTTON_LABEL_WITHDRAW,&#xD;
+          skipValidaton: true,&#xD;
+          value: cons!COM_BUTTON_LABEL_WITHDRAW,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+  */&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>answers_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

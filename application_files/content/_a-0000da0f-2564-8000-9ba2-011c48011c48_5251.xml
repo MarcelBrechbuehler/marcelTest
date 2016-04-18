@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_partnerRowEach</name>
+        <uuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5251</uuid>
+        <description>This rule is used to populate partner grid fields dynamically</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(
+  id: ri!index,
+  contents: {
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;partnerCustomerName&quot; &amp; ri!index,
+      required: false,
+      readOnly: true,
+      value: ri!items[ri!index].partnerCustomerName,
+      saveInto: ri!items[ri!index].partnerCustomerName
+    ),
+    #&quot;SYSTEM_SYSRULES_integerField&quot;(
+      label: &quot;percentage&quot; &amp; ri!index,
+      validations: if(
+        isnull(
+          ri!items[ri!index].percentage
+        ),
+        &quot;&quot;,
+        if(
+          or(
+            ri!items[ri!index].percentage &lt;= 0,
+            ri!items[ri!index].percentage &gt; 100
+          ),
+          &quot;Must be between 1 to 100&quot;,
+          &quot;&quot;
+        )
+      ),
+      value: ri!items[ri!index].percentage,
+      saveInto: ri!items[ri!index].percentage
+    ),
+    /*a!linkField(
+      label: &quot;active&quot; &amp; ri!index,
+      align: &quot;CENTER&quot;,
+      links: a!dynamicLink(
+        label: &quot;Inactivate&quot;,
+        value: ri!items[ri!index].active,
+        saveInto: ri!items[ri!index].active
+      )
+    ),*/
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;delete&quot; &amp; ri!index,
+      align: &quot;CENTER&quot;,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: char(
+          10005
+        ),
+        value: ri!index,
+        saveInto: {
+          a!save(
+            ri!deletedItemIds,
+            append(
+              ri!deletedItemIds,
+              index(
+                ri!items.partyPartnershipId,
+                save!value,
+                null
+              )
+            )
+          ),
+          a!save(
+            ri!items,
+            remove(
+              ri!items,
+              save!value
+            )
+          ),
+          a!save(
+            ri!itemsToken,
+            remove(
+              ri!itemsToken,
+              save!value
+            )
+          )
+        }
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

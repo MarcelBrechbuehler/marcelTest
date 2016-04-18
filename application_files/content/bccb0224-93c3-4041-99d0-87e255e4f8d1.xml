@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>QAS_addressLookup</name>
+        <uuid>bccb0224-93c3-4041-99d0-87e255e4f8d1</uuid>
+        <description></description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2703</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(local!queryString,
+local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:1,batchSize:200,sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(field: &quot;PartialAddress&quot;, ascending: true)),
+  /*with(
+    local!results: webservicequery(
+  a!wsConfig(
+    wsdlUrl: &quot;https://ws3.ondemand.qas.com/ProOnDemand/V3/ProOnDemandService.asmx?WSDL&quot;,
+    service: &quot;{http://www.qas.com/OnDemand-2011-03}QASOnDemandIntermediary&quot;,
+    port: &quot;QAPortType&quot;,
+    operation: &quot;{http://www.qas.com/OnDemand-2011-03}DoSearch&quot;,
+    endpointCredentals: a!wsHttpCredentials(username:&quot;ws_eval_4001_ext&quot;,password:&quot;norton850&quot;),
+    wsdlCredentials: a!wsHttpCredentials(username:&quot;ws_eval_4001_ext&quot;,password:&quot;norton850&quot;)
+  ),
+  {
+    DoSearch:{QueryHeader:{QAAuthentication:{Username:&quot;ws_eval_4001_ext&quot;, Password:&quot;norton850&quot;}}},
+    Search:{Country:&quot;AUE&quot;,Layout:&quot;( QAS Standard Layout )&quot;,Search:&quot;400 george street&quot;,FormattedAddressInPickList:&quot;false&quot;,
+    Engine:{value:&quot;Singleline&quot;,@attributes:{Flatten:&quot;true&quot;,Intensity:&quot;Close&quot;,PromptSet:&quot;OneLine&quot;}}}
+    
+  }
+),*/
+#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;QAS Address Lookup&quot;,
+  instructions: &quot;Type in an address to see results&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      firstColumnContents: {
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Address&quot;,
+          value: ri!queryString,
+          saveInto: ri!queryString
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;QAS State Transition:&quot;,
+          value: index(ri!qaInformation,&quot;StateTransition&quot;,{}),
+          readOnly: true
+          
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      firstColumnContents: {
+       #&quot;SYSTEM_SYSRULES_gridField&quot;(
+              totalCount: count(ri!searchResults),
+              selection:true,
+              readOnly: true,
+              columns: {
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Address&quot;,
+                  data: index(ri!SearchResults, &quot;PartialAddress&quot;,{})
+                  )
+                ,
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Postcode&quot;,
+                  data: index(ri!SearchResults, &quot;Postcode&quot;,{})
+                ),
+                 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Score&quot;,
+                  data: index(ri!SearchResults, &quot;Score&quot;,{})
+                )
+              },
+              value: local!pagingInfo,
+              saveInto: local!pagingInfo
+            )
+    })
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Submit&quot;,
+        style: &quot;PRIMARY&quot;,
+        value: &quot;Submit&quot;,
+        saveInto: ri!btnVal
+      )
+    },
+    secondaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Cancel&quot;,
+        skipValidation: true,
+        value: &quot;Cancel&quot;,
+        saveInto: ri!btnVal
+      )
+    }
+  )
+))</definition>
+        <namedTypedValue>
+            <name>queryString</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchResults</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>btnVal</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>qaInformation</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:simpleType name="PromptSetType">
+    <xsd:annotation>
+      <xsd:documentation>The available prompt sets</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string">
+      <xsd:enumeration value="OneLine"/>
+      <xsd:enumeration value="Default"/>
+      <xsd:enumeration value="Generic"/>
+      <xsd:enumeration value="Optimal"/>
+      <xsd:enumeration value="Alternate"/>
+      <xsd:enumeration value="Alternate2"/>
+      <xsd:enumeration value="Alternate3"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+</xsd:schema>

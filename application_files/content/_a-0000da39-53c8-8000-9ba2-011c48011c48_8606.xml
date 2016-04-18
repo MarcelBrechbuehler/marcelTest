@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_contactInformation</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8606</uuid>
+        <description>Contains contact information of permit</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Contact Information&quot;,&#xD;
+  isCollapsible: true,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      readOnly: true,&#xD;
+      label: &quot;&quot;,&#xD;
+      totalCount: local!partyContactDetailsDataSubset.totalCount,&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Contact Name&quot;,&#xD;
+          data: if(isnull(local!partyContactDetails),null,local!partyContactDetails.partyName)/*,&#xD;
+		   links: if(isnull(local!partyContactDetails),null,apply(a!recordLink(recordtype: cons!COM_PARTY_RECORD, identifier: _) ,local!partyContactDetails.contactId))*/&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Contact Phone Number&quot;,&#xD;
+          field: &quot;phoneNumber&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!partyContactDetails&#xD;
+            ),&#xD;
+            null,&#xD;
+            local!partyContactDetails.phoneNumber&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Party Contact Email&quot;,&#xD;
+          field: &quot;email&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!partyContactDetails&#xD;
+            ),&#xD;
+            null,&#xD;
+            local!partyContactDetails.email&#xD;
+          )&#xD;
+        )&#xD;
+      },&#xD;
+      value: local!partyContactPagingInfo&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

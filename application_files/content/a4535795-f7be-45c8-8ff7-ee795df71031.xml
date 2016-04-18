@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addRelatedCustomerDetails</name>
+        <uuid>a4535795-f7be-45c8-8ff7-ee795df71031</uuid>
+        <description>This rule is used to display add related customer details.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Enter Related Customer Details&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot;(&#xD;
+        ri!processMilestoneIndex&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+        label: &quot;Type of relationship&quot;,&#xD;
+        labelPosition: &quot;ADJACENT&quot;,&#xD;
+        placeholderLabel: &quot;Select One&quot;,&#xD;
+        readOnly: true,&#xD;
+        choiceLabels: {&#xD;
+          #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5475&quot;&#xD;
+        },&#xD;
+        choiceValues: {&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[1],&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[2],&#xD;
+          #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[3]&#xD;
+        },&#xD;
+        value: ri!relationshipType,&#xD;
+        saveInto: ri!relationshipType&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Related Customer&quot;,&#xD;
+            readOnly: true,&#xD;
+            requiredMessage: &quot;Must have a related customer&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!customerName,&#xD;
+            saveInto: {&#xD;
+              ri!customerName&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+            secondaryButtons: {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5845&quot;,&#xD;
+                style: &quot;NORMAL&quot;,&#xD;
+                skipValidation: true,&#xD;
+                value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5845&quot;,&#xD;
+                saveInto: ri!buttonValue&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;900681e8-7567-4691-b028-3bfd2114fe6a&quot;(&#xD;
+        items: ri!items,&#xD;
+        index: ri!index,&#xD;
+        itemsToken: ri!itemsToken,&#xD;
+        deletedItemIds: ri!deletedItemIds&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          skipValidation: false,&#xD;
+          validate: true,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          skipValidation: true,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    validations: {&#xD;
+      if(&#xD;
+        isnull(&#xD;
+          ri!items.percentage&#xD;
+        ),&#xD;
+        {},&#xD;
+        if(&#xD;
+          sum(&#xD;
+            ri!items.percentage&#xD;
+          ) = 100,&#xD;
+          {},&#xD;
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+            message: &quot;Percentage should add upto 100&quot;,&#xD;
+            validateAfter: &quot;SUBMIT&quot;&#xD;
+          )&#xD;
+        )&#xD;
+      ),&#xD;
+      if(&#xD;
+        and(&#xD;
+          count(&#xD;
+            ri!items&#xD;
+          ) &lt; 1,&#xD;
+          ri!relationshipType = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[3]&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+          message: &quot;Must have one Trustee&quot;,&#xD;
+          validateAfter: &quot;SUBMIT&quot;&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      if(&#xD;
+        and(&#xD;
+          count(&#xD;
+            ri!items&#xD;
+          ) &lt; 2,&#xD;
+          or(&#xD;
+            ri!relationshipType = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[1],&#xD;
+            ri!relationshipType = #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2402&quot;[2]&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+          message: &quot;Must have two or more partners&quot;,&#xD;
+          validateAfter: &quot;SUBMIT&quot;&#xD;
+        ),&#xD;
+        {}&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>relationshipType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerName</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>percentage</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partnerName</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

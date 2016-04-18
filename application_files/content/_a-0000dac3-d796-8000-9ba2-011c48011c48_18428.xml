@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_getCustomerSearch</name>
+        <uuid>_a-0000dac3-d796-8000-9ba2-011c48011c48_18428</uuid>
+        <description></description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_4420</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+  ri!searchKey_txt = &quot;Business number&quot;,
+  #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19346&quot;(
+    ri!searchValue_txt,
+    ri!customerType_int
+  ),
+  if(
+    ri!searchKey_txt = &quot;Contact name&quot;,
+    #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19349&quot;(
+      ri!searchValue_txt,
+      ri!customerType_int
+    ),
+    if(
+      ri!searchKey_txt = &quot;Customer Id&quot;,
+      #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19332&quot;(
+        ri!searchValue_txt,
+        ri!customerType_int
+      ),
+      if(
+        ri!searchKey_txt = &quot;Customer name&quot;,
+        #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18389&quot;(
+          ri!searchValue_txt,
+          ri!customerType_int
+        ),
+        if(
+          ri!searchKey_txt = &quot;Customer type&quot;,
+          #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18435&quot;(
+            tointeger(
+              ri!searchValue_txt
+            )
+          ),
+          if(
+            ri!searchKey_txt = &quot;Email address&quot;,
+            #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19350&quot;(
+              ri!searchValue_txt,
+              ri!customerType_int
+            ),
+            if(
+              ri!searchKey_txt = &quot;Phone number&quot;,
+              #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19351&quot;(
+                ri!searchValue_txt,
+                ri!customerType_int
+              ),
+              if(
+                ri!searchKey_txt = &quot;Street name&quot;,
+                #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19352&quot;(
+                  ri!searchValue_txt,
+                  ri!customerType_int
+                ),
+                if(
+                  ri!searchKey_txt = &quot;Suburb&quot;,
+                  #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19353&quot;(
+                    ri!searchValue_txt,
+                    ri!customerType_int
+                  ),
+                  if(
+                    ri!searchKey_txt = &quot;Suitable Operator Reference&quot;,
+                    #&quot;_a-0000dacd-14bd-8000-9ba2-011c48011c48_19354&quot;(
+                      ri!searchValue_txt,
+                      ri!customerType_int
+                    ),
+                    {}
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>searchKey_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerType_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_addEditUserRoleDetails</name>
+        <uuid>78dec5f2-d74c-456d-837d-e27ecba7dd06</uuid>
+        <description>Add or edit user role details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11467</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!gridValues,&#xD;
+  local!selectedIndices: tointeger(&#xD;
+    {}&#xD;
+  ),&#xD;
+  local!itemsToken,&#xD;
+  with(&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: if(&#xD;
+        ri!isInternal = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7453&quot;,&#xD;
+        &quot;Edit Internal User&quot;,&#xD;
+        &quot;Edit External User&quot;&#xD;
+      ),&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+          ri!processMilestoneName,&#xD;
+          ri!processMilestoneIndex&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;User Access&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            if(&#xD;
+              ri!isInternal = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7453&quot;,&#xD;
+              {&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;Business Unit&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;&#xD;
+                  },&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: {&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;&#xD;
+                  },&#xD;
+                  value: ri!businessUnitName,&#xD;
+                  saveInto: {&#xD;
+                    ri!businessUnitName,&#xD;
+                    a!save(&#xD;
+                      ri!userRole,&#xD;
+                      &quot;&quot;&#xD;
+                    )&#xD;
+                  },&#xD;
+                  required: true&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;User Role&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    if(&#xD;
+                      ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[1],&#xD;
+                      {&#xD;
+                        ri!roleNameList[1],&#xD;
+                        ri!roleNameList[2]&#xD;
+                      },&#xD;
+                      {&#xD;
+                        if(&#xD;
+                          ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[2],&#xD;
+                          {&#xD;
+                            ri!roleNameList[3],&#xD;
+                            ri!roleNameList[4]&#xD;
+                          },&#xD;
+                          {&#xD;
+                            if(&#xD;
+                              ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[3],&#xD;
+                              {&#xD;
+                                ri!roleNameList[5],&#xD;
+                                ri!roleNameList[6]&#xD;
+                              },&#xD;
+                              {&#xD;
+                                if(&#xD;
+                                  ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[4],&#xD;
+                                  {&#xD;
+                                    ri!roleNameList[7],&#xD;
+                                    ri!roleNameList[8]&#xD;
+                                  },&#xD;
+                                  {&#xD;
+                                    ri!roleNameList&#xD;
+                                  }&#xD;
+                                )&#xD;
+                              }&#xD;
+                            )&#xD;
+                          }&#xD;
+                        )&#xD;
+                      }&#xD;
+                    )&#xD;
+                  },&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: {&#xD;
+                    if(&#xD;
+                      ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[1],&#xD;
+                      {&#xD;
+                        ri!roleNameList[1],&#xD;
+                        ri!roleNameList[2]&#xD;
+                      },&#xD;
+                      {&#xD;
+                        if(&#xD;
+                          ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[2],&#xD;
+                          {&#xD;
+                            ri!roleNameList[3],&#xD;
+                            ri!roleNameList[4]&#xD;
+                          },&#xD;
+                          {&#xD;
+                            if(&#xD;
+                              ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[3],&#xD;
+                              {&#xD;
+                                ri!roleNameList[5],&#xD;
+                                ri!roleNameList[6]&#xD;
+                              },&#xD;
+                              {&#xD;
+                                if(&#xD;
+                                  ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[4],&#xD;
+                                  {&#xD;
+                                    ri!roleNameList[7],&#xD;
+                                    ri!roleNameList[8]&#xD;
+                                  },&#xD;
+                                  {&#xD;
+                                    ri!roleNameList&#xD;
+                                  }&#xD;
+                                )&#xD;
+                              }&#xD;
+                            )&#xD;
+                          }&#xD;
+                        )&#xD;
+                      }&#xD;
+                    )&#xD;
+                  },&#xD;
+                  value: ri!userRole,&#xD;
+                  saveInto: ri!userRole,&#xD;
+                  required: true,&#xD;
+                  validations: if(&#xD;
+                    length(&#xD;
+                      ri!userRole_items&#xD;
+                    ) &gt; 0,&#xD;
+                    #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18379&quot;(&#xD;
+                      ri!userRole,&#xD;
+                      ri!userRole_items.userId&#xD;
+                    ),&#xD;
+                    {}&#xD;
+                  )&#xD;
+                ),&#xD;
+                if(&#xD;
+                  ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[4],&#xD;
+                  {&#xD;
+                    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;Customer Name&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: ri!partyName,&#xD;
+                      saveInto: ri!partyName,&#xD;
+                      required: true,&#xD;
+                      readOnly: true&#xD;
+                    )&#xD;
+                  },&#xD;
+                  {}&#xD;
+                )&#xD;
+              },&#xD;
+              {&#xD;
+                if(&#xD;
+                  length(&#xD;
+                    ri!partyIdList&#xD;
+                  ) &lt; 1,&#xD;
+                  {&#xD;
+                    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                      label: &quot;Customer Name&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      value: ri!partyName,&#xD;
+                      saveInto: ri!partyName,&#xD;
+                      required: true,&#xD;
+                      readOnly: true&#xD;
+                    )&#xD;
+                  },&#xD;
+                  {&#xD;
+                   /* a!dropdownField(&#xD;
+                      label: &quot;Customer Names&quot;,&#xD;
+                      labelPosition: &quot;ADJACENT&quot;,&#xD;
+                      choiceLabels: {&#xD;
+                        ri!customerNameList&#xD;
+                      },&#xD;
+                      placeholderLabel: cons!COM_DROPDOWN_DEFAULT,&#xD;
+                      choiceValues: {&#xD;
+                        ri!partyIdList&#xD;
+                      },&#xD;
+                      value: ri!partyId,&#xD;
+                      saveInto: ri!partyId,&#xD;
+                      required: true&#xD;
+                    )*/&#xD;
+                  }&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                  label: &quot;User Roles&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  choiceLabels: {&#xD;
+                    ri!roleNameList&#xD;
+                  },&#xD;
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+                  choiceValues: {&#xD;
+                    ri!roleNameList&#xD;
+                  },&#xD;
+                  value: ri!userRole,&#xD;
+                  saveInto: ri!userRole,&#xD;
+                  required: true,&#xD;
+                  validations: if(&#xD;
+                    length(&#xD;
+                      ri!userRole_items&#xD;
+                    ) &gt; 0,&#xD;
+                    #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_18379&quot;(&#xD;
+                      ri!userRole,&#xD;
+                      ri!userRole_items.userId&#xD;
+                    ),&#xD;
+                    {}&#xD;
+                  )&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            if(&#xD;
+              or(&#xD;
+                length(&#xD;
+                  ri!partyIdList&#xD;
+                ) &lt; 1,&#xD;
+                ri!businessUnitName = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7458&quot;[4]&#xD;
+              ),&#xD;
+              {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+                  secondaryButtons: {&#xD;
+                    #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                      label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5845&quot;,&#xD;
+                      style: &quot;NORMAL&quot;,&#xD;
+                      value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5845&quot;,&#xD;
+                      saveInto: ri!buttonValue,&#xD;
+                      skipValidation: true&#xD;
+                    )&#xD;
+                  }&#xD;
+                )&#xD;
+              },&#xD;
+              {}&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Description&quot;,&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: if(&#xD;
+                isnull(&#xD;
+                  ri!userRole&#xD;
+                ),&#xD;
+                {},&#xD;
+                index(&#xD;
+                  ri!roleDescList,&#xD;
+                  wherecontains(&#xD;
+                    ri!userRole,&#xD;
+                    ri!roleNameList&#xD;
+                  )&#xD;
+                )&#xD;
+              ),&#xD;
+              saveInto: ri!userRoleDescription,&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+            secondaryButtons: {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8350&quot;,&#xD;
+                style: &quot;NORMAL&quot;,&#xD;
+                value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8350&quot;,&#xD;
+                saveInto: ri!buttonValue&#xD;
+              )&#xD;
+            }&#xD;
+          ),&#xD;
+          if(&#xD;
+            ri!isInternal = #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7453&quot;,&#xD;
+            {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+                headerCells: {&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;Business Unit&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  /*if(&#xD;
+                  isnull(&#xD;
+                    ri!userRole_items.partyName&#xD;
+                  ),&#xD;
+                  {},&#xD;
+                  {&#xD;
+                    a!gridLayoutHeaderCell(&#xD;
+                      label: &quot;Customer Name&quot;,&#xD;
+                      align: &quot;CENTER&quot;&#xD;
+                    )&#xD;
+                  }&#xD;
+                ),*/#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;Customer Name&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;User Role&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;Description&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;&quot;&#xD;
+                  )&#xD;
+                },&#xD;
+                columnConfigs: {&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  /*if(&#xD;
+                  isnull(&#xD;
+                    ri!userRole_items.partyName&#xD;
+                  ),&#xD;
+                  {},&#xD;
+                  {&#xD;
+                    a!gridLayoutColumnConfig(&#xD;
+                      width: &quot;DISTRIBUTE&quot;&#xD;
+                    )&#xD;
+                  }&#xD;
+                ),*/#&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;NARROW&quot;&#xD;
+                  )&#xD;
+                },&#xD;
+                rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+                  function: #&quot;cf7f0d79-8a15-43c5-b1ce-c43983d35a67&quot;(&#xD;
+                    items: ri!userRole_items,&#xD;
+                    isInternal: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7453&quot;,&#xD;
+                    index: _,&#xD;
+                    itemsToken: local!itemsToken&#xD;
+                  ),&#xD;
+                  array: if(&#xD;
+                    or(&#xD;
+                      isnull(&#xD;
+                        ri!userRole_items&#xD;
+                      ),&#xD;
+                      count(&#xD;
+                        ri!userRole_items&#xD;
+                      ) &lt; 1&#xD;
+                    ),&#xD;
+                    {},&#xD;
+                    1 + enumerate(&#xD;
+                      count(&#xD;
+                        ri!userRole_items&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  arrayVariable: local!itemsToken&#xD;
+                ),&#xD;
+                selectable: true,&#xD;
+                selectionValue: local!selectedIndices,&#xD;
+                selectionSaveInto: local!selectedIndices&#xD;
+              )&#xD;
+            },&#xD;
+            {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+                headerCells: {&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;Customer Name&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;User Role&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;Description&quot;,&#xD;
+                    align: &quot;CENTER&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                    label: &quot;&quot;&#xD;
+                  )&#xD;
+                },&#xD;
+                columnConfigs: {&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;DISTRIBUTE&quot;&#xD;
+                  ),&#xD;
+                  #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                    width: &quot;NARROW&quot;&#xD;
+                  )&#xD;
+                },&#xD;
+                rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+                  function: #&quot;818bdc5c-4688-4599-bd26-4d00805f3db7&quot;(&#xD;
+                    items: ri!userRole_items,&#xD;
+                    index: _,&#xD;
+                    itemsToken: local!itemsToken&#xD;
+                  ),&#xD;
+                  array: if(&#xD;
+                    or(&#xD;
+                      isnull(&#xD;
+                        ri!userRole_items&#xD;
+                      ),&#xD;
+                      count(&#xD;
+                        ri!userRole_items&#xD;
+                      ) &lt; 1&#xD;
+                    ),&#xD;
+                    {},&#xD;
+                    1 + enumerate(&#xD;
+                      count(&#xD;
+                        ri!userRole_items&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  arrayVariable: local!itemsToken&#xD;
+                ),&#xD;
+                selectable: true,&#xD;
+                selectionValue: local!selectedIndices,&#xD;
+                selectionSaveInto: local!selectedIndices&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+            saveInto: ri!buttonValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!buttonValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userRole</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userRoleDescription</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userRole_items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEdit</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerNameList</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gridSelection</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyIdList</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>roleNameList</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>roleDescList</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isInternal</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessUnitNameList</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userBusinessUnitId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessUnitIdList</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessUnitName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

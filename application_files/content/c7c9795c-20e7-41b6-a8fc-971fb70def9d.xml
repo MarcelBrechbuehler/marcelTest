@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>UTIL_uploadBulkInsertFile</name>
+        <uuid>c7c9795c-20e7-41b6-a8fc-971fb70def9d</uuid>
+        <description></description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11465</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;Bulk Insert Uploaded&quot;,
+  instructions: &quot;Upload the file and specify the params.&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(
+      label: &quot;Bulk insert file&quot;,
+      labelPosition: &quot;ABOVE&quot;,
+      saveInto: {ri!bulkInsertFile_doc},
+      value:ri!bulkInsertFile_doc,
+      target:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14459&quot;,
+      validations: {}
+    ),
+    #&quot;SYSTEM_SYSRULES_integerField&quot;(
+      label: &quot;Start Line Number&quot;,
+      labelPosition: &quot;ABOVE&quot;,
+      saveInto: {ri!startLine_int},
+      value:ri!startLine_int,
+      refreshAfter: &quot;UNFOCUS&quot;,
+      validations: {},
+      align: &quot;LEFT&quot;
+    ),
+    #&quot;SYSTEM_SYSRULES_integerField&quot;(
+      label: &quot;Commit After N Lines&quot;,
+      labelPosition: &quot;ABOVE&quot;,
+      saveInto: {ri!commitAfterNLines_int},
+      value:ri!commitAfterNLines_int,
+      refreshAfter: &quot;UNFOCUS&quot;,
+      validations: {},
+      align: &quot;LEFT&quot;
+    )
+  },
+  secondColumnContents: {
+    /* Add components here for a two-column form */
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Submit&quot;,
+        style: &quot;PRIMARY&quot;,
+        saveInto: {}
+      )
+    },
+    secondaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Cancel&quot;,
+        style: &quot;NORMAL&quot;,
+        value: true,
+        saveInto: ri!cancel,
+        skipValidation: true
+      )
+    }
+  ),
+  validations: {}
+)</definition>
+        <namedTypedValue>
+            <name>bulkInsertFile_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>startLine_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>commitAfterNLines_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

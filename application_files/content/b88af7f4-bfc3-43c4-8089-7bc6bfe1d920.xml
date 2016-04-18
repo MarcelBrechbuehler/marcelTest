@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_addDocument</name>
+        <uuid>b88af7f4-bfc3-43c4-8089-7bc6bfe1d920</uuid>
+        <description>This interface is used by the generic document upload process</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(&#xD;
+  local!function_int: ri!function_int,&#xD;
+  local!activity_int: ri!activity_int,&#xD;
+  local!subject_int: ri!subject_int,&#xD;
+  local!type_int: ri!type_int,&#xD;
+  local!subType_int: ri!subType_int,&#xD;
+  local!file_doc,&#xD;
+  local!fileName_txt: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14315&quot;(ri!commonDocumentClassification_cdt.documentSubtype,#&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10327&quot; ),&#xD;
+  local!commonDocumentVersionDocument_cdt: 'type!{http://www.ehp.qld.gov.au/connect/types/}CTCommonDocumentVersionDocument'(),&#xD;
+  local!commonDocumentClassification_cdt: ri!commonDocumentClassification_cdt,&#xD;
+  local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+    pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: 5&#xD;
+    )&#xD;
+  ),&#xD;
+  local!removeFailure: false,&#xD;
+  local!removedIDs: {},&#xD;
+  local!confirmUpdate,&#xD;
+  with(&#xD;
+    local!activities: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12862&quot;(local!function_int),&#xD;
+    local!subjects: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12867&quot;(local!function_int,local!activity_int),&#xD;
+    local!types: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12865&quot;(local!function_int,local!activity_int,local!subject_int),&#xD;
+    local!subTypes: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12864&quot;(local!function_int,local!activity_int,local!subject_int,local!type_int),&#xD;
+    local!documents: todatasubset(ri!commonDocumentVersionDocument_cdt,local!gridSelection.pagingInfo),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      label: ri!processMilestoneName_txt,&#xD;
+      firstColumnContents: {&#xD;
+        if(ri!processMilestoneName_txt=&quot;Add Document&quot;,&#xD;
+          {},&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+            ri!processMilestoneName_txt,&#xD;
+            ri!processMilestoneIndex_int&#xD;
+          )&#xD;
+        ),&#xD;
+        if(ri!processMilestoneName_txt=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14894&quot;,&#xD;
+          with(&#xD;
+            local!customerInfo: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4421&quot;(ri!customerId_int),&#xD;
+            #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(&#xD;
+              local!customerInfo.customerName,&#xD;
+              local!customerInfo.customerType.description,&#xD;
+              local!customerInfo.customerId,&#xD;
+              local!customerInfo.customerType.partyTypeId&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_sectionLayoutColumns&quot;(&#xD;
+            label: &quot;Entity&quot;,&#xD;
+            columns: {&#xD;
+              #&quot;SYSTEM_SYSRULES_columnLayout&quot;(&#xD;
+                contents: {&#xD;
+                  #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                    label: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13335&quot;(ri!entityType_int,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11904&quot;).codeRef,&#xD;
+                    labelPosition: &quot;ADJACENT&quot;,&#xD;
+                    value: ri!entity_int,&#xD;
+                    readOnly: true&#xD;
+                  )&#xD;
+                }&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_columnLayout&quot;(&#xD;
+                contents: {}&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Document Classification&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            if(isnull(ri!function_int),&#xD;
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                label: &quot;Function&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                choiceLabels: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12866&quot;().description,&#xD;
+                placeholderLabel: &quot;--- Select Document Function ---&quot;,&#xD;
+                choiceValues: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12866&quot;().commonCodeId,&#xD;
+                value: local!function_int,&#xD;
+                saveInto: {&#xD;
+                  local!function_int,&#xD;
+                  a!save(local!activity_int, null),&#xD;
+                  a!save(local!subject_int, null),&#xD;
+                  a!save(local!type_int, null),&#xD;
+                  a!save(local!subType_int, null)&#xD;
+                },&#xD;
+                required: if(isnull(ri!function_int),true,false),&#xD;
+                disabled: if(isnull(ri!function_int),false,true),&#xD;
+                validations: {}&#xD;
+              ),&#xD;
+              {}&#xD;
+            ),&#xD;
+            if(isnull(ri!activity_int),&#xD;
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                label: &quot;Activity&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                choiceLabels: index(local!activities,&quot;description&quot;,{}),&#xD;
+                placeholderLabel: &quot;--- Select Document Activity ---&quot;,&#xD;
+                choiceValues: index(local!activities,&quot;commonCodeId&quot;,{}),&#xD;
+                value: local!activity_int,&#xD;
+                saveInto: {&#xD;
+                  local!activity_int,&#xD;
+                  a!save(local!subject_int, null),&#xD;
+                  a!save(local!type_int, null),&#xD;
+                  a!save(local!subType_int, null)&#xD;
+                },&#xD;
+                required: if(isnull(ri!activity_int),true,false),&#xD;
+                disabled: if(isnull(ri!activity_int),false,true),&#xD;
+                validations: {}&#xD;
+              ),&#xD;
+              {}&#xD;
+            ),&#xD;
+            if(isnull(ri!subject_int),&#xD;
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+                label: &quot;Subject&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                choiceLabels: index(local!subjects,&quot;description&quot;,{}),&#xD;
+                placeholderLabel: &quot;--- Select Document Subject ---&quot;,&#xD;
+                choiceValues: index(local!subjects,&quot;commonCodeId&quot;,{}),&#xD;
+                value: local!subject_int,&#xD;
+                saveInto: {&#xD;
+                  local!subject_int,&#xD;
+                  a!save(local!type_int, null),&#xD;
+                  a!save(local!subType_int, null)&#xD;
+                },&#xD;
+                required: if(isnull(ri!subject_int),true,false),&#xD;
+                disabled: if(isnull(ri!subject_int),false,true),&#xD;
+                validations: {}&#xD;
+              ),&#xD;
+              {}&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Document Type&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: index(local!types,&quot;description&quot;,{}),&#xD;
+              placeholderLabel: &quot;--- Select Document Type ---&quot;,&#xD;
+              choiceValues: index(local!types,&quot;commonCodeId&quot;,{}),&#xD;
+              value: local!type_int,&#xD;
+              saveInto: {&#xD;
+                local!type_int,&#xD;
+                a!save(local!subType_int, null)&#xD;
+              },&#xD;
+              required: if(isnull(ri!type_int),true,false),&#xD;
+              disabled: if(isnull(ri!type_int),false,true),&#xD;
+              validations: {}&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Document Sub Type&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: index(local!subTypes,&quot;description&quot;,{}),&#xD;
+              placeholderLabel: &quot;--- Select Document Sub Type ---&quot;,&#xD;
+              choiceValues: index(local!subTypes,&quot;commonCodeId&quot;,{}),&#xD;
+              value: local!subType_int,&#xD;
+              saveInto: {&#xD;
+                local!subType_int,&#xD;
+                a!save(&#xD;
+                  local!commonDocumentClassification_cdt,&#xD;
+                  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14009&quot;(&#xD;
+                    local!function_int,&#xD;
+                    local!activity_int,&#xD;
+                    local!subject_int,&#xD;
+                    local!type_int,&#xD;
+                    local!subType_int&#xD;
+                  )&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!commonDocumentClassification_cdt,&#xD;
+                  local!commonDocumentClassification_cdt&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.commonDocument.commonDocumentClassificationId,&#xD;
+                  local!commonDocumentClassification_cdt.commonDocumentClassificationId&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.readOnlyFlag,&#xD;
+                  local!commonDocumentClassification_cdt.readOnlyFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.documentSensitivity,&#xD;
+                  local!commonDocumentClassification_cdt.documentSensitivity&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.publicRegisterFlag,&#xD;
+                  local!commonDocumentClassification_cdt.publicRegisterFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.internalOnlyFlag,&#xD;
+                  local!commonDocumentClassification_cdt.internalOnlyFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.direction,&#xD;
+                  local!commonDocumentClassification_cdt.direction&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!fileName_txt,&#xD;
+                  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13335&quot;(local!subType_int,#&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10327&quot;).description&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.documentName,&#xD;
+                  local!fileName_txt&#xD;
+                )&#xD;
+              },&#xD;
+              required: if(isnull(ri!subType_int),true,false),&#xD;
+              disabled: if(isnull(ri!subType_int),false,true),&#xD;
+              validations: {}&#xD;
+            ),&#xD;
+            if(and(isnull(ri!subType_int),local!commonDocumentVersionDocument_cdt.commonDocument.commonDocumentClassificationId&lt;1),&#xD;
+              {},&#xD;
+              {&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;Document Name&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                instructions: &quot;You can overwrite the default name&quot;,&#xD;
+                validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22937&quot;,&#xD;
+                    fieldData: local!commonDocumentVersionDocument_cdt.documentName&#xD;
+                  ),&#xD;
+                value: local!fileName_txt,&#xD;
+                saveInto: {&#xD;
+                  local!fileName_txt,&#xD;
+                  a!save(local!commonDocumentVersionDocument_cdt.documentName,save!value)&#xD;
+                }&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(&#xD;
+                label: &quot;Upload Document&quot; &amp; local!file_doc,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                instructions: &quot;Any format is acceptable.&quot;,&#xD;
+                target: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14459&quot;,&#xD;
+                documentName: local!fileName_txt,&#xD;
+                value: local!file_doc,&#xD;
+                saveInto: {&#xD;
+                  local!file_doc,&#xD;
+                  a!save(local!commonDocumentVersionDocument_cdt.dmId,tostring(tointeger(local!file_doc)))&#xD;
+                },&#xD;
+                required: true&#xD;
+              )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Filler&quot;,&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          },&#xD;
+          validationGroup: &quot;Document&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          firstColumnContents: {},&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+              secondaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+                  label: &quot;Add Document&quot;,&#xD;
+                  value: &quot;Add Document&quot;,&#xD;
+                  saveInto: {&#xD;
+                    ri!buttonValue_txt,&#xD;
+/*&#xD;
+                    a!save(local!commonDocumentVersionDocument_cdt.commonDocument.documentRef, ri!documentRef_txt),&#xD;
+*/&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.commonDocument.commonDocumentClassificationId,&#xD;
+                  local!commonDocumentClassification_cdt.commonDocumentClassificationId&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.readOnlyFlag,&#xD;
+                  local!commonDocumentClassification_cdt.readOnlyFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.documentSensitivity,&#xD;
+                  local!commonDocumentClassification_cdt.documentSensitivity&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.publicRegisterFlag,&#xD;
+                  local!commonDocumentClassification_cdt.publicRegisterFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.internalOnlyFlag,&#xD;
+                  local!commonDocumentClassification_cdt.internalOnlyFlag&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.direction,&#xD;
+                  local!commonDocumentClassification_cdt.direction&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  local!commonDocumentVersionDocument_cdt.documentName,&#xD;
+                  local!fileName_txt&#xD;
+                ),&#xD;
+                    a!save(ri!commonDocumentVersionDocument_cdt, append(ri!commonDocumentVersionDocument_cdt,local!commonDocumentVersionDocument_cdt)),&#xD;
+                    a!save(ri!file_doc, append(ri!file_doc,local!file_doc)),&#xD;
+                    if(isnull(ri!function_int),&#xD;
+                      a!save(local!function_int, null),&#xD;
+                      null&#xD;
+                    ),&#xD;
+                    if(isnull(ri!activity_int),&#xD;
+                      a!save(local!activity_int, null),&#xD;
+                      null&#xD;
+                    ),&#xD;
+                    if(isnull(ri!subject_int),&#xD;
+                      a!save(local!subject_int, null),&#xD;
+                      null&#xD;
+                    ),&#xD;
+                    if(isnull(ri!type_int),&#xD;
+                      a!save(local!type_int, null),&#xD;
+                      null&#xD;
+                    ),&#xD;
+                    if(isnull(ri!subType_int),&#xD;
+                      a!save(local!subType_int, null),&#xD;
+                      null&#xD;
+                    ),&#xD;
+                    a!save(local!fileName_txt, null),&#xD;
+                    a!save(local!file_doc, null)&#xD;
+                  },&#xD;
+                  submit: true,&#xD;
+                  validate: true,&#xD;
+                  validationGroup: &quot;Document&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Instructions&quot;,&#xD;
+              value: &quot;You need to add the Documents to the list below by clicking the Add Document button.&quot;,&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Documents&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            if(local!documents.totalCount&gt;0,&#xD;
+            {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              label: &quot;Uploaded Documents&quot;,&#xD;
+              instructions: &quot;Only Documents shown in this list will be added to the Document Management system&quot;,&#xD;
+              totalCount: local!documents.totalCount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Reference&quot;, data: index(local!documents.data.commonDocument, &quot;documentRef&quot;, {})),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Name&quot;, data: index(local!documents.data, &quot;documentName&quot;, {}))&#xD;
+              },&#xD;
+              identifiers: index(local!documents.data, &quot;dmId&quot;, {}),&#xD;
+              value: local!gridSelection,&#xD;
+              saveInto: {&#xD;
+                local!gridSelection,&#xD;
+                a!save(&#xD;
+                  local!removeFailure,&#xD;
+                  if(&#xD;
+                    or(isnull(local!gridSelection.selected), length(local!gridSelection.selected) &lt; 1),&#xD;
+                    local!removeFailure,&#xD;
+                    false&#xD;
+                  )&#xD;
+                )&#xD;
+              },&#xD;
+              selection: true&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+              secondaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+                  label: &quot;Remove&quot;,&#xD;
+                  value: true,&#xD;
+                  saveInto: {&#xD;
+                    if(&#xD;
+                      or(&#xD;
+                        isnull(local!gridSelection.selected),&#xD;
+                        length(local!gridSelection.selected)&lt;1&#xD;
+                      ),&#xD;
+                      local!removeFailure,&#xD;
+                      {}&#xD;
+                    ),&#xD;
+                    a!save(ri!file_doc, remove(ri!file_doc, wherecontains(tostring(local!gridSelection.selected), apply(fn!tostring,tointeger(ri!file_doc))))),&#xD;
+                    a!save(ri!commonDocumentVersionDocument_cdt, remove(ri!commonDocumentVersionDocument_cdt, wherecontains(tostring(local!gridSelection.selected), ri!commonDocumentVersionDocument_cdt.dmId))),&#xD;
+                    if(local!removeFailure,&#xD;
+                      {},&#xD;
+                      a!save(local!removedIDs, append(local!removedIDs, local!gridSelection.selected))&#xD;
+                    ),&#xD;
+                    /*  This sets the start index back by one page when  *&#xD;
+                     *  all of the results on the final page are deleted.  */&#xD;
+                    a!save(&#xD;
+                      local!gridSelection.pagingInfo.startIndex,&#xD;
+                      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13130&quot;(pagingInfo: local!gridSelection.pagingInfo, length: length(ri!commonDocumentVersionDocument_cdt))&#xD;
+                    ),&#xD;
+                    a!save(local!gridSelection.selected, null)&#xD;
+                  }&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+            },&#xD;
+            {}&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      secondColumnContents: {},&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            confirmMessage: if(count(ri!file_doc)&lt;1,&#xD;
+              &quot;There is not document in the Uploaded Document list. Do you still want to proceed?&quot;,&#xD;
+              &quot;&quot;&#xD;
+            ),&#xD;
+            saveInto: ri!buttonValue_txt,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!buttonValue_txt,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      validations: {}&#xD;
+    )&#xD;
+  )&#xD;
+)&#xD;
+</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>function_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activity_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>subject_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>type_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>subType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>commonDocumentVersionDocument_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>file_doc</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entity_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>commonDocumentClassification_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

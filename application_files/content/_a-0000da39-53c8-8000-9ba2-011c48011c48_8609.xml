@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_permitHistory</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8609</uuid>
+        <description>Contains the permit history section</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Permit History&quot;,&#xD;
+  isCollapsible: true,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      readOnly: true,&#xD;
+      label: &quot;&quot;,&#xD;
+      totalCount: 5,&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Date&quot;,&#xD;
+          data: {&#xD;
+            if(isnull(local!permitInfoByPermitRef.grantDate),{},&#xD;
+            apply(&#xD;
+              #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;,&#xD;
+              local!permitInfoByPermitRef.grantDate&#xD;
+            ))&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Action&quot;,&#xD;
+          data: {&#xD;
+            local!permitInfoByPermitRef.changeActionRef.description&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Reason&quot;,&#xD;
+          data: {&#xD;
+           local!permitInfoByPermitRef.changeReason&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Decision Maker&quot;,&#xD;
+          data: {&#xD;
+            local!permitInfoByPermitRef.createdBy&#xD;
+          },&#xD;
+/*&#xD;
+          data: {&#xD;
+            if(local!permitInfoByPermitRef.createdBy,&#xD;
+            apply(&#xD;
+              rule!PERM_getUserFirstAndLastName,&#xD;
+              local!permitInfoByPermitRef.createdBy&#xD;
+            ),{})&#xD;
+          },&#xD;
+*/&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Version&quot;,&#xD;
+          data: local!permitInfoByPermitRef.permitVersion,&#xD;
+          links: {&#xD;
+            apply(&#xD;
+              #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+                value: _,&#xD;
+                saveInto: local!permitVersion&#xD;
+              ),&#xD;
+              local!permitInfoByPermitRef.permitVersion&#xD;
+            )&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Status&quot;,&#xD;
+          data: {&#xD;
+            local!permitInfoByPermitRef.statusRef.description&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Related Application&quot;,&#xD;
+          links: {&#xD;
+            &#xD;
+            if(or(not(isnull(local!permitApplicationDetails)),length(local!permitApplicationDetails)&gt;0),&#xD;
+		  apply(&#xD;
+          #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+            recordType: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10392&quot;,&#xD;
+              identifier: _&#xD;
+            ),&#xD;
+		local!permitInfoByPermitRef.permitApplicationId),{})&#xD;
+          },&#xD;
+          data: {&#xD;
+           local!permitApplicationDetails&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+        startIndex: 1,&#xD;
+        batchSize: 5,&#xD;
+        sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+          field: local!permitInfoByPermitRef.grantDate,&#xD;
+          ascending: true&#xD;
+        )&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_ehpCustomerDashboard</name>
+        <uuid>_a-0000db98-abcf-8000-9ba2-011c48011c48_17906</uuid>
+        <description></description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  /*================ LOAD ================*/&#xD;
+  local!authorisationCache: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22071&quot;(&#xD;
+      loggedInUser(),{#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22459&quot;}&#xD;
+  ),&#xD;
+	local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 13),&#xD;
+  local!customer: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13096&quot;(&#xD;
+    ri!customerId_int&#xD;
+  ),&#xD;
+  local!contacts: #&quot;aa14d3ac-e201-4040-b8ad-08f4df9018f2&quot;(&#xD;
+    ri!customerId_int&#xD;
+  ),&#xD;
+  local!addresses: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25683&quot;(&#xD;
+    ri!customerId_int&#xD;
+  ),&#xD;
+  local!suitableOperator_cdt: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7930&quot;(&#xD;
+    ri!customerId_int&#xD;
+  ),&#xD;
+  local!businessNumber: if(isnull(local!customer[1].customerExternalId),{},index(&#xD;
+    local!customer[1].customerExternalId.externalId,&#xD;
+    wherecontains(&#xD;
+      {&#xD;
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5225&quot;,&#xD;
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5224&quot;,&#xD;
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5226&quot;&#xD;
+      },&#xD;
+      local!customer[1].customerExternalId.externalIdType&#xD;
+    )&#xD;
+  )),&#xD;
+  local!formattedBusinessNumber: if(isnull(local!customer[1].customerExternalId),{},apply(&#xD;
+    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13798&quot;,&#xD;
+    merge(&#xD;
+      local!customer[1].customerExternalId.externalIdType,&#xD;
+      local!businessNumber&#xD;
+    )&#xD;
+  )),&#xD;
+  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(&#xD;
+  /*================ DASHBOARD ================*/&#xD;
+    firstColumnContents: {&#xD;
+      if(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22528&quot;(loggedInUser(),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22459&quot;),&#xD;
+      {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;View Customer Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Ecotrack Customer Reference&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                local!customer[1].customerExternalId&#xD;
+              ),&#xD;
+              {},&#xD;
+              index(&#xD;
+                local!customer[1].customerExternalId.externalId,&#xD;
+                lookup(&#xD;
+                  local!customer[1].customerExternalId.externalIdType,&#xD;
+                  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16695&quot;,&#xD;
+                  - 1&#xD;
+                ),&#xD;
+                {}&#xD;
+              )&#xD;
+            ),&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Name&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: local!customer.customerName,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Customer ID&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: local!customer.customerRef,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          if(&#xD;
+            isnull(&#xD;
+              local!customer[1].customerExternalId&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Business Number&quot;,&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: {},&#xD;
+              readOnly: true&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Business Number&quot;,&#xD;
+              labelPosition: &quot;ABOVE&quot;,&#xD;
+              value: joinarray(&#xD;
+                local!formattedBusinessNumber,&#xD;
+                char(&#xD;
+                  10&#xD;
+                )&#xD;
+              ),&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Type&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: local!customer.customerType.description,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+            label: &quot;Verified Date&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: &quot;test&quot;,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+            label: &quot;Active?&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            choiceLabels: {&#xD;
+              &quot;&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+            },&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                local!customer.active&#xD;
+              ),&#xD;
+              null,&#xD;
+              local!customer.active&#xD;
+            ),&#xD;
+            disabled: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Contacts&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            totalCount: count(&#xD;
+              local!contacts&#xD;
+            ) + 1,&#xD;
+            columns: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Type&quot;,&#xD;
+                data: {&#xD;
+                  local!contacts.description&#xD;
+                },&#xD;
+                alignment: &quot;LEFT&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Name&quot;,&#xD;
+                data: {&#xD;
+                  local!contacts.partyName&#xD;
+                },&#xD;
+                alignment: &quot;LEFT&quot;/*PU-1060 links: apply(rule!CUST_returnRecordLinkForCustomerDashboard,merge({local!contacts.partyName},{local!contacts.contactId}))*/&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Position&quot;,&#xD;
+                data: {&#xD;
+                  local!contacts.position&#xD;
+                },&#xD;
+                alignment: &quot;LEFT&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Phone&quot;,&#xD;
+                data: {&#xD;
+                  local!contacts.phoneNumber&#xD;
+                },&#xD;
+                alignment: &quot;LEFT&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Email&quot;,&#xD;
+                data: {&#xD;
+                  local!contacts.email&#xD;
+                },&#xD;
+                alignment: &quot;LEFT&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+              startIndex: 1,&#xD;
+              batchSize: - 1,&#xD;
+              sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                field: &quot;name&quot;,&#xD;
+                ascending: true&#xD;
+              )&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Addresses&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            totalCount: count(&#xD;
+              local!addresses&#xD;
+            ) + 1,&#xD;
+            columns: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Type&quot;,&#xD;
+                data: apply(&#xD;
+                  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13094&quot;,&#xD;
+                  {&#xD;
+                    local!addresses.addressType&#xD;
+                  }&#xD;
+                ),&#xD;
+                alignment: &quot;LEFT&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                label: &quot;Details&quot;,&#xD;
+                data: apply(&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4286&quot;,&#xD;
+                  {&#xD;
+                    local!addresses&#xD;
+                  }&#xD;
+                )&#xD;
+              )&#xD;
+            },&#xD;
+            value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+              startIndex: 1,&#xD;
+              batchSize: - 1,&#xD;
+              sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                field: &quot;name&quot;,&#xD;
+                ascending: true&#xD;
+              )&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Relationships&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;92295db2-1241-4022-9774-75086dcb35e6&quot;(&#xD;
+            ri!customerId_int&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      if(&#xD;
+        length(&#xD;
+          local!suitableOperator_cdt&#xD;
+        ) &gt; 0,&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Suitable Operator&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            if(&#xD;
+              length(&#xD;
+                local!suitableOperator_cdt.suitableOperatorRef&#xD;
+              ) = 0,&#xD;
+              #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+                label: &quot;Application Reference&quot;,&#xD;
+                links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                  label: local!suitableOperator_cdt.applicationRef,&#xD;
+                  recordType: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16447&quot;,&#xD;
+                  identifier: local!suitableOperator_cdt.suitableOperatorId&#xD;
+                )&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+                label: &quot;Reference&quot;,&#xD;
+                links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                  label: local!suitableOperator_cdt.suitableOperatorRef,&#xD;
+                  recordType: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16447&quot;,&#xD;
+                  identifier: local!suitableOperator_cdt.suitableOperatorId&#xD;
+                )&#xD;
+              )&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Status&quot;,&#xD;
+              value: local!suitableOperator_cdt.statusRef.description,&#xD;
+              readOnly: true&#xD;
+            ),&#xD;
+            if(&#xD;
+              length(&#xD;
+                local!suitableOperator_cdt.suitableOperatorRef&#xD;
+              ) = 0,&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;Application Date&quot;,&#xD;
+                value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(&#xD;
+                  local!suitableOperator_cdt.applicationDate&#xD;
+                ),&#xD;
+                readOnly: true&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;Registration Date&quot;,&#xD;
+                value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(&#xD;
+                  local!suitableOperator_cdt.registrationDate&#xD;
+                ),&#xD;
+                readOnly: true&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;File Notes&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            value: &quot;&quot;,&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(&#xD;
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5961&quot;,&#xD;
+        ri!customerId_int&#xD;
+      )&#xD;
+      },&#xD;
+      {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Permission Error&quot; ,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition : &quot;ABOVE&quot;,&#xD;
+            value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22554&quot;,&#xD;
+            readOnly: true&#xD;
+          )  &#xD;
+        }&#xD;
+      )&#xD;
+      }&#xD;
+    )&#xD;
+  }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

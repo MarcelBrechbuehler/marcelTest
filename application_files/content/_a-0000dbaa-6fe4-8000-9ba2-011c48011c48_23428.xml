@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_canCreateNewCustomer</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23428</uuid>
+        <description>This rule checks if a new customer record can be created based on these conditions:
+- Customer ID empty or has value of 0  AND
+- New Customer record value is passed  AND
+- No customer found with the same ABN number.
+</description>
+        <parentUuid>_a-0000dba5-d4f5-8000-9ba2-011c48011c48_22994</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+  local!customerIdFromABNSearch: if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!partyExternalId_cdt), null(), #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23327&quot;(ri!partyExternalId_cdt.externalId , #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5190&quot; ).partyId),&#xD;
+	local!customerIdValid: if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!customerId_int), 0, ri!customerId_int) &lt;= 0,&#xD;
+	local!newPartyValid: not(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!party_cdt)),&#xD;
+	local!customerFoundForABNSearch: if(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!customerIdFromABNSearch), 0, local!customerIdFromABNSearch) &lt;= 0,&#xD;
+	and(local!customerIdValid, local!newPartyValid, local!customerFoundForABNSearch)&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>party_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyExternalId_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>party_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>partyExternalId_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

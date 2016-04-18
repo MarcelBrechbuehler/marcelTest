@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_getPartyAddressLinkAddressDetails</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_21011</uuid>
+        <description>This rule returns party address link address details</description>
+        <parentUuid>_a-0000dada-365c-8000-9ba2-011c48011c48_21003</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!partyAddressDetailsWithoutEndDate: #&quot;61e529db-f376-42bc-84e9-b9657bf5f9c6&quot;(
+    ri!partyId,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;() + 1
+  ),
+  local!partyAddressDetailsWithFutureEndDate: #&quot;38a14401-e4a5-4e2f-9399-3c965b058e1b&quot;(
+    ri!partyId,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;() + 1,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;()
+  ),
+  local!endDateNullList: apply(
+    fn!isnull,
+    local!partyAddressDetailsWithoutEndDate.endDate
+  ),
+  local!indexEndDate: where(
+    local!endDateNullList
+  ),
+  local!partyAddressDetailsWithNullEndDate: if(
+    isnull(
+      local!indexEndDate
+    ),
+    null,
+    index(
+      local!partyAddressDetailsWithoutEndDate,
+      local!indexEndDate,
+      null
+    )
+  ),
+  local!filteredPartyAddressDetails: if(
+    or(
+      isnull(
+        local!partyAddressDetailsWithFutureEndDate
+      ),
+      isnull(
+        local!partyAddressDetailsWithNullEndDate
+      )
+    ),
+    null,
+    union(
+      local!partyAddressDetailsWithFutureEndDate,
+      local!partyAddressDetailsWithNullEndDate
+    )
+  ),
+  local!partyAddressLinkAddressDetails: if(
+    isnull(
+      local!filteredPartyAddressDetails
+    ),
+    null,
+    #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_21015&quot;(
+      local!filteredPartyAddressDetails.partyAddressLinkId,
+      ri!partyId,
+      1,
+      #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;
+    )
+  ),
+  if(
+    length(
+      local!partyAddressLinkAddressDetails
+    ) &gt; 0,
+    local!partyAddressLinkAddressDetails[1],
+    local!partyAddressLinkAddressDetails
+  )
+)</definition>
+        <namedTypedValue>
+            <name>partyId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

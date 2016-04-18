@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_userRoleRowEach</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_23737</uuid>
+        <description>Contains components to display in dynamic grid of internal user role map screen.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11467</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(
+  id: ri!index,
+  contents: {
+    /*a!integerField(
+      label: &quot;userBusinessRoleId &quot; &amp; ri!index,
+      value: ri!items[ri!index].userRoleId,
+      saveInto: ri!items[ri!index].userRoleId,
+      required: true,
+      align: &quot;CENTER&quot;
+    ),*/
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+      label: &quot;roleName &quot; &amp; ri!index,
+      choiceLabels: {
+        local!businessRoleDetails.roleName
+      },
+      placeholderLabel: &quot;--Select-- &quot;,
+      choiceValues: {
+        local!businessRoleDetails.roleName
+      },
+      value: ri!items[ri!index].roleName,
+      saveInto: {
+        ri!items[ri!index].roleName,
+        a!save(
+          ri!items[ri!index].appianRoleGroup,
+          index(
+            local!businessRoleDetails.appianRoleGroup,
+            wherecontains(
+              ri!items[ri!index].roleName,
+              local!businessRoleDetails.roleName
+            )
+          )
+        ),
+        a!save(
+          ri!items[ri!index].description,
+          index(
+            local!businessRoleDetails.description,
+            wherecontains(
+              ri!items[ri!index].roleName,
+              local!businessRoleDetails.roleName
+            )
+          )
+        ),
+        a!save(
+          ri!items[ri!index].createdBy,
+          #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22063&quot;(
+            loggedInuser()
+          )
+        ),
+        a!save(
+          ri!items[ri!index].assignFromDate,
+          now()
+        ),
+        a!save(
+          ri!items[ri!index].userRoleId,
+          index(
+            local!businessRoleDetails.userBusinessRoleId,
+            wherecontains(
+              ri!items[ri!index].roleName,
+              local!businessRoleDetails.roleName
+            )
+          )
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;description &quot; &amp; ri!index,
+      readOnly: true(),
+      value: ri!items[ri!index].description,
+      saveInto: ri!items[ri!index].description,
+      align: &quot;CENTER&quot;
+    ),
+    /* a!textField(
+      label: &quot;assignedBy &quot; &amp; ri!index,
+      readOnly: true,
+      align: &quot;CENTER&quot;,
+      value: ri!items[ri!index].createdBysaveInto: ri!items[ri!index].createdBy
+    ),*/#&quot;SYSTEM_SYSRULES_dateField&quot;(
+      label: &quot;assignedDate &quot; &amp; ri!index,
+      value: ri!items[ri!index].assignFromDate,
+      saveInto: ri!items[ri!index].assignFromDate,
+      align: &quot;CENTER&quot;
+    ),
+    #&quot;SYSTEM_SYSRULES_dateField&quot;(
+      label: &quot;expiryDate &quot; &amp; ri!index,
+      value: ri!items[ri!index].assignToDate,
+      validations: if(
+        ri!items[ri!index].assignToDate &gt; now(),
+        {},
+        {
+          &quot;Expiry date must be in future&quot;
+        }
+      ),
+      saveInto: ri!items[ri!index].assignToDate,
+      align: &quot;CENTER&quot;
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;delete &quot; &amp; ri!index,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: char(
+          10005
+        ) ,
+        value: ri!index,
+        saveInto: {
+          a!save(
+            ri!deletedItemIds,
+            append(
+              ri!deletedItemIds,
+              index(
+                ri!items.userRoleMapId,
+                save!value,
+                null
+              )
+            )
+          ),
+           
+          a!save(
+            ri!items,
+            remove(
+              ri!items,
+              save!value
+            )
+          ),
+          a!save(
+            ri!itemsToken,
+            remove(
+              ri!itemsToken,
+              save!value
+            )
+          )
+        },
+        align: &quot;CENTER&quot;
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemId_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>deletedItemIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>deletedItemId_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

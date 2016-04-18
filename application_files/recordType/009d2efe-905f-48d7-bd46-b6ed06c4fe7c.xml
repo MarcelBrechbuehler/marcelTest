@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Permit" a:uuid="009d2efe-905f-48d7-bd46-b6ed06c4fe7c">
+        <a:pluralName>Permits</a:pluralName>
+        <a:description>Directory of Permits</a:description>
+        <a:urlStub>qu6DTw</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="4f949498-31c2-48f3-be2a-4020bb58d53b@_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1299"/>
+        <a:listViewTemplateExpr>#&quot;4d42b024-9cc6-4cc7-b956-9c18d021dd3b&quot;()</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;6bf567bb-5e74-4714-9bc8-b276e3ce4441&quot;()</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>235d696a-9fcb-4198-887c-d5adafa1e15d</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>active</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>1</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultSortInfo>
+            <field>permitId</field>
+            <ascending>false</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0005dbb6-addb-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{recordId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_25868&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>235d696a-9fcb-4198-887c-d5adafa1e15d</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_36</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

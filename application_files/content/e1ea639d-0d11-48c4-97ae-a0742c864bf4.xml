@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_addEditLocationDetails</name>
+        <uuid>e1ea639d-0d11-48c4-97ae-a0742c864bf4</uuid>
+        <description>Interface to add edit and search location details</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!buttonAction_txt,&#xD;
+  local!locationType,&#xD;
+  local!addressString,&#xD;
+  local!isAddressFound,&#xD;
+  local!address,&#xD;
+  local!itemsToken,&#xD;
+  local!itemsToken1,&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+    startIndex: 1,&#xD;
+    batchSize: 12&#xD;
+  ),&#xD;
+  local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+    pagingInfo: local!pagingInfo&#xD;
+  ),&#xD;
+  local!gpsDetailsDataSubset,&#xD;
+  local!lga,&#xD;
+  local!qualifiers,&#xD;
+  local!isQueensland,&#xD;
+  local!gpsStatus: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12067&quot;&#xD;
+  ),&#xD;
+  local!planType: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13643&quot;&#xD;
+  ),&#xD;
+  local!tenureType: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8831&quot;&#xD;
+  ),&#xD;
+  local!tenureStatus: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8832&quot;&#xD;
+  ),&#xD;
+  local!mineral: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10281&quot;&#xD;
+  ),&#xD;
+  local!areaUnit: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8837&quot;&#xD;
+  ),&#xD;
+  local!termUnit: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26066&quot;&#xD;
+  ),&#xD;
+  local!bim: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+    #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10838&quot;&#xD;
+  ),&#xD;
+  local!lgaDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7685&quot;(&#xD;
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+  ),&#xD;
+	local!partyAddress: ri!partyAddress_cdt,&#xD;
+  local!permitTenureDetails,&#xD;
+  local!permitTenureMineralDetails,&#xD;
+  local!permitTenureBlockDetails,&#xD;
+  local!locationLgaDetails,&#xD;
+  local!relatedApplication,&#xD;
+  local!generalDetails,&#xD;
+	local!selectedAddressOption,&#xD;
+	local!submittedAddress,&#xD;
+&#xD;
+  with(&#xD;
+    local!getRegisteredSuburbDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(&#xD;
+      local!partyAddress.postCode&#xD;
+    ),&#xD;
+    local!addressOptions: todatasubset(&#xD;
+      if(&#xD;
+        and(&#xD;
+          not(&#xD;
+            isnull(&#xD;
+              local!addressString&#xD;
+            )&#xD;
+          ),&#xD;
+          local!buttonAction_txt = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;&#xD;
+        ),&#xD;
+        #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14644&quot;(&#xD;
+          local!addressString&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      local!gridSelection.pagingInfo&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: if(&#xD;
+            ri!isEdit_txt = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+            &quot;Edit &quot;,&#xD;
+            &quot;Add &quot;&#xD;
+          ) &amp; &quot;Location&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Location Type&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceLabels: {&#xD;
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_26631&quot;&#xD;
+              },&#xD;
+              choiceValues: {&#xD;
+                {&#xD;
+                  #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;&#xD;
+                }&#xD;
+              },&#xD;
+              value: ri!location_cdt.locationType,&#xD;
+              saveInto: {&#xD;
+                ri!location_cdt.locationType,&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.description,&#xD;
+                  null&#xD;
+                )&#xD;
+              },&#xD;
+              required: true(),&#xD;
+              disabled: if(&#xD;
+                ri!isEdit_txt = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+                true(),&#xD;
+                false()&#xD;
+              )&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Location Details&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Location Name&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!location_cdt.locationName,&#xD;
+              saveInto: ri!location_cdt.locationName,&#xD;
+              required: true()&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Ecotrack Location Name&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!location_cdt.ecotrackName,&#xD;
+              saveInto: ri!location_cdt.ecotrackName&#xD;
+            ),&#xD;
+						#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Ecotrack Location Ref&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!location_cdt.ecotrackRef,&#xD;
+              saveInto: ri!location_cdt.ecotrackRef&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Description&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!location_cdt.description,&#xD;
+              saveInto: ri!location_cdt.description,&#xD;
+              validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22938&quot;,&#xD;
+                local!generalDetails.description&#xD;
+              )&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Other Names&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!location_cdt.otherNames,&#xD;
+              saveInto: ri!location_cdt.otherNames,&#xD;
+              validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22939&quot;,&#xD;
+                local!generalDetails.otherNames&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;CLR&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).description,&#xD;
+              choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).commonCodeId,&#xD;
+              value: if(&#xD;
+                isnull(&#xD;
+                  ri!location_cdt.clrStatus&#xD;
+                ),&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16288&quot;,&#xD;
+                ri!location_cdt.clrStatus&#xD;
+              ),&#xD;
+              saveInto: ri!location_cdt.clrStatus,&#xD;
+              required: true()&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;EMR&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).description,&#xD;
+              choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).commonCodeId,&#xD;
+              value: if(&#xD;
+                isnull(&#xD;
+                  ri!location_cdt.emrStatus&#xD;
+                ),&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16289&quot;,&#xD;
+                ri!location_cdt.emrStatus&#xD;
+              ),&#xD;
+              saveInto: ri!location_cdt.emrStatus,&#xD;
+              required: true()&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Officer Safety Risk&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).description,&#xD;
+              choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+              ).commonCodeId,&#xD;
+              value: if(&#xD;
+                isnull(&#xD;
+                  ri!location_cdt.safetyRiskStatus&#xD;
+                ),&#xD;
+                #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10748&quot;,&#xD;
+                ri!location_cdt.safetyRiskStatus&#xD;
+              ),&#xD;
+              saveInto: ri!location_cdt.safetyRiskStatus,&#xD;
+              required: true()&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Operational Status&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12070&quot;&#xD;
+              ).description,&#xD;
+              choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12070&quot;&#xD;
+              ).commonCodeId,&#xD;
+              value: if(&#xD;
+                isnull(&#xD;
+                  ri!location_cdt.operationalStatus&#xD;
+                ),&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16290&quot;,&#xD;
+                ri!location_cdt.operationalStatus&#xD;
+              ),&#xD;
+              saveInto: ri!location_cdt.operationalStatus,&#xD;
+              required: true()&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible: true()&#xD;
+        ),&#xD;
+        if(&#xD;
+          ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[2],&#xD;
+          {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Search Address&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: local!addressString,&#xD;
+              saveInto: {&#xD;
+                local!addressString,&#xD;
+                a!save(&#xD;
+                  local!buttonAction_txt,&#xD;
+                  null&#xD;
+                )&#xD;
+              },&#xD;
+              validations: {},&#xD;
+              align: &quot;LEFT&quot;&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+              primaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+                  label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,&#xD;
+                  style: &quot;NORMAL&quot;,&#xD;
+                  value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,&#xD;
+                  saveInto: &#xD;
+									{&#xD;
+										a!save(local!buttonAction_txt, save!value),&#xD;
+										a!save(local!gridSelection.pagingInfo, local!pagingInfo),&#xD;
+										a!save(local!gridSelection.selected, null()),&#xD;
+										a!save(local!selectedAddressOption, null())&#xD;
+									}&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              label: &quot;Results&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              totalCount: local!addressOptions.totalCount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Address Line&quot;,&#xD;
+                  data: index(&#xD;
+                    local!addressOptions.data,&#xD;
+                    &quot;addressLine&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Locality&quot;,&#xD;
+                  data: index(&#xD;
+                    local!addressOptions.data,&#xD;
+                    &quot;locality&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;State&quot;,&#xD;
+                  data: index(&#xD;
+                    local!addressOptions.data,&#xD;
+                    &quot;state&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Postcode&quot;,&#xD;
+                  data: index(&#xD;
+                    local!addressOptions.data,&#xD;
+                    &quot;postcode&quot;,&#xD;
+                    {}&#xD;
+                  ),&#xD;
+                  alignment: &quot;LEFT&quot;&#xD;
+                )&#xD;
+              },&#xD;
+              identifiers: index(&#xD;
+                local!addressOptions.data,&#xD;
+                &quot;recordId&quot;,&#xD;
+                {}&#xD;
+              ),&#xD;
+              value: local!gridSelection,&#xD;
+              saveInto: local!gridSelection,&#xD;
+              selection: true(),&#xD;
+              validations: {&#xD;
+								if(count(local!gridSelection.selected)&gt;1, &quot;You may only select one address.&quot;, null) &#xD;
+						  }&#xD;
+            ),&#xD;
+            #&quot;cda21e9d-4ea7-47b1-b395-dcfcfe5aa671&quot;(&#xD;
+              partyAddress_cdt: local!partyAddress&#xD;
+            )&#xD;
+          }, &#xD;
+          {&#xD;
+            if(&#xD;
+              ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[3],&#xD;
+              #&quot;964dbedf-3b09-47ff-a248-24f5976feb04&quot;(&#xD;
+                locationLotPlan_cdt: ri!locationLotPlan_cdt&#xD;
+              ),&#xD;
+              {&#xD;
+                if(&#xD;
+                  ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[1],&#xD;
+                  {&#xD;
+                    #&quot;0c64a1a5-f1e0-4809-a5e4-9af371f3d63a&quot;(&#xD;
+                      locationLotPlan_cdt: ri!locationLotPlan_cdt,&#xD;
+                      itemsToken: local!itemsToken,&#xD;
+                      index: ri!index,&#xD;
+                      itemsToken1: local!itemsToken1,&#xD;
+                      locationGps_vw: ri!locationGps_vw,&#xD;
+                      deletedLotPlanIds: ri!deletedLotPlanIds,&#xD;
+                      deletedGpsIds: ri!deletedGpsIds&#xD;
+                    )&#xD;
+                  },&#xD;
+                  {&#xD;
+                    if(&#xD;
+                      ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[4],&#xD;
+                      #&quot;24f66f9d-e027-4598-9f43-c4bf3b9b09b4&quot;(&#xD;
+                        items: ri!permitTenureBlock_vw,&#xD;
+                        itemsToken: ri!itemsToken,&#xD;
+                        index: ri!index,&#xD;
+                        deletedItemIds: ri!deletedBlockIds,&#xD;
+                        permitTenureMineral_cdt: ri!permitTenureMineral_cdt,&#xD;
+                        locationLgaMap_cdt: ri!locationLgaMap_cdt,&#xD;
+                        permitTenure_cdt: ri!permitTenure_cdt,&#xD;
+                        location_cdt: ri!location_cdt&#xD;
+                      ),&#xD;
+                      {}&#xD;
+                    )&#xD;
+                  }&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+			buttons: &#xD;
+				#&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+          primaryButtons: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+              style: &quot;PRIMARY&quot;,&#xD;
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+              saveInto: {&#xD;
+                ri!buttonAction_txt,&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.createdBy,&#xD;
+                  loggedInUser()&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.updatedBy,&#xD;
+                  loggedInUser()&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.createdTimestamp,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.updatedTimestamp,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;()&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.source,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4549&quot;&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.active,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4414&quot;&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.clrStatus,&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!location_cdt.clrStatus&#xD;
+                    ),&#xD;
+                    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16288&quot;,&#xD;
+                    ri!location_cdt.clrStatus&#xD;
+                  )&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.emrStatus,&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!location_cdt.emrStatus&#xD;
+                    ),&#xD;
+                    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16289&quot;,&#xD;
+                    ri!location_cdt.emrStatus&#xD;
+                  )&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.safetyRiskStatus,&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!location_cdt.safetyRiskStatus&#xD;
+                    ),&#xD;
+                    #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10748&quot;,&#xD;
+                    ri!location_cdt.safetyRiskStatus&#xD;
+                  )&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!location_cdt.operationalStatus,&#xD;
+                  if(&#xD;
+                    isnull(&#xD;
+                      ri!location_cdt.operationalStatus&#xD;
+                    ),&#xD;
+                    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16290&quot;,&#xD;
+                    ri!location_cdt.operationalStatus&#xD;
+                  )&#xD;
+                ),&#xD;
+                a!save(&#xD;
+                  ri!partyAddress_cdt,&#xD;
+                  if(isnull(local!isAddressFound),&#xD;
+                    #&quot;0d5eef05-bce5-4ff9-9795-92582705fc7a&quot;(local!gridSelection.selected),&#xD;
+                    local!partyAddress&#xD;
+                  )&#xD;
+/*&#xD;
+                  rule!CUST_getPartyAddressByKleberRecordId(local!selectedAddressOption.recordId)&#xD;
+*/&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },   &#xD;
+          secondaryButtons: {&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+              label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+              style: &quot;DESTRUCTIVE&quot;,&#xD;
+              confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+              saveInto: {&#xD;
+                ri!buttonAction_txt&#xD;
+              },&#xD;
+              skipValidation: true()&#xD;
+            )&#xD;
+          }&#xD;
+        ),&#xD;
+			validations: {&#xD;
+					if(&#xD;
+						and(&#xD;
+							#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!permitTenureBlock_vw)=false(),&#xD;
+							ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[4],&#xD;
+							#&quot;5e44f244-6777-4a3d-b6da-71675a9d9c40&quot;(ri!permitTenureBlock_vw)=false()&#xD;
+						),&#xD;
+						#&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+						  Message: &quot;Ensure that all BIM and Block combinations are unique.&quot;,&#xD;
+						  validateAfter: &quot;SUBMIT&quot;  &#xD;
+						),&#xD;
+						null()&#xD;
+					),&#xD;
+					if(&#xD;
+					  and(&#xD;
+					    ri!buttonAction_txt=#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+					    ri!location_cdt.locationType = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13634&quot;[2],&#xD;
+					    #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!partyAddress_cdt)  &#xD;
+					  ),&#xD;
+					  #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+					    Message: &quot;Specify the address using address search or enter the details if the address is not found in the search result.&quot;,&#xD;
+					    validateAfter: &quot;SUBMIT&quot;  &#xD;
+					  ),&#xD;
+					  null()&#xD;
+					)&#xD;
+			}&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonAction_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyAddress_cdt</name>
+            <type>
+                <name>CTPartyAddress</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEdit_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedBlockIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>location_cdt</name>
+            <type>
+                <name>CTLocation</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationLotPlan_cdt</name>
+            <type>
+                <name>CTLocationLotPlan?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitTenureMineral_cdt</name>
+            <type>
+                <name>CTPermitTenureMineral</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitTenureBlock_vw</name>
+            <type>
+                <name>CTPermitTenureBlock_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationGps_vw</name>
+            <type>
+                <name>CTLocationGps_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationLgaMap_cdt</name>
+            <type>
+                <name>CTLocationLgaMap?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitTenure_cdt</name>
+            <type>
+                <name>CTPermitTenure</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedLotPlanIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedGpsIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonAction_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>partyAddress_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isEdit_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedBlockIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>location_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationLotPlan_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>permitTenureMineral_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>permitTenureBlock_vw</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>locationId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationGps_vw</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationLgaMap_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>permitTenure_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedLotPlanIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedGpsIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

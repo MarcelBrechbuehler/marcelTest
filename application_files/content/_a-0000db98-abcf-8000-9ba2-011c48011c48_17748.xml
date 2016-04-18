@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_viewOutcomeSummary</name>
+        <uuid>_a-0000db98-abcf-8000-9ba2-011c48011c48_17748</uuid>
+        <description>Views the Outcome Summary for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo:     #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:  1,&#xD;
+                                      batchSize:   3,&#xD;
+                                      sort:  #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                                                field:  &quot;recommendationText&quot;,&#xD;
+                                                ascending:  true&#xD;
+                                              )&#xD;
+                        ),&#xD;
+  local!component:      if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                            {},&#xD;
+                            #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14759&quot;(&#xD;
+                              ri!careEvaluationId,&#xD;
+                              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13016&quot;&#xD;
+                            ).careEvaluationComponentId&#xD;
+                        ),&#xD;
+  local!recommendation: if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(local!component),&#xD;
+                          {},&#xD;
+                          #&quot;21568ca7-2dd7-4417-aa66-569361cd4a85&quot;(local!component)&#xD;
+                        ),&#xD;
+  with(&#xD;
+    local!outcome:  fn!todatasubset(local!recommendation, local!pagingInfo),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label:  &quot;Outcome Summary&quot;,&#xD;
+      firstColumnContents:  {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+          label: {},&#xD;
+          totalCount: local!outcome.totalCount,&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+  					  label:  &quot;Summary Analysis&quot;,&#xD;
+  					  field:  &quot;recommendationText&quot;,&#xD;
+  					  data: index(local!outcome.data, &quot;recommendationText&quot;, {})&#xD;
+  			    )&#xD;
+          },&#xD;
+          value: local!pagingInfo,&#xD;
+          saveInto: {&#xD;
+            a!save(local!pagingInfo, save!value)&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      isCollapsible:  true&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

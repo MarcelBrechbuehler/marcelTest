@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DEngineEnumType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DEngineIntensityType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DPromptSetType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DThresholdType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DTimeoutType.xsd"/>
+  <xsd:complexType name="EngineType">
+    <xsd:annotation>
+      <xsd:documentation>EngineType specifies the engine to use for a search, and any engine optionsThe various attributes are as follows:Flatten       : Whether or not to flatten the picklist returned by the searchIntensity     : How hard the search engine will search to get a matchPromptSet     : The prompt set to apply to the search stringThreshold     : The typedown threshold (typedown engine only)Timeout       : The time out period in milliseconds</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:simpleContent>
+      <xsd:extension base="tns:EngineEnumType">
+        <xsd:attribute name="Flatten" type="xsd:boolean"/>
+        <xsd:attribute name="Intensity" type="tns:EngineIntensityType"/>
+        <xsd:attribute name="PromptSet" type="tns:PromptSetType"/>
+        <xsd:attribute name="Threshold" type="tns:ThresholdType"/>
+        <xsd:attribute name="Timeout" type="tns:TimeoutType"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+</xsd:schema>

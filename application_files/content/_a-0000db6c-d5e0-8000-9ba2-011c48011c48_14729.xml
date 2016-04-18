@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_viewEvaluationAttributes</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14729</uuid>
+        <description>Views the selected attributes for the CaRE</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11464</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex:  1,&#xD;
+                                 batchSize:   5,&#xD;
+                                 sort:  #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+                                          field:  &quot;attributeTypeValue&quot;,&#xD;
+                                          ascending:  true&#xD;
+                                        )&#xD;
+                    ),&#xD;
+  local!attributeTypes: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14847&quot;),&#xD;
+  local!attribs:    if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!careEvaluationId),&#xD;
+                      {},&#xD;
+                      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12706&quot;(ri!careEvaluationId)&#xD;
+                    ),&#xD;
+  with(&#xD;
+    local!attributes:  fn!todatasubset(local!attribs, local!pagingInfo),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label:  &quot;Evaluation Attributes&quot;,&#xD;
+      firstColumnContents:  {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+          label: {},&#xD;
+          totalCount: local!attributes.totalCount,&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+  					  label:  &quot;Type&quot;,&#xD;
+  					  field:  &quot;attributeTypeName&quot;,&#xD;
+  					  data: apply(fn!displayvalue,&#xD;
+  					                index(local!attributes.data, &quot;attributeTypeName&quot;, {}),&#xD;
+  					                local!attributeTypes.commonCodeId,&#xD;
+  					                local!attributeTypes.description,&#xD;
+  					                {}&#xD;
+  					        )&#xD;
+  			    ),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+  					  label:  &quot;Details&quot;,&#xD;
+  					  field:  &quot;attributeTypeValue&quot;,&#xD;
+  					  data: index(local!attributes.data, &quot;attributeTypeValue&quot;, {})&#xD;
+  			    )&#xD;
+          },&#xD;
+          value: local!pagingInfo,&#xD;
+          saveInto: {&#xD;
+            a!save(local!pagingInfo, save!value)&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      isCollapsible:  true&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>careEvaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>careEvaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

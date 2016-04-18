@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicationGeneralDetails</name>
+        <uuid>37e5086a-f477-461e-a197-de792ae8019f</uuid>
+        <description>This interface rule used to display permit application general details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;General Information&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Application Number:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.applicationRef,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Application Type:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.applicationTypeRef.description,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Customer Project Name:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.dnrmProjectName,&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        &#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Lodgement Date:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value:  #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;(local!generalDetails.receivedDate),&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Status:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.statusRef.description,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Status Reason:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.statusReasonRef.description,&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      )&#xD;
+   </definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

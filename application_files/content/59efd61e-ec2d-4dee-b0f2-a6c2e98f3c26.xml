@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addCustomerTradingName</name>
+        <uuid>59efd61e-ec2d-4dee-b0f2-a6c2e98f3c26</uuid>
+        <description>This rule defines customer trading name with web service lookup details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+  local!abnDetails: fn!searchabr(&#xD;
+    ri!abnValue_txt,&#xD;
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5229&quot;&#xD;
+  ),&#xD;
+  {&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;Trading Name Details&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        if(&#xD;
+          ri!isEdit = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+          {},&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Type&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+              fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22901&quot;,&#xD;
+              fieldData: ri!customerType&#xD;
+            ),&#xD;
+            required: true,&#xD;
+            placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+            choiceLabels: {&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5209&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;&#xD;
+            },&#xD;
+            value: ri!customerType,&#xD;
+            saveInto: ri!customerType,&#xD;
+            readOnly: if(&#xD;
+              ri!customerType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;,&#xD;
+              if(&#xD;
+                isnull(&#xD;
+                  local!abnDetails.entityMainTradingName&#xD;
+                ),&#xD;
+                false(),&#xD;
+                true()&#xD;
+              ),&#xD;
+              false()&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;ABN&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          validations: {&#xD;
+            if(&#xD;
+              isnull(ri!abnValue_txt),&#xD;
+              null,&#xD;
+              #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_24281&quot;(&#xD;
+                #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5225&quot;,&#xD;
+                ri!abnValue_txt,&#xD;
+                0&#xD;
+              )&#xD;
+            ),&#xD;
+            if(&#xD;
+              isnull(ri!abnValue_txt),&#xD;
+              null,&#xD;
+              if(&#xD;
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22093&quot;(&#xD;
+                  ri!abnValue_txt&#xD;
+                ),&#xD;
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+                  fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22907&quot;,&#xD;
+                  fieldData: ri!abnValue_txt&#xD;
+                ),&#xD;
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26488&quot;&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          value: if(&#xD;
+            #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22093&quot;(&#xD;
+              ri!abnValue_txt&#xD;
+            ),&#xD;
+            #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13798&quot;(&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5225&quot;,&#xD;
+              ri!abnValue_txt&#xD;
+            ),&#xD;
+            ri!abnValue_txt&#xD;
+          ),&#xD;
+          saveInto: {&#xD;
+            a!save(&#xD;
+              ri!abnValue_txt,&#xD;
+              stripwith(&#xD;
+                save!value,&#xD;
+                &quot; &quot;&#xD;
+              )&#xD;
+            ),&#xD;
+            if(&#xD;
+              isnull(&#xD;
+                ri!abnData_cdt&#xD;
+              ),&#xD;
+              {},&#xD;
+              a!save(&#xD;
+                ri!abnData_cdt.externalId,&#xD;
+                stripwith(&#xD;
+                  save!value,&#xD;
+                  &quot; &quot;&#xD;
+                )&#xD;
+              )&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Name&quot;,&#xD;
+      labelPosition: &quot;ADJACENT&quot;,&#xD;
+      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(&#xD;
+        fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22908&quot;,&#xD;
+        fieldData: ri!partyName&#xD;
+      ),&#xD;
+      value: if(&#xD;
+        ri!customerType = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;,&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            local!abnDetails.entityMainTradingName&#xD;
+          ),&#xD;
+          ri!partyName,&#xD;
+          local!abnDetails.entityMainTradingName&#xD;
+        ),&#xD;
+        ri!partyName&#xD;
+      ),&#xD;
+      saveInto: ri!partyName,&#xD;
+      required: true&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;ABR Web Service Lookup Details &quot;,&#xD;
+      firstColumnContents: {&#xD;
+        /*a!textField(label: local!abnDetails),&#xD;
+     a!textField(label: ri!abnValue_txt),*/#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;ABN&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13798&quot;(&#xD;
+            #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5225&quot;,&#xD;
+            local!abnDetails.abn&#xD;
+          ),&#xD;
+          saveInto: {&#xD;
+            a!save(&#xD;
+              ri!abnValue,&#xD;
+              stripwith(&#xD;
+                save!value,&#xD;
+                &quot; &quot;&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;ACN&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13798&quot;(&#xD;
+            #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5224&quot;,&#xD;
+            local!abnDetails.ASICNumber&#xD;
+          ),&#xD;
+          saveInto: {&#xD;
+            a!save(&#xD;
+              ri!acn,&#xD;
+              stripwith(&#xD;
+                save!value,&#xD;
+                &quot; &quot;&#xD;
+              )&#xD;
+            )&#xD;
+          },&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Entity Name&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityMainName,&#xD;
+          saveInto: ri!entityName,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Trading Name&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityMainTradingName,&#xD;
+          saveInto: ri!entityMainTradingName,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Entity Type&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityTypeCode,&#xD;
+          saveInto: ri!entityTypeCode,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Entity Type Desc.&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityTypeDescription,&#xD;
+          saveInto: ri!entityTypeDescription,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;State&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.mainBusinessPhysicalAddressStateCode,&#xD;
+          saveInto: ri!state,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Post Code&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.mainBusinessPhysicalAddressPostcode,&#xD;
+          saveInto: ri!postCode,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;GST Effective From&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.gstEffectiveFrom,&#xD;
+          saveInto: ri!gstStatus,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Status&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityStatusCode,&#xD;
+          saveInto: ri!abnStatus,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Status Date&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.entityStatusEffectiveFrom,&#xD;
+          saveInto: ri!abnStatusDate,&#xD;
+          readOnly: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;Date Last Updated&quot;,&#xD;
+          labelPosition: &quot;ADJACENT&quot;,&#xD;
+          value: local!abnDetails.recordLastUpdated,&#xD;
+          saveInto: ri!lastUpdatedDate,&#xD;
+          readOnly: true&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    if(&#xD;
+      ri!isEdit = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,&#xD;
+      {},&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+            primaryButtons: {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                style: &quot;PRIMARY&quot;,&#xD;
+                validate: true,&#xD;
+                value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+                saveInto: {&#xD;
+                  ri!buttonValue,&#xD;
+                  a!save(&#xD;
+                    ri!partyName,&#xD;
+                    if(&#xD;
+                      isnull(&#xD;
+                        local!abnDetails.entityMainTradingName&#xD;
+                      ),&#xD;
+                      ri!partyName,&#xD;
+                      local!abnDetails.entityMainTradingName&#xD;
+                    )&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            },&#xD;
+            secondaryButtons: {&#xD;
+              /*a!buttonWidgetSubmit(&#xD;
+                label:&quot;Go Back&quot;,&#xD;
+                style: &quot;NORMAL&quot;,&#xD;
+                value: cons!COM_BUTTON_LABEL_BACK,&#xD;
+                saveInto: ri!buttonValue,&#xD;
+                skipValidation: true&#xD;
+              ),*/#&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                style: &quot;DESTRUCTIVE&quot;,&#xD;
+                skipValidation: true,&#xD;
+                confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+                value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+                saveInto: ri!buttonValue&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>acn</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityMainTradingName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityTypeCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityTypeDescription</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>state</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gstStatus</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnStatus</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnStatusDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lastUpdatedDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEdit</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnData_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>partyName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>customerType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>acn</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityMainTradingName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityTypeCode</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityTypeDescription</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>state</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>postCode</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>gstStatus</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnStatus</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>abnStatusDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>lastUpdatedDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isEdit</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>abnData_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

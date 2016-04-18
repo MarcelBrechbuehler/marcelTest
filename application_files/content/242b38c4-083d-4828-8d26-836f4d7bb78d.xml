@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_classificationDetails</name>
+        <uuid>242b38c4-083d-4828-8d26-836f4d7bb78d</uuid>
+        <description>This Rule generates classification details used in Document Record Dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!commonDocumentClassificationFK_cdt: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14543&quot;(ri!commonDocumentClassificationId_int),&#xD;
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    label: &quot;Classification&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Subject&quot;,&#xD;
+        value:  local!commonDocumentClassificationFK_cdt.documentSubject.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Public Register&quot;,&#xD;
+        value:  if(local!commonDocumentVersionDocumentDetails.publicRegisterFlag=#&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11173&quot;,#&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11171&quot;,#&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11172&quot;),&#xD;
+        readOnly: true&#xD;
+      )&#xD;
+    },&#xD;
+    secondColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Document Type&quot;,&#xD;
+        value: local!commonDocumentClassificationFK_cdt.documentType.description,&#xD;
+        readOnly: true&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+        label: &quot;Document SubType&quot;,&#xD;
+        value: local!commonDocumentClassificationFK_cdt.documentSubtype.description,&#xD;
+        readOnly: true&#xD;
+      )&#xD;
+    },&#xD;
+    isCollapsible: true&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>commonDocumentClassificationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

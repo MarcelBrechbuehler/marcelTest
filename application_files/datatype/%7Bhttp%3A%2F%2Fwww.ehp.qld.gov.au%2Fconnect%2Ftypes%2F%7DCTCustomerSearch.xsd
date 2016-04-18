@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCommonCode.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyAddress.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyEmail.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyExternalId.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyPerson.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyPhone.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTPartyType.xsd"/>
+  <xsd:complexType name="CTCustomerSearch">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( 	name="customer_search")
+	</xsd:appinfo>
+      <xsd:documentation><![CDATA[This data type is used to store customer details]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="customerId" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Id
+				  @GeneratedValue
+				  @Column( name="party_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerRef" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="customerRef")			
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerType" nillable="true" type="tns:CTPartyType">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_type_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="customer_name")			
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="prefCorrespondenceType" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				  @Column( name="prefCorrespondenceType")			
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="status" nillable="true" type="tns:CTCommonCode">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="common_code_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerPerson" nillable="true" type="tns:CTPartyPerson">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_person_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerExternalId" nillable="true" type="tns:CTPartyExternalId">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_externalid_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerPhone" nillable="true" type="tns:CTPartyPhone">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_phone_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerEmail" nillable="true" type="tns:CTPartyEmail">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_email_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="customerAddress" nillable="true" type="tns:CTPartyAddress">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@OneToOne(cascade=ALL, optional=true)
+				@JoinColumn(name="party_address_id", nullable=false, unique=true) 
+			</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

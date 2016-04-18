@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+  targetNamespace="{http://appiancorp.com/webservices/pm}StartProcessIFBinding"
+  xmlns:tns="{http://appiancorp.com/webservices/pm}StartProcessIFBinding" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="start">
+    <xsd:complexType>
+      <xsd:annotation>
+        <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+          <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+            <ns2:Flags>HIDDEN</ns2:Flags>
+          </ns2:Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+        <xsd:element name="username" nillable="true" type="xsd:string"/>
+        <xsd:element name="password" nillable="true" type="xsd:string"/>
+        <xsd:element name="CallBackID" nillable="true" type="xsd:string"/>
+        <xsd:element name="Operation" nillable="true" type="xsd:string"/>
+        <xsd:element name="Payload" nillable="true" type="xsd:string"/>
+        <xsd:element name="SourceSystem" nillable="true" type="xsd:string"/>
+        <xsd:element name="UserId" nillable="true" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

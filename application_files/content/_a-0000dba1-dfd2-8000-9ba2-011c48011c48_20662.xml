@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_questionFollowUpActions</name>
+        <uuid>_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20662</uuid>
+        <description>Component section to select CaRE Question Follow Up Actions using checkboxes</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  isCollapsible: true,
+  label: &quot;Follow Up Actions&quot;,
+  firstColumnContents: {
+
+    #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+      labelPosition: &quot;COLLAPSED&quot;,
+      choiceLabels: {
+        &quot;Follow up with Customer&quot;,
+        &quot;Further Research Required&quot;,
+        &quot;Potential Compliance Issue&quot;,
+        &quot;Refer to Assessment Centre&quot;
+      },
+      choiceValues: {
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20592&quot;,
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20594&quot;,
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20596&quot;,
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20598&quot;
+      },
+      value: ri!followUpActions,
+      saveInto: ri!followUpActions
+    )
+
+  }
+)
+</definition>
+        <namedTypedValue>
+            <name>followUpActions</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>followUpActions</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

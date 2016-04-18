@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_internalUserRoleDetails</name>
+        <uuid>0d9daa49-9974-431d-b9e8-1de5a53b3259</uuid>
+        <description>This interface is used to display internal user role map details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11467</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!businessRoleDetails: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23975&quot;(
+    1
+  ),
+  with(
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+      label: &quot;Assign Business Role(s)&quot;,
+      firstColumnContents: {
+        #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(
+          ri!processMilestoneName,
+          ri!processMilestoneIndex
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+          headerCells: {
+            /*a!gridLayoutHeaderCell(
+              label: &quot;ID&quot;,
+              align: &quot;CENTER&quot;
+            ),*/
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+              label: &quot;Business Role&quot;,
+              align: &quot;CENTER&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+              label: &quot;Description&quot;,
+              align: &quot;CENTER&quot;
+            ),
+            /*a!gridLayoutHeaderCell(
+            label: &quot;Assigned By&quot;,
+            align: &quot;CENTER&quot;
+          ),*/
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+              label: &quot;Assigned Date&quot;,
+              align: &quot;CENTER&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+              label: &quot;Expiry Date&quot;,
+              align: &quot;CENTER&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+              label: &quot;&quot;,
+              align: &quot;CENTER&quot;
+            )
+          },
+          columnConfigs: {
+           /* a!gridLayoutColumnConfig(
+              width: &quot;NARROW&quot;
+            ),*/
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+              width: &quot;DISTRIBUTE&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+              width: &quot;DISTRIBUTE&quot;
+            ),
+            /*a!gridLayoutColumnConfig(
+            width: &quot;DISTRIBUTE&quot;
+          ),*/
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+              width: &quot;DISTRIBUTE&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+              width: &quot;DISTRIBUTE&quot;
+            ),
+            #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+              width: &quot;NARROW&quot;
+            )
+          },
+          rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+            function: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23737&quot;(
+              items: ri!items,
+              index: _,
+              itemsToken: ri!itemsToken,
+              deletedItemIds: ri!deletedItemIds
+            ),
+            array: if(
+              or(
+                isnull(
+                  ri!items
+                ),
+                count(
+                  ri!items
+                ) &lt; 1
+              ),
+              {},
+              1 + enumerate(
+                count(
+                  ri!items
+                )
+              )
+            ),
+            arrayVariable: ri!itemsToken
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_linkField&quot;(
+          label: &quot;Add Business Role&quot;,
+          labelPosition: &quot;COLLAPSED&quot;,
+          links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+            label: &quot;+Add Business Role&quot;,
+            value: {
+              ri!items.partyId: null
+              
+            },
+            saveInto: {
+              a!save(
+                ri!deletedItemIds,
+                append(
+                  ri!deletedItemIds,
+                  save!value
+                )
+              ),
+              a!save(
+                ri!items,
+                append(
+                  ri!items,
+                  save!value
+                )
+              ),
+              a!save(
+                ri!itemsToken,
+                append(
+                  ri!itemsToken,
+                  save!value
+                )
+              )
+               
+            }
+          )
+        )
+      },
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+          style: &quot;PRIMARY&quot;,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+          saveInto: ri!buttonValue_txt
+        ),
+        secondaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+            style: &quot;DESTRUCTIVE&quot;,
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+            saveInto: ri!buttonValue_txt,
+            skipValidation: true()
+          )
+        }
+      ),
+      validations: {
+        if(
+          or(
+            isnull(
+              ri!items
+            ),
+            count(
+              ri!items
+            ) &lt; 1
+          ),
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(
+            message: &quot;Please assign a role to the user.&quot;,
+            validateAfter: &quot;SUBMIT&quot;
+          ),
+          {}
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>CTUserRole_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userRoleMap_cdt</name>
+            <type>
+                <name>CTUserRoleMap?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemId_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedItemIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>userRoleMap_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedItemId_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_searchLocation</name>
+        <uuid>4ac6506a-027b-4c06-9a7d-42fe7e5befb2</uuid>
+        <description>This interface rule is used to search for location</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  /*================ LOAD ================*/&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+    startIndex: 1,&#xD;
+    batchSize: 10&#xD;
+  ),&#xD;
+  local!gridSelection: #&quot;SYSTEM_SYSRULES_gridSelection&quot;(&#xD;
+    pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: 10,&#xD;
+      sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+        field: &quot;locationRef&quot;,&#xD;
+        ascending: false&#xD;
+      )&#xD;
+    )&#xD;
+  ),&#xD;
+  local!searchString_txt,&#xD;
+  local!suburb_txt,&#xD;
+  local!otherNames_txt,&#xD;
+  with(&#xD;
+  /*================ WITH ================*/&#xD;
+    local!locationDetails:&#xD;
+    if(&#xD;
+      and(&#xD;
+        isnull(ri!locationRef_txt),&#xD;
+        not(isNull(local!searchString_txt))&#xD;
+      ),&#xD;
+      if(and(ri!buttonValue_txt=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,len(local!searchString_txt) &gt;= 3),&#xD;
+        if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14386&quot;,&#xD;
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14333&quot;(local!searchString_txt,local!pagingInfo,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13901&quot;).data,&#xD;
+          if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14387&quot;,&#xD;
+            #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14333&quot;(local!searchString_txt,local!pagingInfo,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14336&quot;).data,&#xD;
+            if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+              #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14333&quot;(local!searchString_txt,local!pagingInfo,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14470&quot;).data,&#xD;
+              if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14385&quot;,&#xD;
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14333&quot;(local!searchString_txt,local!pagingInfo,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14495&quot;).data,&#xD;
+                {}&#xD;
+              )&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        {}&#xD;
+      ),&#xD;
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9114&quot;(ri!locationRef_txt)&#xD;
+    ),&#xD;
+    local!locationDetailsDataSubset: todatasubset(&#xD;
+      local!locationDetails,&#xD;
+      local!gridSelection.pagingInfo&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  /*================ FORMLAYOUT ================*/&#xD;
+      label: &quot;Location Search&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Search Criteria&quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(&#xD;
+              labelPosition: &quot;COLLAPSED&quot;,&#xD;
+              value: {&#xD;
+                #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                  text: {&#xD;
+                    &quot;Either enter a &quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                      text: &quot;Location Ref&quot;,&#xD;
+                      style: &quot;EMPHASIS&quot;&#xD;
+                    ),&#xD;
+                    &quot; or Select a  &quot;,&#xD;
+                    #&quot;SYSTEM_SYSRULES_richTextItem&quot;(&#xD;
+                      text: &quot;Location Type&quot;,&#xD;
+                      style: &quot;EMPHASIS&quot;&#xD;
+                    )&#xD;
+                  },&#xD;
+                  style: &quot;STRONG&quot;&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              label: &quot;Location Ref&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              value: ri!locationRef_txt,&#xD;
+              saveInto: {&#xD;
+                ri!locationRef_txt,&#xD;
+                a!save(ri!locationType_int,null),&#xD;
+                a!save(local!gridSelection.selected,null)&#xD;
+              },&#xD;
+              validations:#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22957&quot;,ri!locationRef_txt)&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              readOnly: true&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot; &quot;,&#xD;
+          firstColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+              label: &quot;Location Type&quot;,&#xD;
+              labelPosition: &quot;ADJACENT&quot;,&#xD;
+              placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,&#xD;
+              choiceLabels:#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8833&quot;&#xD;
+                  ).description,&#xD;
+              choiceValues:#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+                    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8833&quot;&#xD;
+                  ).commonCodeId,&#xD;
+              value: ri!locationType_int,&#xD;
+              saveInto: {&#xD;
+                ri!locationType_int,&#xD;
+                a!save(ri!locationRef_txt,null),&#xD;
+                a!save(local!gridSelection.selected,null)&#xD;
+              }&#xD;
+            ),&#xD;
+            if(or(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14386&quot;,&#xD;
+              ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14387&quot;,&#xD;
+              ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+              ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14385&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                label: &quot;Search String&quot;,&#xD;
+                labelPosition: &quot;ADJACENT&quot;,&#xD;
+                value: local!searchString_txt,&#xD;
+                saveInto: local!searchString_txt,&#xD;
+                required: true,&#xD;
+                validations: if(&#xD;
+                  len(local!searchString_txt) &gt;= 3,&#xD;
+                  null,&#xD;
+                  #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5417&quot;&#xD;
+                )&#xD;
+              ),&#xD;
+              {}&#xD;
+            )&#xD;
+          },&#xD;
+          secondColumnContents: {&#xD;
+            #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+              readOnly: true&#xD;
+            ),&#xD;
+            #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+              secondaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(&#xD;
+                  label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,&#xD;
+                  value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5411&quot;,&#xD;
+                  saveInto: {&#xD;
+                    ri!buttonValue_txt&#xD;
+                  }&#xD;
+                )&#xD;
+              }&#xD;
+            )&#xD;
+          },&#xD;
+          isCollapsible: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+          label: &quot;Search Result&quot;,&#xD;
+          firstColumnContents: {&#xD;
+/*&#xD;
+            a!paragraphField(&#xD;
+              label: &quot;Test&quot;,&#xD;
+              value: local!locationDetails &amp; local!locationDetailsDataSubset&#xD;
+            ),&#xD;
+            a!paragraphField(&#xD;
+              label: &quot;local!gridSelection&quot;,&#xD;
+              value: local!gridSelection&#xD;
+            ),&#xD;
+*/&#xD;
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+              label: &quot;Select Location&quot;,&#xD;
+              totalCount: local!locationDetailsDataSubset.totalcount,&#xD;
+              columns: {&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Location Ref&quot;,&#xD;
+                  field: &quot;locationRef&quot;,&#xD;
+                  data: index(&#xD;
+                    local!locationDetailsDataSubset.data,&quot;locationRef&quot;,{}&#xD;
+                  ),&#xD;
+                  links: if(local!locationDetailsDataSubset.totalCount=0, &#xD;
+                    {},&#xD;
+                    apply(#&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                      recordType: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10177&quot;,&#xD;
+                      identifier: _&#xD;
+                      ),&#xD;
+                    index(local!locationDetailsDataSubset.data,&quot;locationId&quot;,null)&#xD;
+                    )&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Location Type&quot;,&#xD;
+                  field: &quot;locationType&quot;,&#xD;
+                  data: apply(#&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11165&quot;,&#xD;
+                    index(local!locationDetailsDataSubset.data,&quot;locationType&quot;,{})&#xD;
+                  )&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Location Name&quot;,&#xD;
+                  field: &quot;locationName&quot;,&#xD;
+                  data: index(local!locationDetailsDataSubset.data,&quot;locationName&quot;,null)&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Description&quot;,&#xD;
+                  field: &quot;description&quot;,&#xD;
+                  data: index(local!locationDetailsDataSubset.data,&quot;description&quot;,null)&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: &quot;Other Names&quot;,&#xD;
+                  field: &quot;otherNames&quot;,&#xD;
+                  data: index(local!locationDetailsDataSubset.data,&quot;otherNames&quot;,null)&#xD;
+                ),&#xD;
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+                  label: if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14386&quot;,&#xD;
+                    &quot;Street Address&quot;,&#xD;
+                    if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14387&quot;,&#xD;
+                      &quot;Lot on Plan&quot;,&#xD;
+                      if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+                        &quot;Permit Tenure&quot;,&#xD;
+                        if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14385&quot;,&#xD;
+                          &quot;Lot on Plan&quot;,&#xD;
+                          {}&#xD;
+                        )&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  field: if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14386&quot;,&#xD;
+                    &quot;addressLines&quot;,&#xD;
+                    if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14387&quot;,&#xD;
+                      &quot;lotPlans&quot;,&#xD;
+                      if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+                        &quot;permitTenure&quot;,&#xD;
+                        if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14385&quot;,&#xD;
+                          &quot;lotPlans&quot;,&#xD;
+                          {}&#xD;
+                        )&#xD;
+                      )&#xD;
+                    )&#xD;
+                  ),&#xD;
+                  data: if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14386&quot;,&#xD;
+                    index(local!locationDetailsDataSubset.data,&quot;addressLines&quot;,null),&#xD;
+                    if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14387&quot;,&#xD;
+                      index(local!locationDetailsDataSubset.data,&quot;lotPlans&quot;,null),&#xD;
+                      if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14388&quot;,&#xD;
+                        index(local!locationDetailsDataSubset.data,&quot;permitTenure&quot;,null),&#xD;
+                        if(ri!locationType_int=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14385&quot;,&#xD;
+                          index(local!locationDetailsDataSubset.data,&quot;lotPlans&quot;,null),&#xD;
+                          {}&#xD;
+                        )&#xD;
+                      )&#xD;
+                    )&#xD;
+                  )&#xD;
+                )&#xD;
+              },&#xD;
+              identifiers: index(local!locationDetailsDataSubset.data,&quot;locationId&quot;,null),&#xD;
+              value: local!gridSelection,&#xD;
+              saveInto: {&#xD;
+                local!gridSelection,&#xD;
+                if(&#xD;
+                  count(&#xD;
+                    local!gridSelection.selected&#xD;
+                  ) &gt; 1,&#xD;
+                  {},&#xD;
+                  {&#xD;
+                    a!save(&#xD;
+                      ri!selectedLocationId_int,&#xD;
+                      index(&#xD;
+                        save!value,&#xD;
+                        &quot;selected&quot;,&#xD;
+                        null&#xD;
+                      )&#xD;
+                    )&#xD;
+                  }&#xD;
+                )&#xD;
+              },&#xD;
+              selection: true,&#xD;
+              validations: if(count(local!gridSelection.selected) &gt; 1,&#xD;
+                &quot;You may only select one location&quot;,&#xD;
+                null&#xD;
+               )&#xD;
+            )&#xD;
+          },&#xD;
+          validations: if(&#xD;
+            or(isnull(local!gridSelection.selected),count(local!gridSelection.selected) &lt; 1)&#xD;
+            ,&#xD;
+            #&quot;SYSTEM_SYSRULES_validationMessage&quot;(&#xD;
+              message: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5414&quot;,&#xD;
+              validateAfter: &quot;SUBMIT&quot;&#xD;
+            ),&#xD;
+            {}&#xD;
+          ),&#xD;
+          isCollapsible: true&#xD;
+        )&#xD;
+      },&#xD;
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+            saveInto: {&#xD;
+              ri!buttonValue_txt&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: {&#xD;
+              ri!buttonValue_txt&#xD;
+            },&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tenureType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tenureRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>otherNames_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>bimName_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lga_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedLocationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>locationType_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>locationRef_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>tenureType_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>tenureRef_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>otherNames_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>bimName_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>lga_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>selectedLocationId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

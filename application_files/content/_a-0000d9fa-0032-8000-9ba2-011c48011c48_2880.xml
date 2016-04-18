@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_constructSuitabilityQuestions</name>
+        <uuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2880</uuid>
+        <description>constructs the question / answer structure for suitable operator &quot;SOR_suitabilityQuestions&quot; screen</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2386</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  firstColumnContents: {
+    {
+      if(
+        ri!questionDisplayOrder[ri!index] = 1,
+        {
+          #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            value: {
+              #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                text: ri!groupText[ri!index],
+                style: &quot;HEADER_SMALL&quot;
+              )
+            }
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Description&quot;,
+            labelPosition: &quot;COLLAPSED&quot;,
+            readonly: true,
+            value: ri!questionText[ri!index]
+          )
+        },
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Description&quot;,
+          labelPosition: &quot;COLLAPSED&quot;,
+          readonly: true,
+          value: ri!questionText[ri!index]
+        )
+      ),
+      #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+        label: ri!index,
+        labelPosition: &quot;COLLAPSED&quot;,
+        required: true,
+        requiredMessage: &quot;You need to answer all the questions.&quot;,
+        choiceLabels: {
+          &quot;No&quot;,
+          &quot;Yes&quot;
+        },
+        choiceValues: {
+          0,
+          1
+        },
+        saveInto: ri!answers_int[ri!index],
+        value: if(
+          count(
+            ri!answers_int
+          ) &gt;= ri!index,
+          ri!answers_int[ri!index],
+          null
+        ),
+        validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+      )
+    }
+  },
+  isCollapsible: true
+)</definition>
+        <namedTypedValue>
+            <name>questionText</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>groupText</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>groupId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionDisplayOrder</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

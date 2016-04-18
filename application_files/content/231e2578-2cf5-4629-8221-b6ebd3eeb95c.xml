@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>EA_ecotrackPermitGeneration</name>
+        <uuid>231e2578-2cf5-4629-8221-b6ebd3eeb95c</uuid>
+        <description></description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11466</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!decisionReason:#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13904&quot;),
+  
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;Standard EA Application - Manual Assessment&quot;,
+  instructions: &quot;&quot;,
+  firstColumnContents: {
+    /*rule!COM_taskDetailsSection(),*/
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label: &quot;Application Details - &quot;&amp;ri!permitApplicationRef_txt,
+      firstColumnContents: {
+        #&quot;SYSTEM_SYSRULES_linkField&quot;(
+          label: &quot;&quot;,
+          labelPosition: &quot;COLLAPSED&quot;,
+          links: {
+            #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+              label: &quot;Permit Application Dashboard&quot;,
+              recordtype: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13906&quot;,
+              identifier: ri!permitApplicationId_int
+            )
+          },
+          align: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+          label: &quot;Decision&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          choiceLabels: {&quot;Approve&quot;, &quot;Refuse&quot;},
+          choiceValues: {#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;, #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13178&quot;},
+          value: ri!permitApplicationDecision_int,
+          saveInto: {ri!permitApplicationDecision_int, 
+                    a!save(ri!permitApplicationDecisionReason_int,if(save!value=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,{},ri!permitApplicationDecisionReason_int)),
+                    a!save(ri!permitNumber_txt,if(save!value=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,ri!permitNumber_txt,{})),
+                    a!save(ri!permitGrantDate_dte,if(save!value=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,ri!permitGrantDate_dte,{})),
+                    a!save(ri!decision_documentName_txt,if(save!value=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,
+  					            #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14543&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17944&quot;).documentSubtype.description,
+  			             		#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14543&quot;(#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17945&quot;).documentSubtype.description
+					          )),
+                    a!save(ri!decisionClassification_int,if(save!value=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17944&quot;,#&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17945&quot;))
+                    },
+          required: true,
+          validations: {}
+        ),
+/*
+        if(ri!permitApplicationDecision_int=cons!COM_COMMON_CODE_ID_STATUS_PERMIT_APPLICATION_REFUSED,
+        {},
+        {
+*/
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Permit Number&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!permitNumber_txt,
+          saveInto: {ri!permitNumber_txt},
+          refreshAfter: &quot;UNFOCUS&quot;,
+          required: if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13178&quot;,false,true),
+          disabled:if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,false,true),
+          validations: {},
+          align: &quot;LEFT&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_dateField&quot;(
+          label: &quot;Grant Date&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!permitGrantDate_dte,
+          saveInto: {ri!permitGrantDate_dte},
+          required: if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13178&quot;,false,true),
+          disabled:if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,false,true),
+          validations: {if(ri!permitGrantDate_dte&gt;#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;(),#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13984&quot;,{})},
+          align: &quot;LEFT&quot;
+        )
+/*
+        }
+        )
+*/
+      },
+      secondColumnContents: {
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+          label: &quot;Decision Reason&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          choiceLabels: local!decisionReason.description,
+          placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+          choiceValues: local!decisionReason.commonCodeId,
+          value:ri!permitApplicationDecisionReason_int,
+          saveInto: {ri!permitApplicationDecisionReason_int},
+          required: if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,false,true),
+          disabled: if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,true,false),
+          validations: {}
+        ),
+        #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+          label: &quot;Notes&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value:ri!permitApplicationDecisionNotes_txt,
+          saveInto: {ri!permitApplicationDecisionNotes_txt},
+          validations: {}
+        )
+      }
+    ),
+    if(ri!permitApplicationDecision_int=#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13179&quot;,
+      #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+        function: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15159&quot;(
+                    label_txt:  ri!documentName_txt,
+                    documentArray_doc: ri!files_doc,
+                    target_doc: ri!target_doc,
+                    index_int: _,
+                    documentName_txt: ri!documentName_txt
+                    ),
+        array: 1+enumerate(count(ri!files_doc))
+      ),
+      {}
+    ),
+    if(isnull(ri!permitApplicationDecision_int),
+      {},
+      #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+        function: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15159&quot;(
+                    label_txt:  ri!decision_documentName_txt,
+                    documentArray_doc: ri!decision_files_doc,
+                    target_doc: ri!decision_target_doc,
+                    index_int: _,
+                    documentName_txt: ri!decision_documentName_txt
+                    ),
+        array: 1+enumerate(count(ri!decision_files_doc))
+      )
+    )
+  },
+  secondColumnContents: {},
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+        style: &quot;PRIMARY&quot;,
+        value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+        saveInto: {ri!buttonValue_txt}
+      )
+    }
+/*
+    },
+    secondaryButtons: {
+      a!buttonWidgetSubmit(
+        label: cons!COM_BUTTON_LABEL_CANCEL,
+        style: &quot;NORMAL&quot;,
+        value: cons!COM_BUTTON_LABEL_CANCEL,
+        saveInto: ri!buttonValue_txt,
+        skipValidation: true
+      )
+    }
+*/
+  ),
+  validations: {}
+)
+)</definition>
+        <namedTypedValue>
+            <name>permitApplicationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitApplicationDecision_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitApplicationDecisionReason_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitApplicationDecisionNotes_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitNumber_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitGrantDate_dte</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>permitApplicationRef_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decision_files_doc</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decision_target_doc</name>
+            <type>
+                <name>CollaborationDocumentOrFolder</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decision_documentName_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>files_doc</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>target_doc</name>
+            <type>
+                <name>CollaborationDocumentOrFolder</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentName_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>decisionClassification_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

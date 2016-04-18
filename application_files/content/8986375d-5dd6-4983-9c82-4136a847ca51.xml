@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_addGpsPoint</name>
+        <uuid>8986375d-5dd6-4983-9c82-4136a847ca51</uuid>
+        <description>Interface to display add GPS point</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Edit Location&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Add GPS Point&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;COLLAPSED&quot;,&#xD;
+            value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9025&quot;,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;COLLAPSED&quot;,&#xD;
+            value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9026&quot;,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;COLLAPSED&quot;,&#xD;
+            value: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9027&quot;,&#xD;
+            readOnly: true&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Status&quot;,&#xD;
+           &#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+           	choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+					  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12067&quot;&#xD;
+					).description,&#xD;
+				/*	placeholderLabel: cons!COM_DROPDOWN_DEFAULT,*/&#xD;
+					choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+					  #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12067&quot;&#xD;
+					).commonCodeId,&#xD;
+            value: if(isnull(ri!status),#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_21963&quot;,ri!status),&#xD;
+            saveInto: ri!status,&#xD;
+            required: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Latitude&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!latitude,&#xD;
+            saveInto: ri!latitude,&#xD;
+            required: true,&#xD;
+            validations: if(&#xD;
+              len(&#xD;
+                fixed(&#xD;
+                  ri!latitude,&#xD;
+                  6,&#xD;
+                  1&#xD;
+                )&#xD;
+              ) = 10,&#xD;
+              {},&#xD;
+             #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10215&quot;&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            readOnly: true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Longitude&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!longitude,&#xD;
+            saveInto: ri!longitude,&#xD;
+            required: true,&#xD;
+            validations: if(&#xD;
+              len(&#xD;
+                fixed(&#xD;
+                  ri!longitude,&#xD;
+                  6,&#xD;
+                  1&#xD;
+                )&#xD;
+              ) = 10,&#xD;
+              {},&#xD;
+              #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10217&quot;&#xD;
+            )&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Description&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+			validations:#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22942&quot;,ri!description),&#xD;
+            value: ri!description,&#xD;
+            saveInto: ri!description,&#xD;
+            required: true&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          skipValidation: true&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>status</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>latitude</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>longitude</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>description</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

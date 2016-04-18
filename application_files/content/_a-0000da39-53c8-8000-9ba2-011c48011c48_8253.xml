@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_integrationRegisterCheckBusinessNumber</name>
+        <uuid>_a-0000da39-53c8-8000-9ba2-011c48011c48_8253</uuid>
+        <description>This purpose of this rule is to validate the payload &quot;business type&quot; data 
+Business Rule: 
+a) Business Number Value must be provided if Type is &quot;Organisation&quot;
+IN: partyType e.g &quot;GOV&quot;,  businessNumberValue e.g &quot;325533&quot;, field type e.g &quot;businessNumber&quot;
+OUT: blank if valid or the error code if invalid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+     local!orgTypes : #&quot;a005ee06-a304-4227-a794-41864472fec1&quot;(&quot;Organisation&quot;,1).partyTypeRef,
+  
+     if(wherecontains(ri!classType_text,local!orgTypes) &gt; 0,
+      /*business number must be provided*/
+       if(isnull(ri!businessNumberValue_text),
+       /*generate an error message*/       
+
+#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+     #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+     824,
+     838,
+     &quot;12&quot;,
+     819
+     ),
+     ri!field_text,
+     ri!businessNumberValue_text)
+       , {})
+      ,{})
+)</definition>
+        <namedTypedValue>
+            <name>classType_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessNumberValue_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

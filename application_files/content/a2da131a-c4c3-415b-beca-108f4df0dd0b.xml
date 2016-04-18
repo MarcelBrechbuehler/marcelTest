@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addCustomerAddress</name>
+        <uuid>a2da131a-c4c3-415b-beca-108f4df0dd0b</uuid>
+        <description>This rule is used to display add customer address details.</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+local!selectedSuburbDetails,&#xD;
+local!selectedPostSuburbDetails,&#xD;
+with(  &#xD;
+  local!getRegisteredSuburbDetails:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(ri!postalCode),&#xD;
+  local!getPostalSuburbDetails:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14065&quot;(ri!postPostalCode),&#xD;
+  /*local!selectedSuburbDetails: if(isnull(ri!suburbValue),&quot;&quot;,rule!COM_getCommonSuburbDetailsByCommonSuburbId(ri!suburbValue)), local!selectedPostSuburbDetails:if(isnull(ri!postSuburbValue),&quot;&quot;,rule!COM_getCommonSuburbDetailsByCommonSuburbId(ri!postSuburbValue)),*/&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  &#xD;
+    label:&quot;Enter Customer Address Details&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      if(not(isnull(ri!processMilestoneName)),&#xD;
+                   if(&#xD;
+          ri!isTradingEntity= #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,&#xD;
+           #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot; (&#xD;
+            ri!processMilestoneIndex&#xD;
+    ),&#xD;
+          #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(&#xD;
+           ri!processMilestoneName,&#xD;
+           ri!processMilestoneIndex&#xD;
+    )),{}),&#xD;
+&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Registered / Residential Address&quot;,&#xD;
+        firstColumnContents: {&#xD;
+         &#xD;
+          #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2811&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot; &#xD;
+            },&#xD;
+            value: if(ri!isOverseas=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,ri!isOverseas,null),&#xD;
+            saveInto: ri!isOverseas&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      if(&#xD;
+        ri!isOverseas = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,&#xD;
+        {&#xD;
+          #&quot;62a26640-1209-4fc2-9497-bb990735bc69&quot;(&#xD;
+            ri!addressValue1,&#xD;
+            ri!addressValue2,&#xD;
+            ri!addressValue3,&#xD;
+            ri!country&#xD;
+          )&#xD;
+        },&#xD;
+        {&#xD;
+          #&quot;d88348dd-b57b-4702-ac68-d4dea2f469c3&quot;(&#xD;
+            propertyValue:ri!propertyValue,&#xD;
+            streetNoValue1:ri!streetNoValue1,&#xD;
+            streetNoValue2:ri!streetNoValue2,&#xD;
+            streetNameValue:ri!streetNameValue,&#xD;
+            streetValue:ri!streetValue,&#xD;
+            postalCode:ri!postalCode,&#xD;
+            suburbValue:ri!suburbValue,&#xD;
+            stateValue:ri!stateValue&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Postal Address&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2825&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+               #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5391&quot;&#xD;
+            },&#xD;
+            value: if(ri!isSameAsAbove=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5391&quot;,ri!isSameAsAbove,null),&#xD;
+            saveInto: ri!isSameAsAbove&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_checkboxField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2811&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;&#xD;
+            },&#xD;
+            value: if(if(&#xD;
+              and(&#xD;
+                ri!isSameAsAbove = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5391&quot;,&#xD;
+                ri!isOverseas = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;&#xD;
+              ),#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,ri!isPostOverseas)=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,null),      &#xD;
+&#xD;
+            saveInto: ri!isPostOverseas,&#xD;
+            disabled: if(&#xD;
+              and(&#xD;
+                ri!isSameAsAbove = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5391&quot;,&#xD;
+                ri!isOverseas = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;&#xD;
+              ),&#xD;
+              true,&#xD;
+              false&#xD;
+            )&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      if(&#xD;
+        ri!isSameAsAbove = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5391&quot;,&#xD;
+        {&#xD;
+          if(&#xD;
+            ri!isOverseas = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,&#xD;
+            {&#xD;
+              #&quot;62a26640-1209-4fc2-9497-bb990735bc69&quot;(&#xD;
+                ri!addressValue1,&#xD;
+                ri!addressValue2,&#xD;
+                ri!addressValue3,&#xD;
+                ri!country&#xD;
+              )&#xD;
+            },&#xD;
+            #&quot;d88348dd-b57b-4702-ac68-d4dea2f469c3&quot;(&#xD;
+              ri!propertyValue,&#xD;
+              ri!streetNoValue1,&#xD;
+              ri!streetNoValue2,&#xD;
+              ri!streetNameValue,&#xD;
+              ri!streetValue,&#xD;
+              ri!postalCode,&#xD;
+              ri!suburbValue,&#xD;
+              ri!stateValue&#xD;
+            )&#xD;
+          )&#xD;
+        },&#xD;
+        {&#xD;
+          if(&#xD;
+            ri!isPostOverseas = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5390&quot;,&#xD;
+            {&#xD;
+              #&quot;62a26640-1209-4fc2-9497-bb990735bc69&quot;(&#xD;
+                ri!postAddressValue1,&#xD;
+                ri!postAddressValue2,&#xD;
+                ri!postAddressValue3,&#xD;
+                ri!postCountry&#xD;
+              )&#xD;
+            },&#xD;
+            {&#xD;
+              #&quot;472388c5-9763-4eae-b560-78434fb4ac26&quot;(&#xD;
+                ri!postBoxValue,&#xD;
+                ri!postPropertyValue,&#xD;
+                ri!postStreetNoValue1,&#xD;
+                ri!postStreetNoValue2,&#xD;
+                ri!postStreetNameValue,&#xD;
+                ri!postStreetValue,&#xD;
+                ri!postPostalCode,&#xD;
+                ri!postSuburbValue,&#xD;
+                ri!postStateValue,&#xD;
+                ri!propertyValue,&#xD;
+                ri!streetNoValue1,&#xD;
+                ri!streetNoValue2,&#xD;
+                ri!streetNameValue,&#xD;
+                ri!streetValue,&#xD;
+                ri!postalCode,&#xD;
+                ri!suburbValue,&#xD;
+                ri!stateValue,&#xD;
+                ri!isSameAsAbove&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+          saveInto: ri!buttonValue&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+                #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label:&quot;Go Back&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,&#xD;
+          saveInto: ri!buttonValue,&#xD;
+          skipValidation: true&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+         confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue,&#xD;
+          skipValidation: true&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>isOverseas</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isSameAsAbove</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postBoxValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postPropertyValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postStreetNoValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postStreetNoValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postStreetNameValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postStreetValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postPostalCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postSuburbValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postStateValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>propertyValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNameValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postalCode</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suburbValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>stateValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addressValue3</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>country</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isPostOverseas</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postAddressValue1</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postAddressValue2</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postAddressValue3</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postCountry</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isTradingEntity</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

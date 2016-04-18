@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTSuitableOperatorRegisterAddress_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTSuitableOperatorRegisterContact_INT.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTSuitableOperatorRegisterSuitability_INT.xsd"/>
+  <xsd:complexType name="CTSuitableOperatorRegister_INT">
+    <xsd:sequence>
+      <xsd:element name="customerReference" nillable="true" type="xsd:string"/>
+      <xsd:element name="type" nillable="true" type="xsd:string"/>
+      <xsd:element name="title" nillable="true" type="xsd:string"/>
+      <xsd:element name="firstName" nillable="true" type="xsd:string"/>
+      <xsd:element name="middleName" nillable="true" type="xsd:string"/>
+      <xsd:element name="surname" nillable="true" type="xsd:string"/>
+      <xsd:element name="dateOfBirth" nillable="true" type="xsd:date"/>
+      <xsd:element name="businessName" nillable="true" type="xsd:string"/>
+      <xsd:element name="businessNumber" nillable="true" type="xsd:string"/>
+      <xsd:element name="businessNumberType" nillable="true" type="xsd:string"/>
+      <xsd:element name="ABN" nillable="true" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="CTSuitableOperatorRegisterAddress_INT" type="tns:CTSuitableOperatorRegisterAddress_INT"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="CTSuitableOperatorRegisterContact_INT" type="tns:CTSuitableOperatorRegisterContact_INT"/>
+      <xsd:element name="prefCorrespondenceType" nillable="true" type="xsd:string"/>
+      <xsd:element maxOccurs="unbounded" minOccurs="0"
+        name="CTSuitableOperatorRegisterSuitability_INT" type="tns:CTSuitableOperatorRegisterSuitability_INT"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

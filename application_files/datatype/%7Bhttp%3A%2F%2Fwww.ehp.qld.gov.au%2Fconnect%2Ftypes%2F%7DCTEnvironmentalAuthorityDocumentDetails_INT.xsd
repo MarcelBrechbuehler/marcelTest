@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTEnvironmentalAuthorityDocumentDetails_INT">
+    <xsd:sequence>
+      <xsd:element name="documentType" nillable="true" type="xsd:string"/>
+      <xsd:element name="documentSubType" nillable="true" type="xsd:string"/>
+      <xsd:element name="documentName" nillable="true" type="xsd:string"/>
+      <xsd:element name="document" nillable="true" type="xsd:string"/>
+      <xsd:element name="dateReceived" nillable="true" type="xsd:dateTime"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

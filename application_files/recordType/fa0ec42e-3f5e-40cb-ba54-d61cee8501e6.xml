@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Document" a:uuid="fa0ec42e-3f5e-40cb-ba54-d61cee8501e6">
+        <a:pluralName>Documents</a:pluralName>
+        <a:description>Directory of documents</a:description>
+        <a:urlStub>JDy7lg</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="7b3a77a2-e375-467a-9892-259189290280@_a-0000da0f-2564-8000-9ba2-011c48011c48_4206"/>
+        <a:listViewTemplateExpr>#&quot;973c6ce6-2220-4a02-9dba-9efd216b433f&quot;()</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;8a1c1e3a-9541-41f6-89ea-82c533611a1d&quot;(rf!commonDocumentId)</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>370193d3-43f5-4703-bc1f-4e2d75973795</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultSortInfo>
+            <field>commonDocumentId</field>
+            <ascending>false</ascending>
+        </a:defaultSortInfo>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002db20-e01d-8000-f92f-7f0000014e7a"/>
+            <a:contextExpr>{documentId_int: rp!id}</a:contextExpr>
+            <a:visibilityExpr>=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26838&quot;(rp!id)</a:visibilityExpr>
+            <a:refId>370193d3-43f5-4703-bc1f-4e2d75973795</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_33</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_11</groupUuid>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_10</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>PERM_displayPermitApplicationActivityLocationDetails</name>
+        <uuid>2d9734f8-34ab-4949-9daf-9dde2748be8e</uuid>
+        <description>This interface rule used to display permit application activity location details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Activity Location&quot;,&#xD;
+  isCollapsible: true,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      readOnly: true,&#xD;
+      label: &quot;&quot;,&#xD;
+      totalCount: max(&#xD;
+        if(&#xD;
+          or(&#xD;
+            isnull(&#xD;
+              local!activityMapDetails&#xD;
+            ),&#xD;
+            length(&#xD;
+              local!activityMapDetails&#xD;
+            ) = 0&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          local!activityMapDetailsDataSubset.totalCount&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            local!activityDetails&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          length(&#xD;
+             local!activityDetails.level4&#xD;
+          )&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            local!locationDetails&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          length(&#xD;
+            local!locationDetails.locationRef&#xD;
+          )&#xD;
+        ),&#xD;
+        if(&#xD;
+          isnull(&#xD;
+            local!permitTenure&#xD;
+          ),&#xD;
+          #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,&#xD;
+          length(local!permitTenure.tenureRef)&#xD;
+        )&#xD;
+      ),&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Activity&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!activityDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+             local!activityDetails.level4&#xD;
+          ),&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Location Reference&quot;,&#xD;
+          links: if(&#xD;
+            isnull(&#xD;
+              local!locationDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            {&#xD;
+              apply(&#xD;
+                #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                  recordType: #&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10177&quot;,&#xD;
+                  identifier: _&#xD;
+                ),&#xD;
+                local!locationDetails.locationId&#xD;
+              )&#xD;
+            }&#xD;
+          ),&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!locationDetails&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!locationDetails.locationRef&#xD;
+          ),&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Location Name&quot;,&#xD;
+          data: if(&#xD;
+            isnull(&#xD;
+              local!permitTenure&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            local!permitTenure.localityName&#xD;
+          ),&#xD;
+          /*links: if(&#xD;
+            isnull(&#xD;
+              local!permitTenure&#xD;
+            ),&#xD;
+            &quot;&quot;,&#xD;
+            {&#xD;
+              apply(&#xD;
+                a!recordLink(&#xD;
+                  recordType: cons!COM_PERMIT_TENURE_RECORD,&#xD;
+                  identifier: _&#xD;
+                ),&#xD;
+                local!permitTenure.permitTenureId&#xD;
+              )&#xD;
+            }&#xD;
+          ),*/&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+        startIndex: 1,&#xD;
+        batchSize: 5,&#xD;
+        sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+          field: &quot;name&quot;,&#xD;
+          ascending: true&#xD;
+        )&#xD;
+      )&#xD;
+    )&#xD;
+  }&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

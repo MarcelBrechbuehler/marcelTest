@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoFeedHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <tempoFeed>
+        <uuid>fb73814e-2a38-43fb-9e23-5e4aae1d03de</uuid>
+        <name>SOR_SuitableOperatorRegistration</name>
+        <description>Informs about Suitable Operator Registration events</description>
+        <showInCatalog>true</showInCatalog>
+        <systemFeed>false</systemFeed>
+    </tempoFeed>
+    <roleMap>
+        <role name="administrator">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+            </groups>
+        </role>
+        <role name="editor">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_23</groupUuid>
+                <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_41</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</tempoFeedHaul>

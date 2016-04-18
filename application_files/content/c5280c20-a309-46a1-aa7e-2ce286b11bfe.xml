@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>AHC_GetNextScheduledDate</name>
+        <uuid>c5280c20-a309-46a1-aa7e-2ce286b11bfe</uuid>
+        <description>Returns the next date and time the Health Check will run on.</description>
+        <parentUuid>_a-0000dbd4-7e1b-8000-4afc-010000010000_2033</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=with(
+  local!dayOfWeek: weekday(ri!date),
+  local!weekNum: weeknum(ri!date),
+
+  /* work out the number of days before the next scheduled day */
+  local!weekDaysToAdd: if (ri!day - local!dayOfWeek &lt; 0, 7 - abs(ri!day - local!dayOfWeek), ri!day - local!dayOfWeek),
+  /* work out the number of days to delay for until we're at the right week */
+  local!mod: mod(local!weekNum, ri!frequency),
+  local!freqDaysToAdd: if(local!mod=0, 0, (local!mod - 1) * 7),
+  /* set the next scheduled date */
+  local!nextScheduledDate: ri!date + local!weekDaysToAdd + local!freqDaysToAdd,
+
+  datetime(
+    year(local!nextScheduledDate),
+    month(local!nextScheduledDate),
+    day(local!nextScheduledDate),
+    ri!hour,
+    0,
+    0
+  )
+)</definition>
+        <namedTypedValue>
+            <name>date</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>frequency</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>day</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>hour</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>Administrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_documentDashboard</name>
+        <uuid>8a1c1e3a-9541-41f6-89ea-82c533611a1d</uuid>
+        <description>This interface is used to display document dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+    local!commonDocumentVersionDocumentDetails:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15992&quot;(ri!commonDocumentId_int),&#xD;
+    local!commonDocumentDetails:#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8929&quot;(ri!commonDocumentId_int),&#xD;
+	local!commonCodeDocumentSubTypeDetails: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3064&quot;(&#xD;
+		if(&#xD;
+		  or(&#xD;
+			length(&#xD;
+			  local!commonDocumentDetails.commonDocumentClassificationId&#xD;
+			) = #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,&#xD;
+			isnull(&#xD;
+			  local!commonDocumentDetails.commonDocumentClassificationId&#xD;
+			)&#xD;
+		  ),&#xD;
+		  #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,&#xD;
+		  local!commonDocumentDetails.commonDocumentClassificationId&#xD;
+		)&#xD;
+	  ),&#xD;
+	  local!commonCodeDocumentTypeDetails: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3064&quot;(&#xD;
+		if(&#xD;
+		  or(&#xD;
+			length(&#xD;
+			  local!commonCodeDocumentSubTypeDetails.commonCodeParentId&#xD;
+			) = #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,&#xD;
+			isnull(&#xD;
+			  local!commonCodeDocumentSubTypeDetails.commonCodeParentId&#xD;
+			)&#xD;
+		  ),&#xD;
+		  #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10895&quot;,&#xD;
+		  local!commonCodeDocumentSubTypeDetails.commonCodeParentId&#xD;
+		)&#xD;
+	  ),&#xD;
+	  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(&#xD;
+		firstColumnContents: {&#xD;
+		  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8769&quot;(),&#xD;
+		  #&quot;a8ec4795-48bf-415c-9bbc-5a60fc7a7825&quot;(ri!commonDocumentId_int),&#xD;
+		  #&quot;242b38c4-083d-4828-8d26-836f4d7bb78d&quot;(local!commonDocumentVersionDocumentDetails.commonDocument.commonDocumentClassificationId),&#xD;
+		  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8770&quot;()&#xD;
+		}&#xD;
+	  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>commonDocumentId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>TEN_blockDetails</name>
+        <uuid>fca833c8-ac2d-4d06-ae8a-1e1e8d92c5b7</uuid>
+        <description>Contains tenure dashboard block section</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11490</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+  label: &quot;Block Sub-block&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+      label: &quot;&quot;,&#xD;
+      totalCount: if(isnull(local!permitTenureBlockDetails),0,length(local!permitTenureBlockDetails)),&#xD;
+      columns: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;BIM Code&quot;,&#xD;
+          data: {&#xD;
+            if(&#xD;
+              local!permitTenureBlockDetails.blockIdentifierMap,&#xD;
+              apply(&#xD;
+                #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8523&quot;,&#xD;
+                local!permitTenureBlockDetails.blockIdentifierMap&#xD;
+              ),&#xD;
+              {}&#xD;
+            )&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Block Number&quot;,&#xD;
+          data: {&#xD;
+            local!permitTenureBlockDetails.blockRef&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Sub-Block code&quot;,&#xD;
+          data: {&#xD;
+            substitute(&#xD;
+              apply(&#xD;
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13758&quot;,&#xD;
+                local!permitTenureBlockDetails.permitTenureBlockId&#xD;
+              ),&#xD;
+              &quot;;&quot;,&#xD;
+              &quot;,&quot;&#xD;
+            )&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+        startIndex: 1,&#xD;
+        batchSize: - 1,&#xD;
+        sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+          field: local!permitTenureBlockDetails.blockIdentifierMap,&#xD;
+          ascending: true&#xD;
+        )&#xD;
+      )&#xD;
+    )&#xD;
+  },&#xD;
+  isCollapsible: true&#xD;
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>dan.cooke@procensol.co.uk</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>COM_Privacy_Statement</name>
+        <uuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1369</uuid>
+        <description>current privacy statement</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1365</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;Privacy Statement&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+      label: &quot;Privacy Statement&quot;,
+      labelPosition: &quot;COLLAPSED&quot;,
+      readOnly: true,
+      value: concat(&quot;If your application is approved your name, address and ABN/ACN will be disclosed on the Register of Suitable Operators which will be publicly available on the department’s website. This disclosure is authorised by section 318I(1)(b) of the Environmental Protection Act 1994. All other information will not be given to any other person or agency unless you have given us permission or we are authorised or required by law. All information supplied on this form may be disclosed publicly in accordance with the Right to Information Act 2009 and Evidence Act 1977. For queries about privacy matters email: &quot;, #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1366&quot;, &quot; or telephone: &quot;,#&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1367&quot;)
+    )
+  },
+  isCollapsible: true
+)</definition>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

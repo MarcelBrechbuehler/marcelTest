@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_dynamicPartnerRowGrid</name>
+        <uuid>900681e8-7567-4691-b028-3bfd2114fe6a</uuid>
+        <description>This is used to generate dynamic partner rows in a grid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+ri!itemsToken,&#xD;
+  {&#xD;
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+      headerCells: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Partner's Name&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Percentage&quot;,&#xD;
+           align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        /*a!gridLayoutHeaderCell(&#xD;
+          label: &quot;Inactivate&quot;,&#xD;
+           align: &quot;CENTER&quot;&#xD;
+        ),*/&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;&quot;,&#xD;
+           align: &quot;CENTER&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+        function: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5251&quot; (&#xD;
+          items: ri!items,&#xD;
+          index: _,&#xD;
+          itemsToken: ri!itemsToken,&#xD;
+          deletedItemIds: ri!deletedItemIds&#xD;
+        ),&#xD;
+        array: if(&#xD;
+          or(&#xD;
+            isnull(&#xD;
+              ri!items&#xD;
+            ),&#xD;
+            count(&#xD;
+              ri!items&#xD;
+            ) &lt; 1&#xD;
+          ),&#xD;
+          {},&#xD;
+          1 + enumerate(&#xD;
+            count(&#xD;
+              ri!items&#xD;
+            )&#xD;
+          )&#xD;
+        ),&#xD;
+        arrayVariable: ri!itemsToken&#xD;
+      )&#xD;
+    )&#xD;
+&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

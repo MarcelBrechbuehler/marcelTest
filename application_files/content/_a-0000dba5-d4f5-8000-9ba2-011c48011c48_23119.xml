@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dashboardFollowUpActions</name>
+        <uuid>_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23119</uuid>
+        <description>The Follow up actions dashboard</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: 10,
+    sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+      field: &quot;streamText&quot;,
+      ascending: true
+    )
+  ),
+  
+  local!careEvaluationDetails: if(
+    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!evaluationId_int),
+    {},
+    index(#&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot;(ri!evaluationId_int), 1,{})
+  ),
+  
+  local!selectedFilter,
+  
+  with(
+    
+    local!questions: #&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+      entity: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23227&quot;,
+      query:  #&quot;SYSTEM_SYSRULES_query&quot;(
+      selection:  #&quot;SYSTEM_SYSRULES_querySelection&quot;(
+        columns: {
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;rowId&quot;),
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;componentText&quot;),
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;streamText&quot;),
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;questionText&quot;),
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;followUpActions&quot;)
+        }
+      ),
+      logicalExpression: #&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(
+        operator: &quot;AND&quot;,
+        filters: {
+          #&quot;SYSTEM_SYSRULES_queryFilter&quot;(
+            field: &quot;evaluationId&quot;,
+            operator: &quot;=&quot;,
+            value: ri!evaluationId_int
+          ),
+          if(
+            #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(local!selectedFilter),
+            {},
+            #&quot;SYSTEM_SYSRULES_queryFilter&quot;(
+            field: &quot;streamCode&quot;,
+            operator: &quot;=&quot;,
+            value: local!selectedFilter
+            )
+          )
+        }
+      ),
+      pagingInfo: local!pagingInfo
+      )
+    ),  
+    
+    #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+      firstColumnContents: {
+             
+          #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(careEvaluation: local!careEvaluationDetails),
+          
+          #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+          label:&quot;Follow Up Actions&quot;,
+          firstColumnContents: {
+            
+            #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+              label: &quot;Filter&quot;,
+              labelPosition:&quot;ABOVE&quot;,
+              placeholderLabel: #&quot;_a-0000dba5-d4f5-8000-9ba2-011c48011c48_23147&quot;,
+              choiceLabels: {
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23373&quot;,
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23375&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23377&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23379&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23381&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23383&quot;,
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23385&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23387&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23389&quot;, 
+                #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23391&quot;
+              },
+              choiceValues: {
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14571&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14575&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14569&quot; ,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14573&quot;, 
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14577&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15264&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15266&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15268&quot;, 
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15270&quot;,
+                #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15272&quot;
+              },
+              value: local!selectedFilter,
+              saveInto: {
+                a!save(local!selectedFilter, save!value),
+                a!save(local!pagingInfo.startIndex, 1)
+              }
+            ),
+            
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(
+              totalCount: local!questions.totalCount,
+              columns: {
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Type&quot;,
+                  field: &quot;componentText&quot;,
+                  data: index(local!questions.data,&quot;componentText&quot;, null)
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Stream&quot;,
+                  field: &quot;streamText&quot;,
+                  data: index(local!questions.data,&quot;streamText&quot;, null)
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Question&quot;,
+                  field: &quot;questionText&quot;,
+                  data: index(local!questions.data,&quot;questionText&quot;, null),
+                  links: apply(
+                    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14720&quot;,
+                    index(
+                      local!questions.data,
+                      &quot;rowId&quot;,
+                      {}
+                    ),
+                    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15050&quot;
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Follow Up Actions&quot;,
+                  field: &quot;followUpActions&quot;,
+                  data: index(local!questions.data,&quot;followUpActions&quot;, null)
+                )
+              },
+             value: local!pagingInfo,
+             saveInto: local!pagingInfo
+            )
+          }
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>evaluationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">29</a:value>
+                <a:nameRef>evaluationId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

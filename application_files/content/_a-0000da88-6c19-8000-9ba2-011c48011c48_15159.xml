@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_manualFileUpload</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_15159</uuid>
+        <description>Returns upload fields depending on the amount of documentArray</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1192</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;Upload Document &quot; &amp; ri!label_txt[ri!index_int],
+  firstColumnContents: {
+  #&quot;SYSTEM_SYSRULES_textField&quot;(
+    label: &quot;Document Name&quot;,
+    labelPosition: &quot;ADJACENT&quot;,
+    instructions: &quot;You may overwrite the default name&quot;,
+    value: ri!documentName_txt[ri!index_int],
+    saveInto: ri!documentName_txt[ri!index_int]
+  ),
+  #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(
+    label: ri!label_txt[ri!index_int],
+    labelPosition: &quot;ADJACENT&quot;,
+    required: true,
+    target: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14459&quot;,
+    documentName: ri!documentName_txt[ri!index_int],
+    value: ri!documentArray_doc[ri!index_int],
+    saveInto: ri!documentArray_doc[ri!index_int]
+  )
+  },
+  secondColumnContents: {
+  }
+)</definition>
+        <namedTypedValue>
+            <name>label_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentArray_doc</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>target_doc</name>
+            <type>
+                <name>CollaborationDocumentOrFolder</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentName_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

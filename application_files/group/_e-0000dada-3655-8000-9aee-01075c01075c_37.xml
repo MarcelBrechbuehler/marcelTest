@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <group>
+        <name>Record Permit Applications</name>
+        <securityMap>SECURITYMAP_PUBLIC</securityMap>
+        <uuid>_e-0000dada-3655-8000-9aee-01075c01075c_37</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <description>View group for Permit Applications Record</description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_LOW</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users/>
+        <groups>
+            <groupUuid>_e-0000da88-6c05-8000-9aee-01075c01075c_18</groupUuid>
+            <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_21</groupUuid>
+            <groupUuid>_e-0000dada-3655-8000-9aee-01075c01075c_22</groupUuid>
+            <groupUuid>_e-0000da88-6c05-8000-9aee-01075c01075c_17</groupUuid>
+            <groupUuid>_e-0000da88-6c05-8000-9aee-01075c01075c_15</groupUuid>
+        </groups>
+    </members>
+    <admins>
+        <users/>
+        <groups>
+            <groupUuid>_e-0000d9e6-bfb7-8000-9aee-01075c01075c_9</groupUuid>
+        </groups>
+    </admins>
+    <ruleSet/>
+</groupHaul>

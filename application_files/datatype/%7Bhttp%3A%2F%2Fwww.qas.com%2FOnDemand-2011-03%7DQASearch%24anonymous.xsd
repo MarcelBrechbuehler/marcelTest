@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DDataIDType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DEngineType.xsd"/>
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DRequestTagType.xsd"/>
+  <xsd:element name="QASearch">
+    <xsd:complexType>
+      <xsd:annotation>
+        <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+          <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+            <ns2:Flags>HIDDEN</ns2:Flags>
+          </ns2:Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:sequence>
+        <xsd:element form="qualified" name="Country" type="tns:DataIDType"/>
+        <xsd:element form="qualified" name="Engine" type="tns:EngineType"/>
+        <xsd:element form="qualified" minOccurs="0" name="Layout" type="xsd:string"/>
+        <xsd:element form="qualified" name="Search" type="xsd:string"/>
+        <xsd:element default="false" form="qualified" minOccurs="0"
+          name="FormattedAddressInPicklist" type="xsd:boolean"/>
+      </xsd:sequence>
+      <xsd:attribute name="Localisation" type="xsd:string"/>
+      <xsd:attribute name="RequestTag" type="tns:RequestTagType"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

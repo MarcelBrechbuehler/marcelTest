@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_editSOStatus</name>
+        <uuid>83f2fe1a-cbd6-494b-a65b-0490e8a1c728</uuid>
+        <description>this screen enables EHP staff to cancel, suspend or expire a suitable operator registration</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!decision,
+  local!reason,
+  local!effectiveDate: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4535&quot;(),
+  local!suspensionEndDate,
+  local!notes,
+  /*
+	local!customerInfo: rule!CT_getCustomerDetailsById(ri!customerId_int),
+  */
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: &quot;Edit Suitable Operator Registration Status&quot;,
+    firstColumnContents: {
+    	#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3074&quot;(ri!customer_cdt.customerName,ri!customer_cdt.customerType.partyClass,ri!customer_cdt.customerId,ri!customer_cdt.customerType.partyTypeId),
+  		#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  		  label: &quot;Registration Details&quot;,
+        firstColumnContents: {
+         
+    			#&quot;SYSTEM_SYSRULES_textField&quot;(
+    			  label: &quot;Reference Number&quot;,
+    			  labelPosition: &quot;ADJACENT&quot;,
+    			  readOnly: true,
+    			  value: ri!suitableOperator_cdt.suitableOperatorRef
+    			),
+    			#&quot;SYSTEM_SYSRULES_textField&quot;(
+    			  label: &quot;Status&quot;,
+    			  labelPosition: &quot;ADJACENT&quot;,
+    			  readOnly: true,
+    			  value: ri!suitableOperator_cdt.statusRef.description
+    			),
+    			#&quot;SYSTEM_SYSRULES_textField&quot;(
+    			  label: &quot;Registration Date&quot;,
+    			  labelPosition: &quot;ADJACENT&quot;,
+    			  readOnly: true,
+    			  value: datevalue(ri!suitableOperator_cdt.registrationDate)
+    			)
+  		  },
+  		  isCollapsible: true
+  		),
+  		#&quot;SYSTEM_SYSRULES_sectionLayoutColumns&quot;(
+  		  columns: {
+  		    #&quot;SYSTEM_SYSRULES_columnLayout&quot;(
+  		      contents: {
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                label: &quot;Decision&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                required: true,
+                choiceLabels: {&quot;Cancel&quot;, &quot;Expire&quot;, &quot;Suspend&quot;},
+                choiceValues: {#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4634&quot;, #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4635&quot;, #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4633&quot;},
+                placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+                value: local!decision,
+                saveInto: {
+                  ac!suitableOperatorStatus_cdt.status,
+                  local!decision
+                },
+                validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+              ),
+              #&quot;SYSTEM_SYSRULES_dateField&quot;(
+                label: &quot;Effective Date&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                required: true,
+                value: local!effectiveDate,
+                saveInto: {
+                  ac!suitableOperatorStatus_cdt.startDate,
+                  local!effectiveDate
+                },
+                validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+              ),
+              if(isnull(local!decision),
+              {},
+              {if(local!decision = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4633&quot;,
+              #&quot;SYSTEM_SYSRULES_dateField&quot;(
+                label: &quot;Suspension End Date&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                required: true,
+                validations: if(isnull(local!suspensionEndDate),null,if(local!effectiveDate &gt;= local!suspensionEndDate,&quot;Suspension End Date must be after Effective Date&quot;,null)),
+                value: local!suspensionEndDate,
+                saveInto: {
+                  ac!suitableOperatorStatus_cdt.endDate,
+                  local!suspensionEndDate
+                },
+                validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+              ),
+              {}
+              ),
+              if(or(local!decision = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4634&quot;,local!decision = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4633&quot;),
+              #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                label: &quot;Reason&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                required: true,
+                choiceLabels: {&quot;Unsuitable Environmental Record&quot;, &quot;Disqualification&quot;},
+                choiceValues: {#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5171&quot;, #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5169&quot;},
+                placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+                value: local!reason,
+                saveInto: {
+                  ac!suitableOperatorStatus_cdt.statusReasonCode,
+                  local!reason
+                },
+                validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+              ),
+              {}
+              )}
+              )
+  		      }
+  		    ),
+  		    #&quot;SYSTEM_SYSRULES_columnLayout&quot;(
+  		      contents: {
+  		      }
+  		    )
+  		  }
+  		),
+  		#&quot;SYSTEM_SYSRULES_sectionLayoutColumns&quot;(
+  		  columns: {
+  		    #&quot;SYSTEM_SYSRULES_columnLayout&quot;(
+  		      contents: {
+              #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+                label: &quot;Notes&quot;,
+                labelPosition: &quot;ADJACENT&quot;,
+                value: local!notes,
+                saveInto: {
+                  ac!suitableOperatorStatus_cdt.statusReasonText,
+                  local!notes
+                }
+              )
+  		      }
+  		    )
+  		  }
+  		)
+    },
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+          style: &quot;PRIMARY&quot;,
+          submit: true,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+          saveInto: ri!buttonValue_txt,
+          validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;
+        )
+      },
+      secondaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+          style: &quot;DESTRUCTIVE&quot;,
+          skipValidaton: true,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+          saveInto: pv!buttonValue_txt
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customer_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suitableOperator_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suitableOperatorStatus_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

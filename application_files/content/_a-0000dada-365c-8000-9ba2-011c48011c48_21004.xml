@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_getPartyPostalAddressDetails</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_21004</uuid>
+        <description>This expression rule returns primary party postal address else returns the 1st postal address</description>
+        <parentUuid>_a-0000dada-365c-8000-9ba2-011c48011c48_21003</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!primaryPostalAddress: #&quot;16ac57e0-84ad-4ad8-a218-798565f7cb99&quot;(
+    ri!partyAddressLinkId,
+    ri!partyId,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,
+    ri!primaryFlag,
+    ri!active
+  ),
+  local!postalAddress: #&quot;937a65ee-1425-4e95-8aa8-c6f2ed1f635e&quot;(
+    ri!partyAddressLinkId,
+    ri!partyId,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5585&quot;,
+    ri!active
+  ),
+  local!resultSet: if(
+    or(
+      length(
+        local!primaryPostalAddress
+      ) = 0,
+      isnull(
+        local!primaryPostalAddress
+      )
+    ),
+    local!postalAddress,
+    local!primaryPostalAddress
+  ),
+  local!resultSet
+)</definition>
+        <namedTypedValue>
+            <name>partyAddressLinkId</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>primaryFlag</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>active</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

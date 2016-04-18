@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_lotPlanRowEach</name>
+        <uuid>_a-0000dada-365c-8000-9ba2-011c48011c48_26418</uuid>
+        <description>Expression to dynamically populate the lot plan for location adjoineries grid</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(
+  id: ri!index,
+  contents: {
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+      label: &quot;planType &quot; &amp; ri!index,
+      choiceLabels: {
+        local!planType.description
+      },
+      placeholderLabel: &quot;--Select-- &quot;,
+      choiceValues: {
+        local!planType.commonCodeId
+      },
+      required: true(),
+      value: ri!items[ri!index].planType,
+      saveInto: ri!items[ri!index].planType
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;lotNo &quot; &amp; ri!index,
+      required: true(),
+      value: ri!items[ri!index].lotNo,
+      saveInto: ri!items[ri!index].lotNo,
+      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+        fieldMaxLength: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13657&quot;,
+        fieldData: ri!items[ri!index].lotNo
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;planNo &quot; &amp; ri!index,
+      required: true(),
+      value: ri!items[ri!index].planNo,
+      saveInto: ri!items[ri!index].planNo,
+      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+        fieldMaxLength: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13658&quot;,
+        fieldData: ri!items[ri!index].planNo
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;delete &quot; &amp; ri!index,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: char(
+          10005
+        )&amp;ri!deletedItemIds,
+        value: ri!index,
+        saveInto: {
+          a!save(
+            ri!deletedItemIds,
+            append(
+              ri!deletedItemIds,
+              index(
+                ri!items.locationLotPlanId,
+                save!value,
+                null
+              )
+            )
+          ),
+          a!save(
+            ri!items,
+            remove(
+              ri!items,
+              save!value
+            )
+          ),
+          a!save(
+            ri!itemsToken,
+            remove(
+              ri!itemsToken,
+              save!value
+            )
+          )
+        },
+        align: &quot;CENTER&quot;
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedItemIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>deletedItemIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

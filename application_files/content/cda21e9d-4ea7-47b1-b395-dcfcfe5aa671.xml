@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_physicalAddressDetails</name>
+        <uuid>cda21e9d-4ea7-47b1-b395-dcfcfe5aa671</uuid>
+        <description>Interface to display physcal address details when location type is physical street address</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+      label: &quot;&quot;,
+      labelPosition: &quot;ADJACENT&quot;,
+      choiceLabels: {
+        &quot;Address Not Found&quot;
+      },
+      choiceValues: {
+        &quot;Address Not Found&quot;
+      },
+      value:local!isAddressFound,
+      saveInto: local!isAddressFound
+    ),
+    if(
+      not(
+        isnull(
+          local!isAddressFound
+        )
+      ),
+      {
+        /*==================== Address Not Found =====================*/
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Property&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.property,
+          saveInto: ri!partyAddress_cdt.property
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Unit No&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.unitNo,
+          saveInto: ri!partyAddress_cdt.unitNo
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Street No&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.streetNo,
+          saveInto: ri!partyAddress_cdt.streetNo
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Street Name&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.streetName,
+          saveInto: ri!partyAddress_cdt.streetName
+        ),
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+          label: &quot;Street Type&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+          choiceLabels: {
+            #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13768&quot;
+          },
+          choiceValues: {
+            #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13769&quot;
+          },
+          value: ri!partyAddress_cdt.streetType,
+          saveInto: ri!partyAddress_cdt.streetType,
+          required: false
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;Post Code&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.postCode,
+          saveInto: {
+            ri!partyAddress_cdt.postCode,
+            a!save(
+              ri!partyAddress_cdt.suburb,
+              &quot;&quot;
+            ),
+            a!save(
+              ri!partyAddress_cdt.state,
+              &quot;&quot;
+            )
+          },
+          required: true
+        ),
+        #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+          label: &quot;Suburb&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+          choiceLabels: local!getRegisteredSuburbDetails.suburbName,
+          choiceValues: local!getRegisteredSuburbDetails.suburbName,
+          value: ri!partyAddress_cdt.suburb,
+          saveInto: {
+            ri!partyAddress_cdt.suburb,
+            a!save(
+              ri!partyAddress_cdt.state,
+              if(
+                isnull(
+                  ri!partyAddress_cdt.postCode
+                ),
+                &quot;&quot;,
+                #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15696&quot;(
+                  ri!partyAddress_cdt.postCode,
+                  save!value
+                ).state
+              )
+            )
+          },
+          required: true
+        ),
+        #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label: &quot;State&quot;,
+          labelPosition: &quot;ADJACENT&quot;,
+          value: ri!partyAddress_cdt.state,
+          saveInto: ri!partyAddress_cdt.state,
+          required: true,
+          readOnly: true
+        )/*==================== Address Not Found =====================*/
+        
+      },
+      {}
+    )
+  },
+  secondColumnContents: {
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;&quot;,
+      labelPosition: &quot;ADJACENT&quot;,
+      readOnly: true()
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>partyAddress_cdt</name>
+            <type>
+                <name>CTPartyAddress</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>partyAddress_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

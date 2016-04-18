@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_integrationRegisterCheckCustomerRefStatus</name>
+        <uuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_14618</uuid>
+        <description>This purpose of this rule is to validate sor status webservice data 
+Business Rule: Customer must not be registered if the status is &quot;REG&quot;. 
+IN: Customer Ref Number,
+OUT: blank if valid or the error code if invalid</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11453</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= if(
+#&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7930&quot;(
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7859&quot;(
+      ri!customerRefNumber_txt
+    ).partyId
+  ).status &lt;&gt; #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3066&quot;,
+       null,
+    #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7111&quot;(
+      #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7108&quot;(
+        824,
+        838,
+        &quot;3&quot;,
+        819
+      ),
+      ri!field_text,
+      &quot;&quot;
+    )
+  )
+</definition>
+        <namedTypedValue>
+            <name>customerRefNumber_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>field_text</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

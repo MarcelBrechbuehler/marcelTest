@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dynamicQuestion</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_13999</uuid>
+        <description>Dynamically creates the questions for display to the user</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  
+  local!observations:union(
+    ri!justificationAnswers_cdt.observationText,
+    ri!justificationAnswers_cdt.observationText
+  ),
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex:  1,
+    batchSize:   5
+  ),
+  
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label:&quot;&quot;,
+    firstColumnContents: {
+
+      if(len(ri!milestone_txt)=0,{},
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(ri!milestone_txt,ri!milestoneIndex_int)
+      ),
+      
+      #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+      label: &quot;CaRE Evaluation Dashboard&quot;,
+      recordType: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4769&quot;,
+      identifier: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_6428&quot;(ri!evaluationComponentId_int).careEvaluationId,
+      dashboard: &quot;summary&quot;
+      )),
+      
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value:#&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+          text: index(ri!justificationAnswers_cdt.questionText,1,{}),
+          style:&quot;HEADER_LARGE&quot;
+        )),
+        
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value:#&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+          text: index(ri!justificationAnswers_cdt.questionGuidance,1,{}),
+          style:&quot;NOrMAL&quot;
+        )),
+        
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value:  #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                  text: /*if(len(ri!questionType)&gt;0, ri!questionType &amp; &quot; Question &quot;, &quot;Question &quot;)*/
+                        &quot;Question &quot;
+                        &amp; if(ri!questionIndex_int,
+                            ri!questionIndex_int,
+                            &quot;1&quot;
+                          ) 
+                        &amp; &quot; of &quot;
+                        &amp; if(ri!totalQuestionsInStream,
+                            ri!totalQuestionsInStream,
+                            &quot;1&quot;
+                          )
+                        &amp; if(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(ri!questionLabel),
+                            {},
+                            &quot;  (&quot; &amp; ri!questionLabel &amp; &quot;)&quot;
+                          ),
+                  style:  &quot;HEADER_SMALL&quot;
+                )
+      ),    
+
+      #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+        function:#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14002&quot;(
+          disabled: false,
+          observations_txt: local!observations,
+          justificationAnswers_cdt: ri!justificationAnswers_cdt, index:_
+        ),
+        array:1+enumerate(length(local!observations))
+      ),
+      
+      if(
+        index(ri!justificationAnswers_cdt.questionTypeId,1,{})=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15032&quot;,
+        {},
+        #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20662&quot;(ri!questionFollowUpActions)
+      ),
+
+      
+      
+      if(length(
+        #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_20916&quot;(
+          #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15399&quot;, 
+          ri!questionAnswerId
+         )
+        )&lt;1,
+        {},
+        {
+          #&quot;bfad2852-23cc-4a15-a372-ca88b425806e&quot;(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15399&quot;, ri!questionAnswerId),
+          
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+            secondaryButtons: {
+              #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+                label: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+                value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+                saveInto: {
+                  ri!buttonValue_txt
+                },
+                submit: true,
+                validate: true,
+                validationGroup: &quot;upload&quot;
+              )
+            }
+          )
+        }
+
+      ),
+
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label:&quot;Documents&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+            secondaryButtons: {
+              #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+                label: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+                value: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_23744&quot;,
+                saveInto: {
+                  ri!buttonValue_txt
+                },
+                submit: true,
+                validate: true,
+                validationGroup: &quot;upload&quot;
+              )
+            }
+          )
+        },
+        isCollapsible: true
+      )  
+    },
+    
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        
+        if(
+          ri!questionType=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23818&quot;,
+          if(
+            and(ri!milestoneIndex_int = 1, ri!questionIndex_int = 1),
+            {},
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              style: &quot;NORMAL&quot;,
+              value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true
+            )
+          ),
+          if(
+            or(ri!questionIndex_int = 0, ri!questionIndex_int = 1),
+            {},
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              style: &quot;NORMAL&quot;,
+              value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true
+            )
+          )
+        ),    
+        
+        
+        if(
+          ri!questionType=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23818&quot;,
+          if(
+            and(ri!milestoneIndex_int = 5, (ri!questionIndex_int = ri!totalQuestionsInStream)),
+            {},
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+              style: &quot;PRIMARY&quot;,
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true
+            )
+          ),
+          if(
+            /*(ri!totalQuestionsInStream=ri!questionIndex_int),*/
+            /*Fix for PU-2719*/
+            or(ri!milestoneIndex_int = 0, (ri!questionIndex_int = ri!totalQuestionsInStream)),
+            {},
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label:  #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+              style: &quot;PRIMARY&quot;,
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true
+            )
+          )
+        ),    
+        
+
+        if(
+          ri!questionType=#&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23818&quot;,
+          if(
+            and(ri!milestoneIndex_int = 5, (ri!questionIndex_int = ri!totalQuestionsInStream)),
+            #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+              label:#&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,
+              style: &quot;PRIMARY&quot;,
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+              saveInto: ri!buttonValue_txt,
+              submit: true
+            ),
+            {}
+          ),
+          #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+            label: if(
+              (ri!totalQuestionsInStream=ri!questionIndex_int),
+              #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,
+              #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;
+            ),
+            style: &quot;PRIMARY&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+            saveInto: ri!buttonValue_txt,
+            submit: true
+          ) 
+        )
+        
+      },
+      
+      secondaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+          style: &quot;NORMAL&quot;,
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+          saveInto: ri!buttonValue_txt,
+          skipValidation: true
+        )          
+      }
+      
+    ),
+    validations: {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>justificationAnswers_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestion_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>evaluationComponentId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestone_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>milestoneIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionFollowUpActions</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documents_doc</name>
+            <type>
+                <name>CollaborationDocument?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionIndex_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>totalQuestionsInStream</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionAnswerId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionLabel</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14580&quot;(12,73)</a:value>
+                <a:nameRef>justificationAnswers_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">false</a:value>
+                <a:nameRef>cancel</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">73</a:value>
+                <a:nameRef>evaluationComponentId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>milestone_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>milestoneIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">{557; 556; 559; 558}</a:value>
+                <a:nameRef>questionFollowUpActions</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">234</a:value>
+                <a:nameRef>documents_doc</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">2</a:value>
+                <a:nameRef>questionIndex_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">13</a:value>
+                <a:nameRef>totalQuestionsInStream</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>questionType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>questionAnswerId</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>questionLabel</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

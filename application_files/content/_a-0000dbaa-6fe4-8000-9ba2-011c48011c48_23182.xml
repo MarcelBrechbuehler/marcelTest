@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_customerContactSection</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23182</uuid>
+        <description>This section display the customer contact information in a table format. Columns displayed are Type, Name, Position, Phone, Email</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+	 label: ri!sectionTitle_txt,&#xD;
+	 firstColumnContents: {&#xD;
+		 if(&#xD;
+	 		 #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!partyContactVW_cdt),&#xD;
+	 		 #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+ 		 		 label: &quot;&quot;,&#xD;
+ 		 		 labelPosition: &quot;COLLAPSED&quot;,&#xD;
+ 		 		 value: &quot;&quot;,&#xD;
+ 		 		 readOnly: true&#xD;
+	 		 ),&#xD;
+	 		 #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+	 		 label: &quot;&quot;,&#xD;
+	 		 totalCount: count(&#xD;
+						ri!partyContactVW_cdt&#xD;
+					) + 1,&#xD;
+	 		 columns: {&#xD;
+		 		 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+ 		 		 label: &quot;Type&quot;,&#xD;
+ 		 		 data: {&#xD;
+	 		 		 ri!partyContactVW_cdt.description&#xD;
+ 		 		 },&#xD;
+ 		 		 alignment: &quot;LEFT&quot;&#xD;
+		 		 ),&#xD;
+		 		 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+ 		 		 label: &quot;Name&quot;,&#xD;
+ 		 		 data: {&#xD;
+	 		 		 ri!partyContactVW_cdt.partyName&#xD;
+ 		 		 },&#xD;
+ 		 		 alignment: &quot;LEFT&quot;&#xD;
+		 		 ),&#xD;
+		 		 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+ 		 		 label: &quot;Position&quot;,&#xD;
+ 		 		 data: {&#xD;
+	 		 		 ri!partyContactVW_cdt.position&#xD;
+ 		 		 },&#xD;
+ 		 		 alignment: &quot;LEFT&quot;&#xD;
+		 		 ),&#xD;
+		 		 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+ 		 		 label: &quot;Phone&quot;,&#xD;
+ 		 		 data: {&#xD;
+	 		 		 ri!partyContactVW_cdt.phoneNumber&#xD;
+ 		 		 },&#xD;
+ 		 		 alignment: &quot;LEFT&quot;&#xD;
+		 		 ),&#xD;
+		 		 #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+ 		 		 label: &quot;Email&quot;,&#xD;
+ 		 		 data: {&#xD;
+	 		 		 ri!partyContactVW_cdt.email&#xD;
+ 		 		 },&#xD;
+ 		 		 alignment: &quot;LEFT&quot;&#xD;
+		 		 )&#xD;
+	 		 },&#xD;
+	 		 value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+		 		 startIndex: 1,&#xD;
+		 		 batchSize: - 1,&#xD;
+		 		 sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+ 		 		 field: &quot;name&quot;,&#xD;
+ 		 		 ascending: true&#xD;
+		 		 )&#xD;
+	 		 )&#xD;
+ 		 )&#xD;
+		 )&#xD;
+&#xD;
+	 },&#xD;
+	 isCollapsible: true&#xD;
+ )</definition>
+        <namedTypedValue>
+            <name>partyContactVW_cdt</name>
+            <type>
+                <name>CTPartyContacts_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>sectionTitle_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>partyContactVW_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>sectionTitle_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

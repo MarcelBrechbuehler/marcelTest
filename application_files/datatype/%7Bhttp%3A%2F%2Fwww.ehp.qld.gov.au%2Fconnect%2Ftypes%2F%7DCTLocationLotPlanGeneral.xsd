@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCommonCodeCore.xsd"/>
+  <xsd:complexType name="CTLocationLotPlanGeneral">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+					@Table( name="location_lot_plan")
+			</xsd:appinfo>
+      <xsd:documentation><![CDATA[This entity is to define a structure for location lot plan]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="locationLotPlanId" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Id
+		@GeneratedValue
+		@Column( name="location_lot_plan_id")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="planType" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="plan_type")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="lotNo" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="lot_no", columndefinition="varchar(10)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="planNo" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="plan_no", columndefinition="varchar(10)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="active")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="source" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+		@Column( name="source", columndefinition="varchar(100)")
+		</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="planTypeRef" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">
+				@ManyToOne( cascade=REFRESH, optional=false)
+				@JoinColumn(name="plan_type",insertable="false" updatable="false")
+				</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

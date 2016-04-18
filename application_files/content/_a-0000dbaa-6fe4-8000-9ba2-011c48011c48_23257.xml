@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_completeRiskEvaluation</name>
+        <uuid>_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23257</uuid>
+        <description>Reminder task to complete the risk evaluation.</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!evaluationComponentId: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14759&quot;(
+    ri!evaluationId,
+    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14982&quot;
+  ).careEvaluationComponentId,
+  local!careEvaluationDetails: if(
+    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+      ri!evaluationId
+    ),
+    {},
+    index(
+      #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1534&quot;(
+        ri!evaluationId
+      ),
+      1,
+      {}
+    )
+  ),
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: 10,
+    sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+      field: &quot;questionTypeText&quot;,
+      ascending: false
+    )
+  ),
+  local!loadQuestionSummary: todatasubset(
+    #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23240&quot;(
+      local!evaluationComponentId
+    ),
+    local!pagingInfo
+  ),
+  with(
+    local!remainingQuestionSummary: todatasubset(
+      #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23240&quot;(
+        local!evaluationComponentId
+      ),
+      local!pagingInfo
+    ),
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+      label: &quot;CaRE Risk Evaluation for &quot; &amp; local!careEvaluationDetails.careEvaluationRef,
+      instructions: &quot;Please ensure the remaining questions for the Risk Evaluation of this CaRE are completed.&quot;,
+      firstColumnContents: {
+        #&quot;62036449-0f0d-4655-b4e9-71bd89ffea77&quot;(
+          careEvaluation: local!careEvaluationDetails
+        ),
+        #&quot;SYSTEM_SYSRULES_linkField&quot;(
+          links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+            label: &quot;CaRE Evaluation Dashboard&quot;,
+            recordType: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4769&quot;,
+            identifier: ri!evaluationId,
+            dashboard: &quot;summary&quot;
+          )
+        ),
+        if(
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+            #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23246&quot;(
+              local!evaluationComponentId
+            )
+          ),
+          #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+            label: &quot;Outstanding Questions&quot;,
+            firstColumnContents: {
+              #&quot;SYSTEM_SYSRULES_textField&quot;(
+                value: &quot;All risk questions are complete, the Risk Evaluation can now be completed.&quot;,
+                readOnly: true()
+              )
+            }
+          ),
+          #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+            label: &quot;Outstanding Questions&quot;,
+            firstColumnContents: {
+              #&quot;SYSTEM_SYSRULES_textField&quot;(
+                value: &quot;The following questions must be completed in order to complete this Risk Evaluation.&quot;,
+                readOnly: true()
+              ),
+              #&quot;SYSTEM_SYSRULES_gridField&quot;(
+                totalCount: local!remainingQuestionSummary.totalCount,
+                columns: {
+                  #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                    label: &quot;Stream&quot;,
+                    field: &quot;questionStream&quot;,
+                    data: index(
+                      local!remainingQuestionSummary.data,
+                      &quot;questionStream&quot;,
+                      {}
+                    )
+                  ),
+                  #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                    label: &quot;Question&quot;,
+                    field: &quot;questionText&quot;,
+                    data: index(
+                      local!remainingQuestionSummary.data,
+                      &quot;questionText&quot;,
+                      {}
+                    ),
+                    links: apply(
+                      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_14720&quot;,
+                      index(
+                        local!remainingQuestionSummary.data,
+                        &quot;careQuestionAnswerId&quot;,
+                        {}
+                      ),
+                      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15050&quot;
+                    )
+                  ),
+                  #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                    label: &quot;Question Type&quot;,
+                    field: &quot;questionTypeText&quot;,
+                    data: index(
+                      local!remainingQuestionSummary.data,
+                      &quot;questionTypeText&quot;,
+                      {}
+                    )
+                  )
+                },
+                value: local!pagingInfo,
+                saveInto: local!pagingInfo,
+                validations: {
+                  if(
+                    #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+                      #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23246&quot;(
+                        local!evaluationComponentId
+                      )
+                    ),
+                    {},
+                    &quot;Risk Evaluation cannot be completed while mandatory questions remain.&quot;
+                  ),
+                  
+                },
+                validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot; 
+              )
+            }
+          )
+        )
+      },
+      secondColumnContents: {},
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: {
+          if(
+            #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+              #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23246&quot;(
+                local!evaluationComponentId
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+              label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+              style: &quot;PRIMARY&quot;,
+              validate: true,
+              saveInto: ri!buttonValue,
+              value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+              validationGroup: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot; 
+            ),
+            {
+              #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+                label: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23929&quot;,
+                submmit: false,
+                value: &quot;&quot;,
+                saveInto: {
+                  a!save(local!pagingInfo, topaginginfo(1,10)),
+                  a!save(local!loadQuestionSummary, #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23240&quot;(local!evaluationComponentId, topaginginfo(1,10)))
+                }
+              ),
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+                label: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23931&quot;,
+                style: &quot;PRIMARY&quot;,
+                saveInto: ri!buttonValue,
+                value: #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_23931&quot;
+              )
+            }
+          )
+        }
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>evaluationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>evaluationId</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

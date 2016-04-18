@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_adjoineriesDetails</name>
+        <uuid>0c64a1a5-f1e0-4809-a5e4-9af371f3d63a</uuid>
+        <description>Interface to display adjoineries details of location</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1198</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+  label: &quot;&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+      label: &quot;GPS Details&quot;,
+      instructions: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9025&quot; &amp; char(10) &amp; #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9026&quot; &amp; char(10) &amp; #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9027&quot;,
+      headerCells: {
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Status&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Latitude&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Longitude&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Description&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;&quot;
+        )
+      },
+      columnConfigs: {
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;NARROW&quot;
+        )
+      },
+      rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+        function: #&quot;6c3def08-8047-48f7-a2d2-0019e7e30d36&quot;(
+          items: ri!locationGps_vw,
+          index: _,
+          itemsToken: ri!itemsToken1,
+          deletedItemIds: ri!deletedGpsIds
+        ),
+        array: if(
+          or(
+            isnull(
+              ri!locationGps_vw
+            ),
+            count(
+              ri!locationGps_vw
+            ) &lt; 1
+          ),
+          {},
+          1 + enumerate(
+            count(
+              ri!locationGps_vw
+            )
+          )
+        ),
+        arrayVariable: ri!itemsToken1
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;Add Link&quot;,
+      labelPosition: &quot;COLLAPSED&quot;,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: &quot;+Add GPS&quot;,
+        value: {
+          id: null
+        },
+        saveInto: {
+          a!save(
+            ri!locationGps_vw,
+            append(
+              ri!locationGps_vw,
+              save!value
+            )
+          ),
+          a!save(
+            ri!itemsToken1,
+            append(
+              ri!itemsToken1,
+              save!value
+            )
+          )
+        }
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(
+      label: &quot;Adjoinery Lots/Plan&quot;,
+      headerCells: {
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Plan Type&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Lot Number&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;Plan Number&quot;,
+          align: &quot;CENTER&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(
+          label: &quot;&quot;
+        )
+      },
+      columnConfigs: {
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;DISTRIBUTE&quot;
+        ),
+        #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(
+          width: &quot;NARROW&quot;
+        )
+      },
+      rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(
+        function: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_26418&quot;(
+          items: ri!locationLotPlan_cdt,
+          index: _,
+          itemsToken: ri!itemsToken,
+          deletedItemIds: ri!deletedLotPlanIds
+        ),
+        array: if(
+          or(
+            isnull(
+              ri!locationLotPlan_cdt
+            ),
+            count(
+              ri!locationLotPlan_cdt
+            ) &lt; 1
+          ),
+          {},
+          1 + enumerate(
+            count(
+              ri!locationLotPlan_cdt
+            )
+          )
+        ),
+        arrayVariable: ri!itemsToken
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(
+      label: &quot;Add Link&quot;,
+      labelPosition: &quot;COLLAPSED&quot;,
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+        label: &quot;+Add Lot/Plan&quot;,
+        value: {
+          id: null
+        },
+        saveInto: {
+          a!save(
+            ri!locationLotPlan_cdt,
+            append(
+              ri!locationLotPlan_cdt,
+              save!value
+            )
+          ),
+          a!save(
+            ri!itemsToken,
+            append(
+              ri!itemsToken,
+              save!value
+            )
+          )
+        }
+      )
+    )
+  }
+)</definition>
+        <namedTypedValue>
+            <name>locationLotPlan_cdt</name>
+            <type>
+                <name>CTLocationLotPlan?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken1</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationGps_vw</name>
+            <type>
+                <name>CTLocationGps_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedLotPlanIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deletedGpsIds</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationLotPlan_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken1</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>locationGps_vw</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedLotPlanIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deletedGpsIds</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

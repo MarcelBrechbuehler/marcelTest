@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_validateUserCustomerRelationship</name>
+        <uuid>_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20334</uuid>
+        <description>interface rule used to display user and customer information along with action to approve/reject the user-customer association.</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1305</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;Authorise user to access customer account&quot;,
+ firstColumnContents: {
+   #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+     label: &quot;&quot;,
+     firstColumnContents: {
+       #&quot;SYSTEM_SYSRULES_textField&quot;(
+         label: &quot;&quot;,
+         labelPosition: &quot;COLLAPSED&quot;,
+         value: &quot;Connect has received a request from the below user to represent the below Customer for which you are the administrative user perspective.&quot;,
+         saveInto: {},
+         refreshAfter: &quot;UNFOCUS&quot;,
+         readonly: true,
+         validations: {}
+       )
+     },
+     secondColumnContents: {}
+   ),
+   #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20515&quot;( ctuser_cdt: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7824&quot;(if (#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!userId_int), 0, ri!userId_int))
+ ),
+   #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+     label: &quot;&quot;,
+     firstColumnContents: {
+       with (
+        local!customerInfo: if(or(#&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!customerId_int), ri!customerId_int&lt;1), null(), #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13096&quot;(ri!customerId_int)),
+        if (
+               #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(local!customerInfo),
+               #&quot;SYSTEM_SYSRULES_textField&quot;(
+                 label: &quot;Customer name&quot;,
+                 labelPosition: &quot;ABOVE&quot;,
+                 value:&quot;n/a&quot;,
+                 readOnly: true
+               ),
+               #&quot;SYSTEM_SYSRULES_linkField&quot;(
+                 label: &quot;Customer name&quot;,
+                 labelPosition: &quot;ABOVE&quot;,
+                 links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+                         label: local!customerInfo.customerName,
+                         recordType: if(local!customerInfo.customerType.partyTypeId=#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5210&quot;,#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_15180&quot;,#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4908&quot;),
+                         identifier: ri!customerId_int
+                        )
+               )
+             )
+       )
+     },
+     secondColumnContents: {},
+     iscollapsible: true
+   ),
+   #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+     label: &quot;&quot;,
+     firstColumnContents: {
+       #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+         label: &quot;&quot;,
+         labelPosition: &quot;COLLAPSED&quot;,
+         choiceLabels: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20512&quot;,
+         choiceValues: #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20512&quot;,
+         value: ri!approvalValue_txt,
+         saveInto: {ri!approvalValue_txt},
+         required: true,
+         choiceLayout: &quot;COMPACT&quot;,
+         validations: {}
+       ),
+       #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+         labelPosition: &quot;COLLAPSED&quot;,
+         value: {
+           #&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+             text: {
+               char(10) &amp; &quot;The user will be classified as a general user representative whose authorisation will be limited to submission of applications and read only access to the Customer information. &quot;
+, &quot;&quot; &amp; char(10) &amp; char(10)  &amp; &quot;&quot;
+, &quot;By approving the request you acknowledge that you can be held liable in the event that the general user representative knowingly and/or intentionally gives false, misleading or incomplete statements or documents through &quot;
+,#&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+                 text: &quot;Connect&quot;,
+                 link: #&quot;SYSTEM_SYSRULES_safeLink&quot;(
+                   label: &quot;Connect website&quot;,
+                   uri: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12858&quot;(
+                 #&quot;_a-0000dbaa-6fe4-8000-9ba2-011c48011c48_26913&quot;).itemValue
+                 )
+               )
+, &quot; to the administering authority under any relevant legislation, or in circumstances where they ought to have reasonably known that such misleading or incomplete statements or documents were false.&quot;
+             }
+           )
+         }
+       )
+
+     },
+     secondColumnContents: {}
+   )
+ },
+ secondColumnContents: {},
+ buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+   primaryButtons: {
+     #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+       label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+       style: &quot;PRIMARY&quot;,
+       value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+       saveInto: ri!buttonValue_txt
+     )
+   },
+   secondarybuttons: {
+     #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+       label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+       style: &quot;DESTRUCTIVE&quot;,
+       confirmmessage: &quot;Data will not be saved. Do you still want to cancel?&quot;,
+       value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+       saveInto: ri!buttonValue_txt,
+       skipvalidation: true
+     )
+   }
+ ),
+ validations: {}
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>approvalValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>userId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>approvalValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>customerId_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

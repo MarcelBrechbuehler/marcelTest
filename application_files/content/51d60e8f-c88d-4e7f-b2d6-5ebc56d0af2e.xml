@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>USR_deactivateUser</name>
+        <uuid>51d60e8f-c88d-4e7f-b2d6-5ebc56d0af2e</uuid>
+        <description>Interface to deactivate the user</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_5563</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(
+  local!userLogin_user: ri!userLogin_user,
+  local!pagingInfoUT: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: 5
+  ),
+  with(
+    local!report: a!queryProcessAnalytics(
+      report: #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12682&quot;,
+      contextUsers: local!userLogin_user,
+      query: #&quot;SYSTEM_SYSRULES_query&quot;(
+        pagingInfo: local!pagingInfoUT
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+      label: &quot;Deactivate User&quot;,
+      instructions: &quot;&quot;,
+      firstColumnContents: {
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+          label: &quot;&quot;,
+          firstColumnContents: {
+            #&quot;SYSTEM_SYSRULES_dateTimeField&quot;(
+              label: &quot;Deactivation Date Time&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              required: true(),
+              value: ri!deactivationDateTime_dt,
+              saveInto: ri!deactivationDateTime_dt
+            ),
+            #&quot;772a3df7-b7fb-4978-902c-de6efe9e4096&quot;()
+          },
+          secondColumnContents: {}
+        )
+      },
+      secondColumnContents: {},
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Submit&quot;,
+            style: &quot;PRIMARY&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+            saveInto: ri!buttonAction_txt
+          )
+        },
+        secondaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: &quot;Cancel&quot;,
+            style: &quot;NORMAL&quot;,
+            confirmationMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+            saveInto: ri!buttonAction_txt,
+            skipValidation: true
+          )
+        }
+      ),
+      validations: {
+        if(
+          count(
+            local!report.data
+          ) &gt; 0,
+          #&quot;SYSTEM_SYSRULES_validationMessage&quot;(
+            message: &quot;Please reassign the current user tasks before deactivation&quot;,
+            validateAfter: &quot;SUBMIT&quot;
+          ),
+          {}
+        )
+      }
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>buttonAction_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>deactivationDateTime_dt</name>
+            <type>
+                <name>dateTime</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>userLogin_user</name>
+            <type>
+                <name>User</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonAction_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>deactivationDateTime_dt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:User"/>
+                <a:nameRef>userLogin_user</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

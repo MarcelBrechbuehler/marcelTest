@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>LOC_editLocationDetails</name>
+        <uuid>085381a3-7eee-402c-9986-be30847ae085</uuid>
+        <description>This interface rule displays the edit location</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11491</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+    startIndex: 1,&#xD;
+    batchSize: - 1&#xD;
+  ),&#xD;
+  local!selectedIndex,&#xD;
+  local!selectedGpsIndex,&#xD;
+  local!generalDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7681&quot;(&#xD;
+    ri!locationId&#xD;
+  ),&#xD;
+  local!locationCategoryDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9119&quot;(&#xD;
+    ri!locationId&#xD;
+  ),&#xD;
+  local!locationRelatedmapDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9173&quot;(&#xD;
+    ri!locationId&#xD;
+  ),&#xD;
+  local!locationRelatedmapLocationDetails: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_7681&quot;(&#xD;
+    local!locationRelatedmapDetails.locationRelatedId&#xD;
+  ),&#xD;
+  local!relatedLocationDetails: apply(&#xD;
+    #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11115&quot;(&#xD;
+      locationId: _,&#xD;
+      relatedLocationId: _,&#xD;
+      locationName: _,&#xD;
+      locationRef: _,&#xD;
+      relationshipReason: _&#xD;
+    ),&#xD;
+    merge(&#xD;
+      local!locationRelatedmapDetails.locationId,&#xD;
+      local!locationRelatedmapDetails.locationRelatedId,&#xD;
+      local!locationRelatedmapLocationDetails.locationName,&#xD;
+      local!locationRelatedmapLocationDetails.locationRef,&#xD;
+      local!locationRelatedmapDetails.relationshipReason&#xD;
+    )&#xD;
+  ),&#xD;
+  local!gpsDetails: if(ri!gpsDetailsFlag,if(isnull(ri!locationGpsDetails_cdt),#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11365&quot;(&#xD;
+    ri!locationId&#xD;
+  ),ri!locationGpsDetails_cdt),#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11365&quot;(&#xD;
+    ri!locationId&#xD;
+  )),&#xD;
+  local!allGpsDetails: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11365&quot;(&#xD;
+    ri!locationId&#xD;
+  ),&#xD;
+  local!itemsToken,&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Edit Location&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: concat(&#xD;
+          local!generalDetails.locationRef,&#xD;
+          &quot; - &quot;,&#xD;
+          local!generalDetails.locationName&#xD;
+        ),&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;CLR:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).description,&#xD;
+            &#xD;
+            choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).commonCodeId,&#xD;
+            value: local!generalDetails.clrStatus,&#xD;
+            saveInto: local!generalDetails.clrStatus,&#xD;
+            required:true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;EMR:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).description,&#xD;
+            &#xD;
+            choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).commonCodeId,&#xD;
+            value: local!generalDetails.emrStatus,&#xD;
+            saveInto: local!generalDetails.emrStatus,&#xD;
+            required:true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Description:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.description,&#xD;
+            saveInto: local!generalDetails.description,&#xD;
+            readOnly: false,&#xD;
+			      validations:#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22938&quot;,local!generalDetails.description)&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Other Names:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: local!generalDetails.otherNames,&#xD;
+            saveInto: local!generalDetails.otherNames,&#xD;
+            readOnly: false,&#xD;
+			      validations:#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22939&quot;,local!generalDetails.otherNames)&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Officer Safety Risk?&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).description,&#xD;
+           &#xD;
+            choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12069&quot;&#xD;
+            ).commonCodeId,&#xD;
+            value: local!generalDetails.safetyRiskStatus,&#xD;
+            saveInto: local!generalDetails.safetyRiskStatus,&#xD;
+            required:true&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Operational Status:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12070&quot;&#xD;
+            ).description,&#xD;
+            &#xD;
+            choiceValues: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3056&quot;(&#xD;
+              #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12070&quot;&#xD;
+            ).commonCodeId,&#xD;
+            value: local!generalDetails.operationalStatus,&#xD;
+            saveInto: local!generalDetails.operationalStatus,&#xD;
+            required:true&#xD;
+          )&#xD;
+        },&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      /*Section Layout for Add Related Location*/#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+            label: &quot;RELATED LOCATIONS&quot;,&#xD;
+            headerCells: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Ref&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Name&quot;&#xD;
+               &#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Relationship Reason&quot;&#xD;
+               &#xD;
+              ),&#xD;
+              /* For the &quot;Remove&quot; column */#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            columnConfigs: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+              function: #&quot;ac83155a-14d6-4aa7-96ff-e77c373f8361&quot;(&#xD;
+                items: local!relatedLocationDetails,&#xD;
+                index: _,&#xD;
+                itemsToken: local!itemsToken,&#xD;
+                selectedIndex: local!selectedIndex&#xD;
+              ),&#xD;
+              array: if(&#xD;
+                or(&#xD;
+                  isnull(&#xD;
+                    local!relatedLocationDetails&#xD;
+                  ),&#xD;
+                  count(&#xD;
+                    local!relatedLocationDetails&#xD;
+                  ) &lt; 1&#xD;
+                ),&#xD;
+                {},&#xD;
+                1 + enumerate(&#xD;
+                  count(&#xD;
+                    local!relatedLocationDetails&#xD;
+                  )&#xD;
+                )&#xD;
+              ),&#xD;
+              arrayVariable: local!itemsToken&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+            secondaryButtons: {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11152&quot;,&#xD;
+                style: &quot;NORMAL&quot;,&#xD;
+                value: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11152&quot;,&#xD;
+                saveInto: {&#xD;
+                  ri!buttonValue_txt,&#xD;
+                  a!save(&#xD;
+                    ri!location_cdt,&#xD;
+                    local!generalDetails&#xD;
+                  ),&#xD;
+                  a!save(&#xD;
+                    ri!relatedLocationDetails,&#xD;
+                    local!locationRelatedmapDetails&#xD;
+                  ),&#xD;
+                  a!save(&#xD;
+                    ri!selectedRelatedLocationIndex,&#xD;
+                    local!selectedIndex&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {},&#xD;
+        isCollapsible: true&#xD;
+      ),&#xD;
+      /*Section Layout for Add Gps Points*/#&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+            label: &quot;GPS POINTS&quot;,&#xD;
+            headerCells: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Point&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Description&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Status&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;Date Added&quot;&#xD;
+              ),&#xD;
+              /* For the &quot;Remove&quot; column */#&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+                label: &quot;&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            columnConfigs: {&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              ),&#xD;
+              #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(&#xD;
+                width: &quot;DISTRIBUTE&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            rows: #&quot;SYSTEM_SYSRULES_applyComponents&quot;(&#xD;
+              function: #&quot;c3db6977-a370-41f5-9367-6a474848be1b&quot;(&#xD;
+                items: local!gpsDetails,&#xD;
+                index: _,&#xD;
+                itemsToken: local!itemsToken,&#xD;
+                selectedGpsIndex: local!selectedGpsIndex&#xD;
+              ),&#xD;
+              array: if(&#xD;
+                or(&#xD;
+                  isnull(&#xD;
+                    local!gpsDetails&#xD;
+                  ),&#xD;
+                  count(&#xD;
+                    local!gpsDetails&#xD;
+                  ) &lt; 1&#xD;
+                ),&#xD;
+                {},&#xD;
+                1 + enumerate(&#xD;
+                  count(&#xD;
+                    local!gpsDetails&#xD;
+                  )&#xD;
+                )&#xD;
+              ),&#xD;
+              arrayVariable: local!itemsToken&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+            secondaryButtons: {&#xD;
+              #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+                label: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11334&quot;,&#xD;
+                style: &quot;NORMAL&quot;,&#xD;
+                value: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11334&quot;,&#xD;
+                saveInto: {&#xD;
+                  ri!buttonValue_txt,&#xD;
+				  a!save(&#xD;
+                    ri!locationGpsDetails_cdt,&#xD;
+                    difference(local!allGpsDetails,local!gpsDetails)&#xD;
+                  ),&#xD;
+                  /*a!save(&#xD;
+                    ri!locationGpsDetails_cdt,&#xD;
+                    local!gpsDetails&#xD;
+                  ),*/&#xD;
+                  a!save(&#xD;
+                    ri!selectedGpsIndex_int,&#xD;
+                    local!selectedGpsIndex&#xD;
+                  )&#xD;
+                }&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {},&#xD;
+        isCollapsible: true&#xD;
+      )&#xD;
+    },&#xD;
+    Buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          confirmMessage: &quot;Do you want to save the changes?&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3037&quot;,&#xD;
+          saveInto: {&#xD;
+            ri!buttonValue_txt,&#xD;
+            a!save(&#xD;
+              ri!location_cdt,&#xD;
+              local!generalDetails&#xD;
+            ),&#xD;
+            a!save(&#xD;
+              ri!relatedLocationDetails,&#xD;
+              local!locationRelatedmapDetails&#xD;
+            ),&#xD;
+            a!save(&#xD;
+              ri!selectedRelatedLocationIndex,&#xD;
+              local!selectedIndex&#xD;
+            ),&#xD;
+			a!save(&#xD;
+                    ri!locationGpsDetails_cdt,&#xD;
+                    difference(local!allGpsDetails,local!gpsDetails)&#xD;
+                  ),&#xD;
+            /*a!save(&#xD;
+              ri!locationGpsDetails_cdt,&#xD;
+              local!allGpsDetails&#xD;
+            ),*/&#xD;
+            a!save(&#xD;
+              ri!selectedGpsIndex_int,&#xD;
+              local!selectedGpsIndex&#xD;
+            )&#xD;
+          }&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          skipValidation:true(),&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>locationId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>location_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>relatedLocationDetails</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedRelatedLocationIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>locationGpsDetails_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>selectedGpsIndex_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gpsDetailsFlag</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

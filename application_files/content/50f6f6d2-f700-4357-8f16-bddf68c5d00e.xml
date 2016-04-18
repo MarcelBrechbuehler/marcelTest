@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_addNewCustomer</name>
+        <uuid>50f6f6d2-f700-4357-8f16-bddf68c5d00e</uuid>
+        <description>This rule is used to add new customer</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!partyClass: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5221&quot;(),
+  local!basicInfo: if(
+    len(
+      ri!businessNumberValue
+    ) &gt; 0,
+    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13779&quot;(
+      ri!businessNumberType,
+      ri!businessNumberValue
+    ),
+    if(
+      len(
+        ri!abnValue_txt
+      ) &gt; 0,
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13779&quot;(
+        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5229&quot;,
+        ri!abnValue_txt
+      ),
+      {}
+    )
+  ),
+  ri!abnValue: index(
+    local!basicInfo,
+    &quot;abn&quot;,
+    {}
+  ),
+  local!acn: index(
+    local!basicInfo,
+    &quot;ASICNumber&quot;,
+    {}
+  ),
+  ri!entityName: index(
+    local!basicInfo,
+    &quot;entityMainName&quot;,
+    {}
+  ),
+  ri!state: index(
+    local!basicInfo,
+    &quot;mainBusinessPhysicalAddressStateCode&quot;,
+    {}
+  ),
+  ri!postCode: index(
+    local!basicInfo,
+    &quot;mainBusinessPhysicalAddressPostcode&quot;,
+    {}
+  ),
+  ri!gstStatus: index(
+    local!basicInfo,
+    &quot;gstEffectiveFrom&quot;,
+    {}
+  ),
+  ri!abnStatus: index(
+    local!basicInfo,
+    &quot;entityStatusCode&quot;,
+    {}
+  ),
+  ri!abnStatusDate: index(
+    local!basicInfo,
+    &quot;entityStatusEffectiveFrom&quot;,
+    {}
+  ),
+  ri!lastUpdatedDate: index(
+    local!basicInfo,
+    &quot;recordLastUpdated&quot;,
+    {}
+  ),
+  local!entityTypeCode: index(
+    local!basicInfo,
+    &quot;entityTypeCode&quot;,
+    {}
+  ),
+  local!entityTypeDescription: index(
+    local!basicInfo,
+    &quot;entityTypeDescription&quot;,
+    {}
+  ),
+  local!entityMainTradingName: index(
+    local!basicInfo,
+    &quot;entityMainTradingName&quot;,
+    {}
+  ),
+  local!businessNumberType,
+  with(
+    local!basicInfo: if(
+      len(
+        ri!businessNumberValue
+      ) &gt; 0,
+      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13779&quot;(
+        ri!businessNumberType,
+        ri!businessNumberValue
+      ),
+      if(
+        len(
+          ri!abnValue_txt
+        ) &gt; 0,
+        #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_13779&quot;(
+          #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5229&quot;,
+          ri!abnValue_txt
+        ),
+        {}
+      )
+    ),
+    ri!abnValue: index(
+      local!basicInfo,
+      &quot;abn&quot;,
+      {}
+    ),
+    local!acn: index(
+      local!basicInfo,
+      &quot;ASICNumber&quot;,
+      {}
+    ),
+    ri!entityName: index(
+      local!basicInfo,
+      &quot;entityMainName&quot;,
+      {}
+    ),
+    ri!state: index(
+      local!basicInfo,
+      &quot;mainBusinessPhysicalAddressStateCode&quot;,
+      {}
+    ),
+    ri!postCode: index(
+      local!basicInfo,
+      &quot;mainBusinessPhysicalAddressPostcode&quot;,
+      {}
+    ),
+    ri!gstStatus: index(
+      local!basicInfo,
+      &quot;gstEffectiveFrom&quot;,
+      {}
+    ),
+    ri!abnStatus: index(
+      local!basicInfo,
+      &quot;entityStatusCode&quot;,
+      {}
+    ),
+    ri!abnStatusDate: index(
+      local!basicInfo,
+      &quot;entityStatusEffectiveFrom&quot;,
+      {}
+    ),
+    ri!lastUpdatedDate: index(
+      local!basicInfo,
+      &quot;recordLastUpdated&quot;,
+      {}
+    ),
+    local!entityTypeCode: index(
+      local!basicInfo,
+      &quot;entityTypeCode&quot;,
+      {}
+    ),
+    local!entityTypeDescription: index(
+      local!basicInfo,
+      &quot;entityTypeDescription&quot;,
+      {}
+    ),
+    local!entityMainTradingName: index(
+      local!basicInfo,
+      &quot;entityMainTradingName&quot;,
+      {}
+    ),
+    #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+      firstColumnContents: {
+        if(
+          not(
+            isnull(
+              ri!processMilestoneName
+            )
+          ),
+          if(
+            ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,
+            #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4453&quot;(
+              ri!processMilestoneIndex
+            ),
+            #&quot;_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1595&quot;(
+              ri!processMilestoneName,
+              ri!processMilestoneIndex
+            )
+          ),
+          {}
+        ),
+        #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+          label: 
+          if(isnull(ri!isExternalUser_txt),
+            if(or(
+                ri!isAdd = &quot;Temp&quot;,
+                ri!buttonValue = &quot;New&quot;
+              ),
+              &quot;Add New Customer&quot;,
+              &quot;Edit Customer&quot;
+            ),
+            &quot;Customer Details&quot;
+          ),
+          firstColumnContents: {
+            if(
+              or(
+                ri!isAdd = &quot;Temp&quot;,
+                ri!buttonValue = &quot;New&quot;
+              ),
+              {},
+              {
+                #&quot;SYSTEM_SYSRULES_textField&quot;(
+                  label: &quot;Ecotrack Customer Reference &quot;,
+                  labelPosition: &quot;ADJACENT&quot;,
+                  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                    fieldMaxLength: #&quot;_a-0000db6b-3789-8000-9ba2-011c48011c48_27900&quot;,
+                    fieldData: ri!ecotrackCustRef.externalId
+                  ),
+                  value: if(
+                    isnull(
+                      ri!ecotrackCustRef
+                    ),
+                    {},
+                    ri!ecotrackCustRef.externalId
+                  ),
+                  saveInto: {
+                    ri!ecotrackCustRef.externalId,
+                    a!save(
+                      ri!ecotrackCustRef.externalIdType,
+                      #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16695&quot;
+                    )
+                  },
+                  required: false,
+                  readOnly: false
+                )
+              }
+            ),
+            if(or(not(isnull(ri!isExternalUser_txt)),ri!isSOR=&quot;SOR&quot;),
+              {
+                #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                  label: &quot;Customer Type&quot;,
+                  placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+                  labelPosition: &quot;ADJACENT&quot;,
+                  required: true,
+                  disabled: if(
+                    or(
+                      ri!buttonValue = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,
+                      not(
+                        or(
+                          #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!isExternalUser_txt),
+                          #&quot;_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20363&quot;(ri!partyTypeMain)
+                        )
+                      )
+                    ),
+                    true,
+                    false
+                  ),
+                  validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                    fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22901&quot;,
+                    fieldData: ri!partyTypeMain
+                  ),
+                  choiceLabels: {
+                    local!partyClass.name[1],
+                    local!partyClass.name[2]
+                  },
+                  choiceValues: {
+                    local!partyClass.value[1],
+                    local!partyClass.value[2]
+                  },
+                  value: ri!partyTypeMain,
+                  saveInto: {ri!partyTypeMain
+                  }
+                )
+              },
+              {
+                if(
+                  ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;,
+                  {
+                    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                      label: &quot;Customer Type&quot;,
+                      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+                      labelPosition: &quot;ADJACENT&quot;,
+                      required: true,
+                      disabled: if(
+                        ri!buttonValue = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,
+                        true,
+                        false
+                      ),
+                      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                        fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22901&quot;,
+                        fieldData: ri!partyTypeMain
+                      ),
+                      choiceLabels: {
+                        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5209&quot;
+                      },
+                      choiceValues: {
+                        #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;
+                      },
+                      value: ri!partyTypeMain,
+                      saveInto: ri!partyTypeMain
+                    )
+                  },
+                  {
+                    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+                      label: &quot;Customer Type&quot;,
+                      placeholderLabel: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5141&quot;,
+                      labelPosition: &quot;ADJACENT&quot;,
+                      required: true,
+                      disabled: if(
+                        ri!buttonValue = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5408&quot;,
+                        true,
+                        false
+                      ),
+                      validations: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22899&quot;(
+                        fieldMaxLength: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22901&quot;,
+                        fieldData: ri!partyTypeMain
+                      ),
+                      choiceLabels: {
+                        local!partyClass.name
+                      },
+                      choiceValues: {
+                        local!partyClass.value
+                      },
+                      value: ri!partyTypeMain,
+                      saveInto: ri!partyTypeMain
+                    )
+                  }
+                )
+              }
+            )
+          },
+          secondColumnContents: {
+            #&quot;SYSTEM_SYSRULES_textField&quot;(
+              label: &quot;&quot;,
+              readOnly: true,
+              value: &quot;&quot;
+            )
+          }
+        ),
+        if(
+          ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5214&quot;,
+          {
+            #&quot;3fe46ac7-82a0-4160-9a75-8d1a70799aa3&quot;(
+              partyType: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5214&quot;,
+              title: ri!title,
+              firstName: ri!firstName,
+              middleName: ri!middleName,
+              surname: ri!surname,
+              dateOfBirth: ri!dateOfBirth,
+              buttonValue: ri!buttonValue,
+              source: ri!source
+            )
+          },
+          {
+            if(
+              ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5215&quot;,
+              {
+                if(
+                  or(
+                    ri!isAdd = &quot;Temp&quot;,
+                    ri!buttonValue = &quot;New&quot;
+                  ),
+                  #&quot;298113e8-52db-4b1d-9ece-43a24d9fd081&quot;(
+                    customerType: ri!customerType,
+                    customerName: ri!customerName,
+                    businessNumberType: ri!businessNumberType,
+                    businessNumberValue: ri!businessNumberValue,
+                    buttonValue: ri!buttonValue,
+                    abnValue: ri!abnValue,
+                    dateValue: ri!dateValue,
+                    verifiedDate: ri!verifiedDate,
+                    streetNoValue: ri!streetNoValue,
+                    entityName: ri!entityName,
+                    postCode: ri!postCode,
+                    gstStatus: ri!gstStatus,
+                    abnStatus: ri!abnStatus,
+                    abnStatusDate: ri!abnStatusDate,
+                    lastUpdatedDate: ri!lastUpdatedDate,
+                    state: ri!state,
+                    abn: ri!abnValue_txt,
+                    acn: local!acn,
+                    entityTypeCode: local!entityTypeCode,
+                    entityTypeDescription: local!entityTypeDescription,
+                    entityMainTradingName: local!entityMainTradingName,
+                    source: ri!source,
+                    ecotrackCustRef: ri!ecotrackCustRef,
+                    abnData_cdt: ri!abnData_cdt,
+                    businessNumber_cdt: ri!businessNumber_cdt
+                  ),
+                  #&quot;1c486b7a-415e-493e-82a8-b1c6769fb93a&quot;(
+                    customerType: ri!customerType,
+                    customerName: ri!customerName,
+                    businessNumberType: ri!businessNumberType,
+                    businessNumberValue: ri!businessNumberValue,
+                    buttonValue: ri!buttonValue,
+                    abnValue: ri!abnValue,
+                    dateValue: ri!dateValue,
+                    verifiedDate: ri!verifiedDate,
+                    streetNoValue: ri!streetNoValue,
+                    entityName: ri!entityName,
+                    postCode: ri!postCode,
+                    gstStatus: ri!gstStatus,
+                    abnStatus: ri!abnStatus,
+                    abnStatusDate: ri!abnStatusDate,
+                    lastUpdatedDate: ri!lastUpdatedDate,
+                    state: ri!state,
+                    abn: ri!abnValue_txt,
+                    acn: local!acn,
+                    entityTypeCode: local!entityTypeCode,
+                    entityTypeDescription: local!entityTypeDescription,
+                    entityMainTradingName: local!entityMainTradingName,
+                    source: ri!source,
+                    ecotrackCustRef: ri!ecotrackCustRef,
+                    abnData_cdt: ri!abnData_cdt,
+                    businessNumber_cdt: ri!businessNumber_cdt
+                  )
+                )
+              },
+              {
+                if(
+                  ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5216&quot;,
+                  {
+                    #&quot;ec2aaec2-0d4b-4b4c-a6b0-0301336f340d&quot;(
+                      typeSearch: ri!typeSearch,
+                      nameValue: ri!nameValue,
+                      buttonValue: ri!buttonValue,
+                      abnValue_txt: ri!abnValue_txt,
+                      items: ri!items,
+                      itemsToken: ri!itemsToken,
+                      index: ri!index,
+                      isEdit: ri!isEdit,
+                      partnershipType: ri!partnershipType,
+                      partyName: ri!partyName,
+                      customerName: ri!customerName,
+                      abnData_cdt: ri!abnData_cdt
+                    )
+                  },
+                  if(
+                    ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5208&quot;,
+                    {
+                      #&quot;59efd61e-ec2d-4dee-b0f2-a6c2e98f3c26&quot;(
+                        customerType: ri!partyTypeMain,
+                        partyName: ri!customerName,
+                        abnValue: ri!abnValue,
+                        abnValue_txt: ri!abnValue_txt,
+                        buttonValue: ri!buttonValue,
+                        isEdit: ri!isEdit,
+                        abnData_cdt: ri!abnData_cdt
+                      )
+                    },
+                    {}
+                  )
+                )
+              }
+            )
+          }
+        )
+      },
+     
+      buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+            style: &quot;PRIMARY&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,
+            saveInto: {
+              ri!buttonValue,
+              /*ri!businessNumberType &lt;&lt; local!businessNumberType*/a!save(
+                ri!businessNumberType,
+                append(
+                  ri!businessNumberType,
+                  local!businessNumberType
+                )
+              ),
+              a!save(
+                ri!customerName,
+                if(
+                  len(
+                    ri!entityName
+                  ) &gt; 0,
+                  ri!entityName,
+                  ri!customerName
+                )
+              ),
+              if(
+                ri!partyTypeMain = #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5215&quot;,
+                a!save(
+                  ri!typeSearch,
+                  &quot;&quot;
+                ),
+                a!save(
+                  ri!customerType,
+                  &quot;&quot;
+                )
+              )
+            }
+          )
+        },
+        secondaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+            style: &quot;DESTRUCTIVE&quot;,
+            skipValidation: true,
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,
+            saveInto: ri!buttonValue
+          ),
+          if(
+            or(
+              ri!isAdd = &quot;Temp&quot;,
+              ri!buttonValue = &quot;New&quot;
+            ),
+            {},
+            #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+              label: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              style: &quot;NORMAL&quot;,
+              skipValidation: true,
+              value: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5394&quot;,
+              saveInto: ri!buttonValue
+            )
+          )
+        }
+      ),
+       validations: if( ri!isExternalUser_txt = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15546&quot;,{},{})
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>processMilestoneName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>processMilestoneIndex</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>title</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>firstName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>middleName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>surname</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>dateOfBirth</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>nameValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessNumberType</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessNumberValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>dateValue</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>verifiedDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streetNoValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>postCode</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>gstStatus</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnStatus</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnStatusDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>lastUpdatedDate</name>
+            <type>
+                <name>date</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>state</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnValue_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>items</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>itemsToken</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isEdit</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partnershipType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyTypeMain</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>typeSearch</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerType</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isAdd</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abn</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>source</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>ecotrackCustRef</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>abnData_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>businessNumber_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isExternalUser_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>isSOR</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>processMilestoneName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>processMilestoneIndex</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>partyType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>title</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>firstName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>middleName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>surname</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>dateOfBirth</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>nameValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>customerName_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>businessNumberType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>businessNumberValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>dateValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>verifiedDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>streetNoValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>entityName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>postCode</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>gstStatus</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnStatus</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>abnStatusDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:date"/>
+                <a:nameRef>lastUpdatedDate</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>state</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>buttonValue</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>abnValue_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abnValue_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>items</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>itemsToken</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isEdit</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>partnershipType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>partyName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>customerName</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>partyTypeMain</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>typeSearch</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                <a:nameRef>customerType</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isAdd</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>abn</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>source</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>ecotrackCustRef</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>abnData_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>businessNumber_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isExternalUser_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>isSOR</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

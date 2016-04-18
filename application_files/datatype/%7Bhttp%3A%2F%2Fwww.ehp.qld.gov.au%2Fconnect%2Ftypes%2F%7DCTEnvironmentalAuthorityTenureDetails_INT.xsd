@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="CTEnvironmentalAuthorityTenureDetails_INT">
+    <xsd:sequence>
+      <xsd:element name="number" nillable="true" type="xsd:string"/>
+      <xsd:element name="tenureType" nillable="true" type="xsd:string"/>
+      <xsd:element name="status" nillable="true" type="xsd:string"/>
+      <xsd:element name="ecComplyFl" nillable="true" type="xsd:string"/>
+      <xsd:element name="scComplyFl" nillable="true" type="xsd:string"/>
+      <xsd:element name="termSoughtValue" nillable="true" type="xsd:int"/>
+      <xsd:element name="termSoughtUnit" nillable="true" type="xsd:string"/>
+      <xsd:element name="generalLocality" nillable="true" type="xsd:string"/>
+      <xsd:element name="additionalInformationOfTheLocation"
+        nillable="true" type="xsd:string"/>
+      <xsd:element name="area" nillable="true" type="xsd:double"/>
+      <xsd:element name="areaUnit" nillable="true" type="xsd:string"/>
+      <xsd:element name="surfaceArea" nillable="true" type="xsd:double"/>
+      <xsd:element name="surfaceAreaUnit" nillable="true" type="xsd:string"/>
+      <xsd:element name="mmolMapsUrl" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>SOR_manualDecisionSignedDocumentUpload</name>
+        <uuid>74b3b4ca-739e-42b1-87dc-ef602581f435</uuid>
+        <description>Allows the end user to download the decision notice, sign the document and re upload it.</description>
+        <parentUuid>_a-0000d9fa-0032-8000-9ba2-011c48011c48_2586</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(local!suitableOperator:#&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4429&quot;(ri!suitableOperatorId_int),
+#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;Suitable Operator Decision Notice - Signature Required&quot;,
+  instructions: &quot;Please download the generated template file, add the name of the delegate to the template, then print the document, get it signed by the delegate and scan the document, uploading back to this task.&quot;,
+  firstColumnContents: {
+            #&quot;SYSTEM_SYSRULES_textField&quot;(
+              label:&quot;Due on&quot;,
+              value:todate(local(tp!deadline)),
+              readOnly:true
+            ),
+       #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            label: &quot;Suitable Operatior Information&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            links: {
+              #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+                label: &quot;Suitable Operator Dashboard&quot;,
+                recordtype: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11227&quot;,
+                identifier: ri!suitableOperatorId_int
+              )
+            },
+            align: &quot;LEFT&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label:&quot;Suitable Operator Reference&quot;,
+            value:if(len(local!suitableOperator.suitableOperatorRef)=0,local!suitableOperator.applicationRef,local!suitableOperator.suitableOperatorRef),
+            readOnly:true
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label:&quot;Source&quot;,
+            value:local!suitableOperator.source,
+            readOnly:true
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Decision completed by&quot;,
+            value: user(ri!loggedOnUser_txt, &quot;firstName&quot;) &amp; &quot; &quot; &amp; user(ri!loggedOnUser_txt, &quot;lastName&quot;),
+            readOnly: true
+          )
+  },
+  secondColumnContents: {
+     #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            label:&quot;Decision Notice Download&quot;,
+            labelPosition:&quot;ABOVE&quot;,
+            links:{
+          #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(label:&quot;Suitable Operator Decision Notice&quot;,document:ri!suitableOperatorDecisionNotice_doc)}
+          ),
+          #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(
+          label:&quot;Suitable Operator Decision Notice Upload&quot;,
+          instructions:&quot;Upload the signed Suitable Operator Decision Notice&quot;,
+          target:#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_14459&quot;,
+          value:if(isnull(ri!uploadedSuitableOperatorDecisionNotice_doc),{},ri!uploadedSuitableOperatorDecisionNotice_doc),
+          saveInto:ri!uploadedSuitableOperatorDecisionNotice_doc,
+          required:true
+        )
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+        style: &quot;PRIMARY&quot;,
+        value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,
+        saveInto: {ri!buttonValue_txt}
+      )
+    },
+    secondaryButtons: {
+      
+    }
+  ),
+  validations: {}
+)
+)</definition>
+        <namedTypedValue>
+            <name>suitableOperatorId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>suitableOperatorDecisionNotice_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>uploadedSuitableOperatorDecisionNotice_doc</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>loggedOnUser_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>ConnectAdministrator</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

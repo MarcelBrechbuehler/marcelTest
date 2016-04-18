@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.ehp.qld.gov.au/connect/types/"
+  xmlns:tns="http://www.ehp.qld.gov.au/connect/types/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.ehp.qld.gov.au%2Fconnect%2Ftypes%2F%7DCTCommonCodeCore.xsd"/>
+  <xsd:complexType name="CTPermitActivityGeneral">
+    <xsd:annotation>
+      <xsd:appinfo source="appian.jpa">
+				  @Table( name="permit_activity")
+				</xsd:appinfo>
+      <xsd:documentation><![CDATA[This data type is used to store permit activity details]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="permitActivityId" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue @Column(name="permit_activity_id")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level1" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="level1")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level2" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="level2")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level3" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="level3")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level4" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="level4")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level5" nillable="true" type="xsd:long">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="level5")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level1Ref" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=REFRESH, optional=false) @JoinColumn(name="level1", insertable=false, updatable=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level2Ref" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=REFRESH, optional=false) @JoinColumn(name="level2", insertable=false, updatable=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level3Ref" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=REFRESH, optional=false) @JoinColumn(name="level3", insertable=false, updatable=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level4Ref" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=REFRESH, optional=false) @JoinColumn(name="level4", insertable=false, updatable=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="level5Ref" nillable="true" type="tns:CTCommonCodeCore">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@ManyToOne(cascade=REFRESH, optional=false) @JoinColumn(name="level5", insertable=false, updatable=false)</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="active" nillable="true" type="xsd:byte">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="active")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="source" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Column(name="source")</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

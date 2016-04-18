@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_relationshipDetails</name>
+        <uuid>a8ec4795-48bf-415c-9bbc-5a60fc7a7825</uuid>
+        <description>This interface is to display the relationship details section of the document dashboard</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+  local!tableDataSet: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11243&quot;(&#xD;
+    ri!commonDocumentId_int&#xD;
+  ),&#xD;
+  local!commonDocumentLinkDetails: #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11155&quot;(&#xD;
+    ri!commonDocumentId_int&#xD;
+  ),&#xD;
+  &#xD;
+  local!entityReference: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11844&quot;(&#xD;
+    ri!commonDocumentId_int&#xD;
+  ),&#xD;
+  local!entityTypeId: intersection(&#xD;
+    &#xD;
+    local!commonDocumentLinkDetails.entityType,&#xD;
+    #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11841&quot;&#xD;
+    &#xD;
+  ),&#xD;
+&#xD;
+  local!entityDescription: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_11989&quot;(&#xD;
+    ri!commonDocumentId_int&#xD;
+  ),&#xD;
+  local!entityId: index(local!commonDocumentLinkDetails.entityId,wherecontains(local!entityTypeId,local!commonDocumentLinkDetails.entityType)),&#xD;
+  #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+    label: &quot;Relationships&quot;,&#xD;
+    totalCount: count(&#xD;
+      local!commonDocumentLinkDetails&#xD;
+    ),&#xD;
+    columns: {&#xD;
+     #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+          label: &quot;Reference&quot;,&#xD;
+          data: {&#xD;
+            local!entityReference&#xD;
+          },&#xD;
+          alignment: &quot;LEFT&quot;,&#xD;
+          links: apply(#&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12030&quot;,local!entityTypeId)&#xD;
+        ),&#xD;
+    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+        label: &quot;Type&quot;,&#xD;
+        data: {&#xD;
+          proper(&#xD;
+    substitute(&#xD;
+      lower(&#xD;
+       apply(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22864&quot;,{local!entityTypeId},{10})&#xD;
+      ),&#xD;
+      &quot;_&quot;,&#xD;
+      &quot; &quot;&#xD;
+    )&#xD;
+  ),&#xD;
+        },&#xD;
+        alignment: &quot;LEFT&quot;&#xD;
+      ),&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+        label: &quot;Description&quot;,&#xD;
+        data: {&#xD;
+          local!entityDescription&#xD;
+        },&#xD;
+        alignment: &quot;LEFT&quot;&#xD;
+      )&#xD;
+    },&#xD;
+    value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex: 1,&#xD;
+      batchSize: 10,&#xD;
+      sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(&#xD;
+        field: &quot;name&quot;,&#xD;
+        ascending: true&#xD;
+      )&#xD;
+    )&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>commonDocumentId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_offlineQuestionStream</name>
+        <uuid>_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15214</uuid>
+        <description>Renders a entire question stream of data for offline use</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+local!questions:union(ri!streamQuestions_cdt.questionText,ri!streamQuestions_cdt.questionText),
+local!questionsId:union(ri!streamQuestions_cdt.questionId,ri!streamQuestions_cdt.questionId),  
+local!arrayVariable,
+#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;CaRE Offline Submission - &quot;&amp;ri!questionStream_txt,
+  instructions: &quot;Use this form on a mobile device to complete &quot;&amp;ri!questionStream_txt&amp;&quot; question bank questions for a selected compliance evaluation&quot;,
+  firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_textField&quot;(
+          label:&quot;Enter Evaluation&quot;,
+          instructions: &quot;Please enter the Evaluation Reference which you wish to answer questions for. You may enter either the full reference or the numbers at the end of the reference. If you enter an incorrect reference, you will be able to correct this when you are next online through a task assigned to you. If you do not remember the reference, enter any text to refer to this evaluation and this will be presented back to you to allow you to select an existing reference when you are next online.&quot;,
+          value: ri!searchString,
+          saveInto: ri!searchString
+      ),
+       /*a!dropdownField(
+          label:&quot;Select Evaluation&quot;,
+          instructions: &quot;Select the evaluation to submit the questions against&quot;,
+          placeholderLabel:&quot;--Please Select--&quot;,
+          choiceLabels:index(ri!careEvaluations_cdt,&quot;careEvaluationRef&quot;,{}),
+          choiceValues:index(ri!careEvaluations_cdt, &quot;careEvaluationId&quot;,{}),
+          value:ri!selectedEvaluation,
+          saveInto:{ri!selectedEvaluation}
+        ),*/
+    /*a!paragraphField(value:typeName(typeOf(*/
+   fn!reduce(fn!append,{},
+   #&quot;SYSTEM_SYSRULES_applyComponents&quot;(function:#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15234&quot;(streamQuestions_cdt:ri!streamQuestions_cdt,
+     questions_txt:local!questions,
+     questionIds_int: local!questionsId,
+     index:_),
+     array:1+enumerate(length(local!questions)),
+     arrayVariable:local!arrayVariable
+     )
+     
+     )
+  },
+   
+  secondColumnContents: {},
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Submit&quot;,
+        style: &quot;PRIMARY&quot;,
+        saveInto: {}
+      )
+    },
+    secondaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Cancel&quot;,
+        style: &quot;NORMAL&quot;,
+        value: true,
+        saveInto: ri!cancel,
+        skipValidation: true
+      )
+    }
+  ),
+  validations: {}
+)
+)</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>questionStream_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>streamQuestions_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestionOffline_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>searchString</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>true</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:Expression"/>
+                <a:nameRef>cancel</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">&quot;AIR&quot;</a:value>
+                <a:nameRef>questionStream_txt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15261&quot;(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15264&quot;,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15034&quot;)</a:value>
+                <a:nameRef>streamQuestions_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                <a:nameRef>searchString</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

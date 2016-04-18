@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CaRE_dynamicQuestionJustificationObservationOffline</name>
+        <uuid>_a-0000dba1-dfd2-8000-9ba2-011c48011c48_20725</uuid>
+        <description>Combined interface rule for rendering justifications as well as observations for offline use</description>
+        <parentUuid>_a-0000d9e6-bfac-8000-9ba2-011c48011c48_1188</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>reject(fn!isnull,{
+  if(ri!index=1,
+    #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+      label:&quot;&quot;,
+      value:#&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+        text:index(ri!streamQuestions_cdt,wherecontains(ri!uniqueIds_int[ri!index],ri!streamQuestions_cdt.uniqueId),{}).observationText,
+        style:&quot;EMPHASIS&quot;)
+        ),
+    if(index(ri!streamQuestions_cdt,wherecontains(ri!uniqueIds_int[ri!index],ri!streamQuestions_cdt.uniqueId),{}).observationText&lt;&gt;index(ri!streamQuestions_cdt,wherecontains(ri!uniqueIds_int[ri!index-1],ri!streamQuestions_cdt.uniqueId),{}).observationText,
+    #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+      label:&quot;&quot;,
+      value:#&quot;SYSTEM_SYSRULES_richTextItem&quot;(
+        text:index(ri!streamQuestions_cdt,wherecontains(ri!uniqueIds_int[ri!index],ri!streamQuestions_cdt.uniqueId),{}).observationText,
+        style:&quot;EMPHASIS&quot;)
+        ),{})),
+
+      if(
+  index(
+    ri!streamQuestions_cdt.justificationDisplayType,
+    wherecontains(
+      ri!uniqueIds_int[ri!index],
+      ri!streamQuestions_cdt.uniqueId
+    ),
+    0
+  ) = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15103&quot;,
+  #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+    label: &quot;&quot;,
+    choiceLabels: {
+      index(
+        ri!streamQuestions_cdt.justificationText,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        {}
+      )
+    },
+    choiceValues: {
+      index(
+        ri!streamQuestions_cdt.justificationValue,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        {}
+      )
+    },
+    value: if(
+      #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+        index(
+          ri!streamQuestions_cdt.justificationAnswerText,
+          wherecontains(
+            ri!uniqueIds_int[ri!index],
+            ri!streamQuestions_cdt.uniqueId
+          ),
+          {}
+        )
+      ),
+      {},
+      index(
+        ri!streamQuestions_cdt.justificationAnswerText,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        {}
+      )
+    ),
+    saveInto: ri!streamQuestions_cdt[wherecontains(
+      ri!uniqueIds_int[ri!index],
+      ri!streamQuestions_cdt.uniqueId
+    )].justificationAnswerText
+  ),
+  if(
+    index(
+      ri!streamQuestions_cdt.justificationDisplayType,
+      wherecontains(
+        ri!uniqueIds_int[ri!index],
+        ri!streamQuestions_cdt.uniqueId
+      ),
+      0
+    ) = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15106&quot;,
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: index(
+        ri!streamQuestions_cdt.justificationText,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        {}
+      ),
+      value: index(
+        ri!streamQuestions_cdt.justificationAnswerText,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        {}
+      ),
+      saveInto: ri!streamQuestions_cdt[wherecontains(
+        ri!uniqueIds_int[ri!index],
+        ri!streamQuestions_cdt.uniqueId
+      )].justificationAnswerText
+   
+    ),
+    if(
+      index(
+        ri!streamQuestions_cdt.justificationDisplayType,
+        wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        ),
+        0
+      ) = #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15108&quot;,
+      #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+        label: &quot;&quot;,
+        choiceLabels: {
+          index(
+            ri!streamQuestions_cdt.justificationText,
+            wherecontains(
+              ri!uniqueIds_int[ri!index],
+              ri!streamQuestions_cdt.uniqueId
+            ),
+            {}
+          )
+        },
+        choiceValues: {
+          index(
+            ri!streamQuestions_cdt.justificationValue,
+            wherecontains(
+              ri!uniqueIds_int[ri!index],
+              ri!streamQuestions_cdt.uniqueId
+            ),
+            {}
+          )
+        },
+        value: if(
+          #&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_12573&quot;(
+            index(
+              ri!streamQuestions_cdt.justificationAnswerText,
+              wherecontains(
+                ri!uniqueIds_int[ri!index],
+                ri!streamQuestions_cdt.uniqueId
+              ),
+              {}
+            )
+          ),
+          {},
+          index(
+            ri!streamQuestions_cdt.justificationAnswerText,
+            wherecontains(
+              ri!uniqueIds_int[ri!index],
+              ri!streamQuestions_cdt.uniqueId
+            ),
+            {}
+          )
+        ),
+        saveInto: ri!streamQuestions_cdt[wherecontains(
+          ri!uniqueIds_int[ri!index],
+          ri!streamQuestions_cdt.uniqueId
+        )].justificationAnswerText
+      ),
+      #&quot;SYSTEM_SYSRULES_richTextDisplayField&quot;(
+        value: #&quot;SYSTEM_SYSRULES_richTextBulletedList&quot;(
+          &quot;Unknown Type - &quot; &amp; index(
+            ri!streamQuestions_cdt.justificationDisplayType,
+            wherecontains(
+              ri!uniqueIds_int[ri!index],
+              ri!streamQuestions_cdt.uniqueId
+            ),
+            0
+          )
+        )
+      )
+    )
+  )
+)
+})
+
+
+</definition>
+        <namedTypedValue>
+            <name>streamQuestions_cdt</name>
+            <type>
+                <name>CTCaREDynamicQuestionOffline_VW?list</name>
+                <namespace>http://www.ehp.qld.gov.au/connect/types/</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>index</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>uniqueIds_int</name>
+            <type>
+                <name>Integer?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">=#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15261&quot;(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15264&quot;,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15034&quot;)</a:value>
+                <a:nameRef>streamQuestions_cdt</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">6</a:value>
+                <a:nameRef>index</a:nameRef>
+            </a:ruleInputTestConfigs>
+            <a:ruleInputTestConfigs>
+                <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:Expression">index(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15261&quot;(#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15264&quot;,#&quot;_a-0000db6c-d5e0-8000-9ba2-011c48011c48_15034&quot;),{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15},{}).uniqueId</a:value>
+                <a:nameRef>uniqueIds_int</a:nameRef>
+            </a:ruleInputTestConfigs>
+        </value>
+    </typedValue>
+</contentHaul>

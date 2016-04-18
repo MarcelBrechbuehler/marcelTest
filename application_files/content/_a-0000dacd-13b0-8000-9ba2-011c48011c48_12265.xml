@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editContactPopulateEmail</name>
+        <uuid>_a-0000dacd-13b0-8000-9ba2-011c48011c48_12265</uuid>
+        <description>Populates email part of contact details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>={
+ partyEmailId: ri!contactEmail_cdt.partyEmailId,
+ partyId: if(
+  len(ri!contactEmail_cdt.partyId) = 0,
+  ri!partyId_int,
+  ri!contactEmail_cdt.partyId
+ ),
+ emailType: #&quot;_a-0000da7e-55bc-8000-9ba2-011c48011c48_10837&quot;,
+ email: ri!contactEmail_cdt.email,
+ primaryFlag: 1,  
+ receiveCorrespondenceFlag: if(
+  len(ri!contactEmail_cdt.receiveCorrespondenceFlag)=0,
+  0,
+  ri!contactEmail_cdt.receiveCorrespondenceFlag
+ ), 
+  createdBy: if(
+    len(
+      ri!contactEmail_cdt.createdBy
+    ) = 0,
+    ri!loggedOnUser,
+    ri!contactEmail_cdt.createdBy
+  ),
+  updatedBy: ri!LoggedOnUser,
+  createdTimestamp: if(
+    len(
+      ri!contactEmail_cdt.createdTimestamp
+    ) = 0,
+    #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;(),
+    ri!contactEmail_cdt.createdTimestamp
+  ),
+  updatedTimestamp: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4536&quot;(),
+  active: if(
+    len(
+      ri!contactEmail_cdt.active
+    ) = 0,
+    1,
+    ri!contactEmail_cdt.active
+  ),
+  source: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_4549&quot;
+}</definition>
+        <namedTypedValue>
+            <name>contactEmail_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>partyId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>loggedOnUser_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

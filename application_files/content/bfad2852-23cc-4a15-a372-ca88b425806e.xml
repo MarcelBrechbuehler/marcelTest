@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_displayRecordDocumentDetails</name>
+        <uuid>bfad2852-23cc-4a15-a372-ca88b425806e</uuid>
+        <description>Shows Document Details for the current record </description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(&#xD;
+  local!documentVW_cdt: #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_20916&quot;(ri!entityType_int, ri!entityId_int),&#xD;
+  local!documents: todatasubset(&#xD;
+    local!documentVW_cdt,&#xD;
+    local!pagingInfo&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+    label:&quot;Documents&quot;,&#xD;
+    isCollapsible: true,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+        totalCount: if(or(isnull(local!documentVW_cdt),length(local!documentVW_cdt)=0),#&quot;_a-0000da72-0b7d-8000-9ba2-011c48011c48_10080&quot;,local!documents.totalCount),&#xD;
+        columns: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(&#xD;
+            label: &quot;Download&quot;,&#xD;
+            field: &quot;dmId&quot;,&#xD;
+            data: apply(&#xD;
+                  #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_8785&quot;,&#xD;
+                  index(local!documents.data,&quot;dmId&quot;,{})&#xD;
+                  ),&#xD;
+            size: &quot;ICON&quot;,&#xD;
+            caption: #&quot;_a-0000da39-53c8-8000-9ba2-011c48011c48_9043&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Name&quot;,&#xD;
+            field: &quot;documentName&quot;,&#xD;
+            data: index(&#xD;
+              local!documents.data,&#xD;
+              &quot;documentName&quot;,&#xD;
+              {}&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Reference&quot;,&#xD;
+            field: &quot;documentRef&quot;,&#xD;
+            data: if(local!documents.totalCount=0, &#xD;
+              {},&#xD;
+              index(&#xD;
+                local!documents.data,&#xD;
+                &quot;documentRef&quot;,&#xD;
+                {}&#xD;
+              )&#xD;
+            ),&#xD;
+            links: if(local!documents.totalCount=0, &#xD;
+              {},&#xD;
+              apply(#&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+                recordType: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_16034&quot;,&#xD;
+                identifier: _&#xD;
+              ),index(local!documents.data,&quot;commonDocumentId&quot;,null))&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Type&quot;,&#xD;
+            field: &quot;documentType&quot;,&#xD;
+            data: index(&#xD;
+              local!documents.data,&#xD;
+              &quot;documentType&quot;,&#xD;
+              null&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Subtype&quot;,&#xD;
+            field: &quot;documentSubtype&quot;,&#xD;
+            data: index(&#xD;
+              local!documents.data,&#xD;
+              &quot;documentSubtype&quot;,&#xD;
+              {}&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Date Created&quot;,&#xD;
+            field: &quot;createdTimestamp&quot;,&#xD;
+            data: if(local!documents.totalCount=0, &#xD;
+              {},&#xD;
+              apply(#&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_25783&quot;,index(&#xD;
+                local!documents.data,&#xD;
+                &quot;createdTimestamp&quot;,&#xD;
+                {}&#xD;
+              ))&#xD;
+            )&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+            label: &quot;Created By&quot;,&#xD;
+            field: &quot;createdBy&quot;,&#xD;
+            data: if(local!documents.totalCount=0, &#xD;
+              {},&#xD;
+              index(&#xD;
+                local!documents.data,&#xD;
+                &quot;createdBy&quot;,&#xD;
+                {}&#xD;
+              )&#xD;
+            )&#xD;
+          )&#xD;
+         },&#xD;
+        value: local!pagingInfo,&#xD;
+        saveInto: local!pagingInfo&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)&#xD;
+&#xD;
+&#xD;
+</definition>
+        <namedTypedValue>
+            <name>entityType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

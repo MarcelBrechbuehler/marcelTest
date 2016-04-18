@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CUST_editTradingName</name>
+        <uuid>664c62e1-0536-4547-8bd1-32f3b0a95556</uuid>
+        <description>This rule is used to display edit trading name details</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11479</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  &#xD;
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+    startIndex: 1,&#xD;
+    batchSize: - 1&#xD;
+  ),&#xD;
+  with(&#xD;
+    local!customerDatasubset: todatasubset(&#xD;
+      ri!customer_cdt,&#xD;
+      local!pagingInfo&#xD;
+    ),&#xD;
+   { #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+      label: &quot;Trading Name&quot;,&#xD;
+      firstColumnContents: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridField&quot;(&#xD;
+          totalCount: local!customerDatasubset.totalCount,&#xD;
+          columns: {&#xD;
+            #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(&#xD;
+              label: &quot;Name&quot;,&#xD;
+              data: ri!customer_cdt.customerName,&#xD;
+              links: apply(&#xD;
+                    #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+                      value: _,&#xD;
+                      saveInto: ri!customerToUpdate&#xD;
+                    ),&#xD;
+                    local!customerDatasubset.data&#xD;
+                  )&#xD;
+               &#xD;
+            )/*,&#xD;
+            a!gridTextColumn(&#xD;
+              label: &quot;Change&quot;,&#xD;
+              data: {},&#xD;
+              links: apply(&#xD;
+                a!dynamicLink(&#xD;
+                  value: _,&#xD;
+                  saveInto: ri!customerToUpdate&#xD;
+                )&#xD;
+              )&#xD;
+            ),&#xD;
+            a!gridTextColumn(&#xD;
+              label: &quot;Inactivate&quot;,&#xD;
+              data: {},&#xD;
+              links: apply(&#xD;
+                a!dynamicLink(&#xD;
+                  value: _,&#xD;
+                  saveInto: ri!customerToUpdate&#xD;
+                )&#xD;
+              )&#xD;
+            )*/&#xD;
+          },&#xD;
+          value: local!pagingInfo,&#xD;
+          saveInto: local!pagingInfo&#xD;
+        )&#xD;
+         &#xD;
+      }&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+              label: &quot;Edit Trading Name&quot;,&#xD;
+              firstColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  label: &quot;Trading Name&quot;,&#xD;
+                  labelPosition: &quot;ADJACENT&quot;,&#xD;
+                  value: ri!customerToUpdate.customerName,&#xD;
+                  saveInto: ri!customerToUpdate.customerName&#xD;
+                )&#xD;
+              },&#xD;
+              secondColumnContents: {&#xD;
+                #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+                  readOnly:true()&#xD;
+                )&#xD;
+              }&#xD;
+            ),&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            style: &quot;PRIMARY&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3004&quot;,&#xD;
+            saveInto: ri!buttonValue&#xD;
+          )&#xD;
+        },&#xD;
+        secondaryButtons: {&#xD;
+          #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+            label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            style: &quot;DESTRUCTIVE&quot;,&#xD;
+            confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+            value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+            saveInto: ri!buttonValue,&#xD;
+            skipValidation: true&#xD;
+          )&#xD;
+        }&#xD;
+        )}&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>customer_cdt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>customerToUpdate</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>tradingName</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>buttonValue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.qas.com/OnDemand-2011-03"
+  xmlns:tns="http://www.qas.com/OnDemand-2011-03" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Bhttp%3A%2F%2Fwww.qas.com%2FOnDemand-2011-03%7DPicklistEntryType.xsd"/>
+  <xsd:complexType name="QAPicklistType">
+    <xsd:annotation>
+      <xsd:documentation>QAPicklistType describes a picklistThe child elements are as follows:FullPicklistMoniker : The Search Point Moniker that describes the entire picklistPicklistEntry       : The actual picklist entriesPrompt              : The prompt to display to the user, indicating what information they should enter nextTotal               : The total number of available resultsThe attributes are as follows:AutoFormatSafe      : It is suggested that you immediately format the first picklist itemAutoFormatPastClose : There is only one exact match, so you may want immediately to format the first picklist itemAutoStepInSafe      : It is suggested that you immediately step-in to the first picklist itemAutoStepInPastClose : There is only one exact match, so you may want immediately to step-in to the first picklist itemLargePotential      : Potentially, there are too many results to displayMaxMatches          : The number of results exceeded the maximum allowedMoreOtherMatches    : There are additional matches that can be displayedOverThreshold       : There are more picklist items than the threshold valueTimeout             : The search/refinement timed out</xsd:documentation>
+      <xsd:appinfo source="http://www.appian.com/ae/types/2009">
+        <ns2:Metadata xmlns:ns2="http://www.appian.com/ae/types/2009">
+          <ns2:Flags>HIDDEN</ns2:Flags>
+        </ns2:Metadata>
+      </xsd:appinfo>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element form="qualified" name="FullPicklistMoniker" type="xsd:string"/>
+      <xsd:element form="qualified" maxOccurs="unbounded" minOccurs="0"
+        name="PicklistEntry" type="tns:PicklistEntryType"/>
+      <xsd:element form="qualified" name="Prompt" type="xsd:string"/>
+      <xsd:element form="qualified" name="Total" type="xsd:nonNegativeInteger"/>
+    </xsd:sequence>
+    <xsd:attribute default="false" name="AutoFormatPastClose" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="AutoFormatSafe" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="AutoStepinPastClose" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="AutoStepinSafe" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="LargePotential" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="MaxMatches" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="MoreOtherMatches" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="OverThreshold" type="xsd:boolean"/>
+    <xsd:attribute default="false" name="Timeout" type="xsd:boolean"/>
+  </xsd:complexType>
+</xsd:schema>

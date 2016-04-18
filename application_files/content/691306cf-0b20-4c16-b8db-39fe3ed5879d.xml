@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>DOC_editDocument</name>
+        <uuid>691306cf-0b20-4c16-b8db-39fe3ed5879d</uuid>
+        <description>Interface to enable editing an existing document</description>
+        <parentUuid>_a-0000da88-6c19-8000-9ba2-011c48011c48_11492</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>= load(&#xD;
+  local!types: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12865&quot;(&#xD;
+    ri!function_int,ri!activity_int,ri!subject_int&#xD;
+  ),&#xD;
+  &#xD;
+  {&#xD;
+   &#xD;
+    #&quot;SYSTEM_SYSRULES_gridLayout&quot;(&#xD;
+      label: &quot;Edit Document &quot;,&#xD;
+      instructions: &quot;Update/Remove Documents&quot;,&#xD;
+      headerCells: {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Document Name&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Related Entity&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Document Type&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Document Sub Type&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        ),&#xD;
+        if(length(ri!entityName_txt)=1,&#xD;
+        {&#xD;
+        #&quot;SYSTEM_SYSRULES_gridLayoutHeaderCell&quot;(&#xD;
+          label: &quot;Remove&quot;,&#xD;
+          align: &quot;CENTER&quot;&#xD;
+        )},{}&#xD;
+        )&#xD;
+      },&#xD;
+      columnConfigs: {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;DISTRIBUTE&quot;),&#xD;
+          if(length(ri!entityName_txt)=1,&#xD;
+        {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridLayoutColumnConfig&quot;(width: &quot;NARROW&quot;)},{})&#xD;
+        },&#xD;
+      rows: &#xD;
+        {&#xD;
+          #&quot;SYSTEM_SYSRULES_gridRowLayout&quot;(&#xD;
+  contents: {&#xD;
+     if(ri!activeFlag_int=0,{&#xD;
+      #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+       readOnly: true()&#xD;
+    ),#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+       readOnly: true()&#xD;
+    ),#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+       readOnly: true()&#xD;
+    ),#&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+       readOnly: true()&#xD;
+    )&#xD;
+     },{&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      value: ri!documentName_txt,&#xD;
+      saveInto: ri!documentName_txt,&#xD;
+      required:true(),&#xD;
+      align: &quot;CENTER&quot;&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      value: joinarray(ri!entityName_txt,{char(10)&amp;char(10)}),&#xD;
+      readOnly: true(),&#xD;
+      align: &quot;CENTER&quot;&#xD;
+    ),&#xD;
+   #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+      label: &quot;Document Type&quot;,&#xD;
+      labelPosition: &quot;ADJACENT&quot;,&#xD;
+      choiceLabels: index(&#xD;
+        local!types,&#xD;
+        &quot;description&quot;,&#xD;
+        {}&#xD;
+      ),&#xD;
+      placeholderLabel: &quot;--- Select ---&quot;,&#xD;
+      choiceValues: index(&#xD;
+        local!types,&#xD;
+        &quot;commonCodeId&quot;,&#xD;
+        {}&#xD;
+      ),&#xD;
+      value: ri!documentType_int,&#xD;
+      saveInto: {ri!documentType_int,&#xD;
+      a!save(ri!documentSubtype_int,null)},&#xD;
+      required:true()&#xD;
+    ),&#xD;
+    with(&#xD;
+      local!subTypes: #&quot;_a-0000da88-6c19-8000-9ba2-011c48011c48_12864&quot;(&#xD;
+     ri!function_int,ri!activity_int,ri!subject_int, ri!documentType_int&#xD;
+  ),&#xD;
+    #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+      label: &quot;Document Sub Type&quot;,&#xD;
+      labelPosition: &quot;ADJACENT&quot;,&#xD;
+      choiceLabels: index(&#xD;
+        local!subTypes,&#xD;
+        &quot;description&quot;,&#xD;
+        {}&#xD;
+      ),&#xD;
+      placeholderLabel: &quot;--- Select ---&quot;,&#xD;
+      choiceValues: index(&#xD;
+        local!subTypes,&#xD;
+        &quot;commonCodeId&quot;,&#xD;
+        {}&#xD;
+      ),&#xD;
+      value: ri!documentSubtype_int,&#xD;
+      saveInto: {ri!documentSubtype_int,&#xD;
+       a!save(ri!commonDocumentClassificationId_int,&#xD;
+#&quot;e2d912f0-c0bd-41d7-8851-27a0f9b5fbe1&quot;(&#xD;
+ ri!function_int,ri!activity_int,ri!subject_int, ri!documentType_int,ri!documentSubtype_int,1&#xD;
+).commonDocumentClassificationId)&#xD;
+      },&#xD;
+      required:true()&#xD;
+    )),&#xD;
+    if(length(ri!entityName_txt)=1,&#xD;
+        {&#xD;
+    #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+      label: &quot;Remove&quot;,&#xD;
+      links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(&#xD;
+        label: char(&#xD;
+          10005&#xD;
+        ),&#xD;
+        value: 0,&#xD;
+        saveInto: {ri!activeFlag_int&#xD;
+        ,a!save({ ri!entityName_txt},&quot;&quot;)&#xD;
+        }&#xD;
+      ),&#xD;
+      align: &quot;CENTER&quot;&#xD;
+    )},{})&#xD;
+    })&#xD;
+  },&#xD;
+  id: ri!activity_int&#xD;
+)&#xD;
+}&#xD;
+&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_3005&quot;,&#xD;
+          saveInto: {ri!buttonValue_txt,&#xD;
+          if(isnull(ri!documentSubtype_int),{},a!save(ri!commonDocumentClassificationId_int,&#xD;
+#&quot;e2d912f0-c0bd-41d7-8851-27a0f9b5fbe1&quot;(&#xD;
+ ri!function_int,ri!activity_int,ri!subject_int, ri!documentType_int,ri!documentSubtype_int,1&#xD;
+).commonDocumentClassificationId))&#xD;
+          },&#xD;
+          skipValidation: false&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          style: &quot;DESTRUCTIVE&quot;,&#xD;
+          confirmMessage: #&quot;_a-0000da0f-2564-8000-9ba2-011c48011c48_5242&quot;,&#xD;
+          value: #&quot;_a-0000d9fa-0032-8000-9ba2-011c48011c48_2979&quot;,&#xD;
+          saveInto: ri!buttonValue_txt,&#xD;
+          skipValidation: true&#xD;
+        )&#xD;
+      }&#xD;
+    )&#xD;
+&#xD;
+  }&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>buttonValue_txt</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentName_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentType_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>documentSubtype_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>entityName_txt</name>
+            <type>
+                <name>Text?list</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activeFlag_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>function_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>activity_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>subject_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>commonDocumentClassificationId_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

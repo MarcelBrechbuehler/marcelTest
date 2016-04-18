@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>COM_PortalReportColumn</name>
+        <uuid>_a-0000da84-7836-8000-9ba2-011c48011c48_11013</uuid>
+        <description>Displays a portal report column using the report's configured column name, sort identifier, and the returned data</description>
+        <parentUuid>_a-0000da0f-2564-8000-9ba2-011c48011c48_6096</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=with(
+  local!columnData: index(
+    ri!data,
+    ri!columnConfig.field,
+    {}
+  ),
+  local!columnDataCount: count(
+    local!columnData
+  ),
+  if(
+    ri!columnConfig.configuredFormatting = &quot;TASK_STATUS&quot;,
+    #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+      label: ri!columnConfig.label,
+      field: ri!columnConfig.field,
+      data: if(
+        local!columnDataCount &gt; 0,
+        apply(
+          #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11015&quot;(
+            data: local!columnData,
+            index: _
+          ),
+          1 + enumerate(
+            local!columnDataCount
+          )
+        ),
+        {}
+      )
+    ),
+    if(
+      ri!columnConfig.configuredFormatting = &quot;PRIORITY&quot;,
+      #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(
+        label: ri!columnConfig.label,
+        field: ri!columnConfig.field,
+        size: &quot;ICON&quot;,
+        data: if(
+          local!columnDataCount &gt; 0,
+          apply(
+            #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11025&quot;(
+              data: local!columnData,
+              index: _
+            ),
+            1 + enumerate(
+              local!columnDataCount
+            )
+          ),
+          {}
+        )
+      ),
+      if(
+        ri!columnConfig.label = &quot;Task On Time&quot;,
+        #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(
+          label: ri!columnConfig.label,
+          field: ri!columnConfig.field,
+          size: &quot;ICON&quot;,
+          data: if(
+            local!columnDataCount &gt; 0,
+            apply(
+              #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22760&quot;(
+                data: local!columnData,
+                index: _
+              ),
+              1 + enumerate(
+                local!columnDataCount
+              )
+            ),
+            {}
+          )
+        ),
+        if(
+          ri!columnConfig.label = &quot;Overdue&quot;,
+          #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(
+            label: ri!columnConfig.label,
+            field: ri!columnConfig.field,
+            size: &quot;ICON&quot;,
+            data: if(
+              local!columnDataCount &gt; 0,
+              apply(
+                #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22778&quot;(
+                  data: local!columnData,
+                  index: _
+                ),
+                1 + enumerate(
+                  local!columnDataCount
+                )
+              ),
+              {}
+            )
+          ),
+          if(
+            ri!columnConfig.label = &quot;At Risk&quot;,
+            #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(
+              label: ri!columnConfig.label,
+              field: ri!columnConfig.field,
+              size: &quot;ICON&quot;,
+              data: if(
+                local!columnDataCount &gt; 0,
+                apply(
+                  #&quot;_a-0000dada-365c-8000-9ba2-011c48011c48_22779&quot;(
+                    data: local!columnData,
+                    index: _
+                  ),
+                  1 + enumerate(
+                    local!columnDataCount
+                  )
+                ),
+                {}
+              )
+            ),
+            if(
+              ri!columnConfig.configuredFormatting = &quot;DATE_TIME&quot;,
+              #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                label: ri!columnConfig.label,
+                field: ri!columnConfig.field,
+                data: if(
+                  local!columnDataCount &gt; 0,
+                  apply(
+                    #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11078&quot;(
+                      data: local!columnData,
+                      index: _
+                    ),
+                    1 + enumerate(
+                      local!columnDataCount
+                    )
+                  ),
+                  {}
+                )
+              ),
+              if(
+                ri!columnConfig.configuredFormatting = &quot;USER_NAME&quot;,
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: ri!columnConfig.label,
+                  field: ri!columnConfig.field,
+                  data: if(
+                    local!columnDataCount &gt; 0,
+                    apply(
+                      #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11092&quot;(
+                        data: local!columnData,
+                        index: _
+                      ),
+                      1 + enumerate(
+                        local!columnDataCount
+                      )
+                    ),
+                    {}
+                  )
+                ),
+                if(
+                  ri!columnConfig.label = &quot;Assignees&quot;,
+                  #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                    label: ri!columnConfig.label,
+                    field: ri!columnConfig.field,
+                    data: if(
+                      local!columnDataCount &gt; 0,
+                      apply(
+                        #&quot;_a-0000dac3-d796-8000-9ba2-011c48011c48_17925&quot;(
+                          data: local!columnData,
+                          index: _
+                        ),
+                        1 + enumerate(
+                          local!columnDataCount
+                        )
+                      ),
+                      {}
+                    )
+                  ),
+                  #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                    label: ri!columnConfig.label,
+                    field: ri!columnConfig.field,
+                    data: if(
+                      local!columnDataCount &gt; 0,
+                      apply(
+                        #&quot;_a-0000da84-7836-8000-9ba2-011c48011c48_11016&quot;(
+                          data: local!columnData,
+                          index: _
+                        ),
+                        1 + enumerate(
+                          local!columnDataCount
+                        )
+                      ),
+                      {}
+                    ),
+                    links: if(
+                      ri!columnConfig.configuredDrilldown = &quot;TASK_DETAILS&quot;,
+                      apply(
+                        #&quot;SYSTEM_SYSRULES_processTaskLink&quot;(
+                          task: _
+                        ),
+                        index(
+                          ri!data,
+                          ri!columnConfig.drilldownField,
+                          {}
+                        )
+                      ),
+                      null
+                    )
+                  )
+                )
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>columnConfig</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>data</name>
+            <type>
+                <name>Variant</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>
